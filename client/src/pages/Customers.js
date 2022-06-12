@@ -29,11 +29,11 @@ function Customers() {
 
   const columns = [
     {
-      title: "Customer",
+      title: "Nama Customer",
       dataIndex: "customerName",
     },
     {
-      title: "Phone Number",
+      title: "Nomor HP",
       dataIndex: "customerPhoneNumber",
     },
     {

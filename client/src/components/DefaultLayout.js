@@ -52,11 +52,11 @@ const DefaultLayout = (props) => {
           <Menu.Item key="/home" icon={<HomeOutlined />}>
             <Link to="/home">Home</Link>
           </Menu.Item>
-          <Menu.Item key="/cart" icon={<ShoppingCartOutlined />}>
-            <Link to="/cart">Cart</Link>
+          <Menu.Item key="/pemesanan" icon={<ShoppingCartOutlined />}>
+            <Link to="/pemesanan">Pemesanan</Link>
           </Menu.Item>
-          <Menu.Item key="/pemesanan" icon={<CopyOutlined />}>
-            <Link to="/bills">Pemesanan</Link>
+          <Menu.Item key="/daftarpemesanan" icon={<CopyOutlined />}>
+            <Link to="/daftarpemesanan">Daftar Pemesanan</Link>
           </Menu.Item>
           <Menu.Item key="/produk" icon={<UnorderedListOutlined />}>
             <Link to="/produk">Produk</Link>
@@ -65,7 +65,7 @@ const DefaultLayout = (props) => {
             <Link to="/customers">Customers</Link>
           </Menu.Item>
           <Menu.Item key="/laporan" icon={<BarChartOutlined />}>
-            <Link to='/laporan'>Laporan</Link>
+            <Link to='/laporanpenjualan'>Laporan</Link>
           </Menu.Item>
           <Menu.Item key="/logout" icon={<LoginOutlined />} onClick={()=>{
             localStorage.removeItem('pos-user')

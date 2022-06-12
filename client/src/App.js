@@ -4,11 +4,12 @@ import { Button } from "antd";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import Produk from "./pages/Items";
-import CartPage from "./pages/CartPage";
+import Pemesanan from "./pages/CartPage";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Customers from "./pages/Customers";
-import Bills from "./pages/Bills";
+import DaftarPemesanan from "./pages/Bills";
+import LaporanPenjualan from "./pages/LaporanPenjualan";
 function App() {
   return (
     <div className="App">
@@ -16,9 +17,10 @@ function App() {
         <Routes>
           <Route path="/home" element={<ProtectedRoute><Homepage /></ProtectedRoute>} />
           <Route path="/produk" element={<ProtectedRoute><Produk /></ProtectedRoute>} />
-          <Route path="/cart" element={<ProtectedRoute><CartPage /></ProtectedRoute>} />
-          <Route path="/bills" element={<ProtectedRoute><Bills /></ProtectedRoute>} />
+          <Route path="/pemesanan" element={<ProtectedRoute><Pemesanan /></ProtectedRoute>} />
+          <Route path="/daftarpemesanan" element={<ProtectedRoute><DaftarPemesanan /></ProtectedRoute>} />
           <Route path="/customers" element={<ProtectedRoute><Customers /></ProtectedRoute>} />
+          <Route path="/laporanpenjualan" element={<ProtectedRoute><LaporanPenjualan /></ProtectedRoute>} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Login />} />

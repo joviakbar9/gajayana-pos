@@ -83,7 +83,7 @@ function CartPage() {
   useEffect(() => {
     let temp = 0;
     cartItems.forEach((item) => {
-      temp = temp + item.price * item.quantity;
+      temp = temp + item.harga * item.quantity;
     });
 
     setSubTotal(temp);
@@ -108,7 +108,7 @@ function CartPage() {
       .post("/api/bills/charge-bill", reqObject)
       .then(() => {
         message.success("Pemesanan Berhasil");
-        navigate('/bills')
+        navigate('/daftarpemesanan')
       })
       .catch(() => {
         message.error("Terjadi kesalahan");
@@ -117,7 +117,7 @@ function CartPage() {
 
   return (
     <DefaultLayout>
-      <h3>Cart</h3>
+      <h3>Pemesanan</h3>
       <Table columns={columns} dataSource={cartItems} bordered pagination={false}/>
       <hr />
       <div className="d-flex justify-content-end flex-column align-items-end">

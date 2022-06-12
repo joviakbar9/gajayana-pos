@@ -89,7 +89,7 @@ function Bills() {
         dataIndex: "_id",
         render: (id, record) => (
           <div>
-            <b>{record.quantity * record.price}</b>
+            <b>{record.quantity * record.harga}</b>
           </div>
         ),
       },
