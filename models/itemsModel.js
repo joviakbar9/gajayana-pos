@@ -1,0 +1,13 @@
+const mongoose = require("mongoose");
+
+const itemsSchema = mongoose.Schema({
+  kodeproduk: { type: String, required: true },
+  nama: { type: String, required: true },
+  harga: { type: Number, required: true },
+  kategori: { type: String, required: true },
+  // image: { type: String, required: true },
+}, {timestamps : true});
+
+const itemsModel = mongoose.model("items", itemsSchema);
+
+module.exports = itemsModel;
