@@ -31,7 +31,7 @@ function Bills() {
 
   const columns = [
     {
-      title: "Id",
+      title: "No. Nota",
       dataIndex: "_id",
     },
     {
@@ -42,10 +42,10 @@ function Bills() {
       title: "SubTotal",
       dataIndex: "subTotal",
     },
-    {
-      title: "Tax",
-      dataIndex: "tax",
-    },
+    // {
+    //   title: "Tax",
+    //   dataIndex: "tax",
+    // },
     {
       title: "Total",
       dataIndex: "totalAmount",
@@ -68,15 +68,15 @@ function Bills() {
   ];
   const cartcolumns = [
     {
-      title: "Name",
-      dataIndex: "name",
+      title: "Nama",
+      dataIndex: "nama",
     },
     {
-      title: "Price",
-      dataIndex: "price",
+      title: "Harga",
+      dataIndex: "harga",
     },
     {
-      title: "Quantity",
+      title: "Jumlah",
       dataIndex: "_id",
       render: (id, record) => (
         <div>
@@ -106,7 +106,7 @@ function Bills() {
   return (
     <DefaultLayout>
       <div className="d-flex justify-content-between">
-        <h3>Items</h3>
+        <h3>Daftar Pemesanan</h3>
       </div>
       <Table columns={columns} dataSource={billsData} bordered />
 
@@ -116,7 +116,7 @@ function Bills() {
             setPrintBillModalVisibilty(false);
           }}
           visible={printBillModalVisibility}
-          title="Bill Details"
+          title="Nota Pemesanan"
           footer={false}
           width={800}
         >
@@ -124,24 +124,25 @@ function Bills() {
             <div className="d-flex justify-content-between bill-header pb-2">
               <div>
                 <h1>
-                  <b>SR MARKET</b>
+                  <b>GAJAYANA DIGITAL PRINTING</b>
                 </h1>
               </div>
               <div>
-                <p>Hyderabd</p>
-                <p>Amberpet 500013</p>
-                <p>9989649278</p>
+                <p>Jl. Gajayana 14A Kav.2</p>
+                <p>Malang</p>
+                <p>0341 552080</p>
+                <p>E-mail : gajayana.digital@gmail.com</p>
               </div>
             </div>
             <div className="bill-customer-details my-2">
               <p>
-                <b>Name</b> : {selectedBill.customerName}
+                <b>Nama</b> : {selectedBill.customerName}
               </p>
               <p>
-                <b>Phone Number</b> : {selectedBill.customerPhoneNumber}
+                <b>Nomor Handphone</b> : {selectedBill.customerPhoneNumber}
               </p>
               <p>
-                <b>Date</b> :{" "}
+                <b>Tanggal</b> :{" "}
                 {selectedBill.createdAt.toString().substring(0, 10)}
               </p>
             </div>
@@ -149,7 +150,7 @@ function Bills() {
 
             <div className="dotted-border">
                 <p><b>SUB TOTAL</b> : {selectedBill.subTotal}</p>
-                <p><b>Tax</b> : {selectedBill.tax}</p>
+                {/* <p><b>Tax</b> : {selectedBill.tax}</p> */}
             </div>
 
             <div>
@@ -158,13 +159,14 @@ function Bills() {
             <div className="dotted-border"></div>
 
             <div className="text-center">
-                  <p>Thanks</p>
-                  <p>Visit Again :)</p>
+              <p>Nota harap dibawa untuk pengambilan pesanan</p>
+              <p>Pengambilan TANPA NOTA tidak dilayani</p>
+              <p>Terimakasih</p>
             </div>
           </div>
 
           <div className="d-flex justify-content-end">
-                  <Button type='primary' onClick={handlePrint}>Print Bill</Button>
+                  <Button type='primary' onClick={handlePrint}>Cetak Nota</Button>
           </div>
         </Modal>
       )}
