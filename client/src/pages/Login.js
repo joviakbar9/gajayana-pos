@@ -35,7 +35,7 @@ useEffect(() => {
             layout="vertical"
             onFinish={onFinish}
           >
-            <h1><b>SHEY POS</b></h1>
+            <h1><b>GAJAYANA DIGITAL PRINTING</b></h1>
             <hr />
             <h3>Login</h3>
           
@@ -45,8 +45,6 @@ useEffect(() => {
             <Form.Item name="password" label="Password">
               <Input type='password'/>
             </Form.Item>
-
-           
 
             <div className="d-flex justify-content-between align-items-center">
               <Link to='/register'>Not Yet Registered ? Click Here To Register</Link>

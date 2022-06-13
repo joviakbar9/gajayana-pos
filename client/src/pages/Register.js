@@ -29,7 +29,7 @@ function Register() {
             layout="vertical"
             onFinish={onFinish}
           >
-            <h1><b>SHEY POS</b></h1>
+            <h1><b>GAJAYANA DIGITAL PRINTING</b></h1>
             <hr />
             <h3>Register</h3>
             <Form.Item name="name" label="Name">

@@ -30,12 +30,12 @@ function Items() {
       .post("/api/items/delete-item" , {itemId : record._id})
       .then((response) => {
         dispatch({ type: "hideLoading" });
-        message.success('Item deleted successdully')
+        message.success('Produk berhasil dihapus')
         getAllItems()
       })
       .catch((error) => {
         dispatch({ type: "hideLoading" });
-        message.error('Something went wrong')
+        message.error('Terjadi kesalahan')
         console.log(error);
       });
   };

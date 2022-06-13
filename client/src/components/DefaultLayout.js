@@ -86,7 +86,7 @@ const DefaultLayout = (props) => {
           )}
           <div
             className="cart-count d-flex align-items-center"
-            onClick={() => navigate("/cart")}
+            onClick={() => navigate("/pemesanan")}
           >
             <b>
               {" "}
