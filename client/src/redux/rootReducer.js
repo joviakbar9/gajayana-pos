@@ -6,9 +6,23 @@ const initailState = {
 export const rootReducer = (state = initailState, action) => {
   switch (action.type) {
     case "addToCart":
+      const items = [...state.cartItems]
+      let shouldPush = true
+
+      items.forEach(item => {
+        if (item.kodeproduk === action.payload.kodeproduk) {
+          item.quantity += 1
+          shouldPush = false
+        }
+      });
+
+      if (shouldPush) {
+        items.push(action.payload)
+      }
+      
       return {
         ...state,
-        cartItems: [...state.cartItems, action.payload],
+        cartItems: items,
       };
       case "deleteFromCart":
       return {
