@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DefaultLayout from "../components/DefaultLayout";
 import axios from "axios";
+import { BASE_URL } from '../constant/axios'
 
 import {
   DeleteOutlined,
@@ -42,13 +43,6 @@ function CartPage() {
       title: "Nama",
       dataIndex: "nama",
     },
-    // {
-    //   title: "Image",
-    //   dataIndex: "image",
-    //   render: (image, record) => (
-    //     <img src={image} alt="" height="60" width="60" />
-    //   ),
-    // },
     {
       title: "Harga",
       dataIndex: "harga",
@@ -80,6 +74,7 @@ function CartPage() {
       ),
     },
   ];
+  
   useEffect(() => {
     let temp = 0;
     cartItems.forEach((item) => {
@@ -94,18 +89,14 @@ function CartPage() {
       ...values,
       subTotal,
       cartItems,
-      // tax: Number(((subTotal / 100) * 10).toFixed(2)),
-      // totalAmount: Number(
-      //   subTotal + Number(((subTotal / 100) * 10).toFixed(2))
-      // ),
       totalAmount:(
-        subTotal .toFixed(2)
+        subTotal.toFixed(2)
       ),
       userId: JSON.parse(localStorage.getItem("pos-user"))._id,
     };
 
     axios
-      .post("/api/bills/charge-bill", reqObject)
+      .post(`${BASE_URL}/api/bills/charge-bill`, reqObject)
       .then(() => {
         message.success("Pemesanan Berhasil");
         navigate('/daftarpemesanan')
@@ -120,6 +111,7 @@ function CartPage() {
       <h3>Pemesanan</h3>
       <Table columns={columns} dataSource={cartItems} bordered pagination={false}/>
       <hr />
+
       <div className="d-flex justify-content-end flex-column align-items-end">
         <div className="subtotal">
           <h3>

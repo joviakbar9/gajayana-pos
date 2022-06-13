@@ -5,6 +5,8 @@ import { Button, Row, Table } from "antd";
 import Item from "../components/Item";
 import "../resources/items.css";
 import { useDispatch } from "react-redux";
+import { BASE_URL } from '../constant/axios'
+
 function LaporanPenjualan() {
 
     const [itemsData, setItemsData] = useState([]);
@@ -13,7 +15,7 @@ function LaporanPenjualan() {
     const getAllItems = () => {
         dispatch({ type: "showLoading" });
         axios
-            .get("/api/items/get-all-items")
+            .get(`${BASE_URL}/api/items/get-all-items`)
             .then((response) => {
                 dispatch({ type: "hideLoading" });
                 setItemsData(response.data);

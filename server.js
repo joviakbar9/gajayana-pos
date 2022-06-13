@@ -1,14 +1,20 @@
 const express = require("express");
 const dbConnect = require("./dbConnect");
+const cors = require('cors')
 
 const app = express();
-app.use(express.json());
 const itemsRoute = require("./routes/itemsRoute");
 const usersRoute = require("./routes/userRoute");
 const billsRoute = require('./routes/billsRoute')
+
+app.use(cors());
+
+app.use(express.json());
+
 app.use("/api/items/", itemsRoute);
 app.use("/api/users/", usersRoute);
 app.use("/api/bills/", billsRoute);
+
 const path = require('path')
 
 if(process.env.NODE_ENV==='production')

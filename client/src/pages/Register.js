@@ -4,12 +4,14 @@ import '../resources/authentication.css'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom';
 import {useDispatch} from 'react-redux'
+import { BASE_URL } from '../constant/axios'
+
 function Register() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const onFinish=(values)=>{
          dispatch({type:'showLoading'})
-         axios.post('/api/users/register' , values).then((res)=>{
+         axios.post(`${BASE_URL}/api/users/register` , values).then((res)=>{
           dispatch({type:'hideLoading'})
            message.success('Registration successfull')
          }).catch(()=>{

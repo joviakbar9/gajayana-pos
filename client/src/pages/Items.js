@@ -4,6 +4,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Button, Form, Input, message, Modal, Select, Table } from "antd";
+import { BASE_URL } from '../constant/axios'
 
 function Items() {
   const [itemsData, setItemsData] = useState([]);
@@ -13,7 +14,7 @@ function Items() {
   const getAllItems = () => {
     dispatch({ type: "showLoading" });
     axios
-      .get("/api/items/get-all-items")
+      .get(`${BASE_URL}/api/items/get-all-items`)
       .then((response) => {
         dispatch({ type: "hideLoading" });
         setItemsData(response.data);
@@ -27,7 +28,7 @@ function Items() {
   const deleteItem = (record) => {
     dispatch({ type: "showLoading" });
     axios
-      .post("/api/items/delete-item" , {itemId : record._id})
+      .post(`${BASE_URL}/api/items/delete-item` , {itemId : record._id})
       .then((response) => {
         dispatch({ type: "hideLoading" });
         message.success('Produk berhasil dihapus')
@@ -92,7 +93,7 @@ function Items() {
     if(editingItem===null)
     {
       axios
-      .post("/api/items/add-item", values)
+      .post(`${BASE_URL}/api/items/add-item`, values)
       .then((response) => {
         dispatch({ type: "hideLoading" });
         message.success("Produk berhasil ditambah");
@@ -107,7 +108,7 @@ function Items() {
     }
     else{
       axios
-      .post("/api/items/edit-item", {...values , itemId : editingItem._id})
+      .post(`${BASE_URL}/api/items/edit-item`, {...values , itemId : editingItem._id})
       .then((response) => {
         dispatch({ type: "hideLoading" });
         message.success("Data produk berhasil diubah");
