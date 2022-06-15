@@ -6,7 +6,8 @@ import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import { Button, Form, Input, message, Modal, Select, Table } from "antd";
 import ReactToPrint from 'react-to-print';
 import { useReactToPrint } from 'react-to-print';
-import { BASE_URL } from '../constant/axios'
+import { BASE_URL } from '../constant/axios';
+import logo from "../resources/PrintingLogo.png";
 
 function Bills() {
     const componentRef = useRef();
@@ -70,8 +71,8 @@ function Bills() {
   ];
   const cartcolumns = [
     {
-      title: "Nama",
-      dataIndex: "nama",
+      title: "Nama Produk",
+      dataIndex: "namaproduk",
     },
     {
       title: "Harga",
@@ -87,7 +88,7 @@ function Bills() {
       ),
     },
     {
-        title: "Total fare",
+        title: "Total Harga",
         dataIndex: "_id",
         render: (id, record) => (
           <div>
@@ -125,9 +126,7 @@ function Bills() {
           <div className="bill-model p-3" ref={componentRef}>
             <div className="d-flex justify-content-between bill-header pb-2">
               <div>
-                <h1>
-                  <b>GAJAYANA DIGITAL PRINTING</b>
-                </h1>
+                <img src={logo} height="70" width="360"/>
               </div>
               <div>
                 <p>Jl. Gajayana 14A Kav.2</p>
@@ -138,21 +137,23 @@ function Bills() {
             </div>
             <div className="bill-customer-details my-2">
               <p>
+                <b>Tanggal Pemesanan</b> :{" "}
+                {selectedBill.createdAt.toString().substring(0, 10)}
+              </p>
+              <p>
                 <b>Nama</b> : {selectedBill.customerName}
               </p>
               <p>
                 <b>Nomor Handphone</b> : {selectedBill.customerPhoneNumber}
               </p>
-              <p>
-                <b>Tanggal</b> :{" "}
-                {selectedBill.createdAt.toString().substring(0, 10)}
-              </p>
             </div>
             <Table dataSource={selectedBill.cartItems} columns={cartcolumns} pagination={false}/>
 
             <div className="dotted-border">
+              <p><b>DP</b> : </p>
+              <p><b>SISA</b> : </p>
                 <p><b>SUB TOTAL</b> : {selectedBill.subTotal}</p>
-                {/* <p><b>Tax</b> : {selectedBill.tax}</p> */}
+                {/* <p><b>Sisa</b> : {selectedBill.tax}</p> */}
             </div>
 
             <div>

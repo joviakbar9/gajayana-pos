@@ -40,8 +40,8 @@ function CartPage() {
       dataIndex: "kodeproduk",
     },
     {
-      title: "Nama",
-      dataIndex: "nama",
+      title: "Nama Produk",
+      dataIndex: "namaproduk",
     },
     {
       title: "Harga",
@@ -151,7 +151,7 @@ function CartPage() {
               Sub Total : <b>Rp {subTotal}</b>
             </h5>
             {/* <h5>
-              Tax : <b>{((subTotal / 100) * 10).toFixed(2)}</b>
+              Sisa : <b>{(subTotal - dp)}</b>
             </h5>
             <hr />
             <h2>

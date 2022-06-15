@@ -32,8 +32,8 @@ function Homepage() {
       dataIndex: "kodeproduk",
     },
     {
-      title: "Nama",
-      dataIndex: "nama",
+      title: "Nama Produk",
+      dataIndex: "namaproduk",
     },
     {
       title: "Harga",

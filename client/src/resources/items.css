@@ -62,7 +62,6 @@ input:focus{
     border: 3px solid rgb(3, 38, 66);
 }
 
-
 .subtotal h3{
     color: rgb(0, 133, 18) !important;
     font-size: 35px;
@@ -87,6 +86,7 @@ input:focus{
     border-bottom: 2px dotted rgb(77, 76, 76);
 }
 .bill-model h2{
+    font-size: 22px !important;
     margin-bottom: 0 !important;
 }
 

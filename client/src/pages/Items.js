@@ -47,8 +47,8 @@ function Items() {
       dataIndex: "kodeproduk",
     },
     {
-      title: "Nama",
-      dataIndex: "nama",
+      title: "Nama Produk",
+      dataIndex: "namaproduk",
     },
     // {
     //   title: "Image",
@@ -148,7 +148,7 @@ function Items() {
             layout="vertical"
             onFinish={onFinish}
           >
-            <Form.Item name="nama" label="Nama">
+            <Form.Item name="namaproduk" label="Nama Produk">
               <Input />
             </Form.Item>
             <Form.Item name="harga" label="Harga">
