@@ -32,15 +32,11 @@ function App() {
 
 export default App;
 
-
-export function ProtectedRoute({children}){
-
-    if(localStorage.getItem('pos-user'))
-    {
-      return children
-    }
-    else{
-      return <Navigate to='/login' />
-    }
-
+export function ProtectedRoute({ children }) {
+  if (localStorage.getItem('pos-user')) {
+    return children
+  }
+  else {
+    return <Navigate to='/login' />
+  }
 }

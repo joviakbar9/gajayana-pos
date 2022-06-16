@@ -3,8 +3,9 @@ import { Button, Col, Form, Input, message, Row } from "antd";
 import '../resources/authentication.css'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom';
-import {useDispatch} from 'react-redux'
-import { BASE_URL } from '../constant/axios'
+import {useDispatch} from 'react-redux';
+import { BASE_URL } from '../constant/axios';
+import logo from "../resources/PrintingLogo.png";
 function Login() {
 
 
@@ -36,7 +37,7 @@ useEffect(() => {
             layout="vertical"
             onFinish={onFinish}
           >
-            <h1><b>GAJAYANA DIGITAL PRINTING</b></h1>
+            <img src={logo} height="70" width="360"/>
             <hr />
             <h3>Login</h3>
           

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import DefaultLayout from "../components/DefaultLayout";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
+import { EyeOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Button, Form, Input, message, Modal, Select, Table } from "antd";
 import ReactToPrint from 'react-to-print';
 import { useReactToPrint } from 'react-to-print';
@@ -10,10 +10,9 @@ import { BASE_URL } from '../constant/axios';
 import logo from "../resources/PrintingLogo.png";
 
 function Bills() {
-    const componentRef = useRef();
+  const componentRef = useRef();
   const [billsData, setBillsData] = useState([]);
-  const [printBillModalVisibility, setPrintBillModalVisibilty] =
-    useState(false);
+  const [printBillModalVisibility, setPrintBillModalVisibilty] = useState(false);
   const [selectedBill, setSelectedBill] = useState(null);
   const dispatch = useDispatch();
   const getAllBills = () => {
@@ -54,17 +53,20 @@ function Bills() {
       dataIndex: "totalAmount",
     },
     {
+      title: "Status Pembayaran",
+      dataIndex: "statusPB",
+    },
+    {
       title: "Actions",
       dataIndex: "_id",
       render: (id, record) => (
         <div className="d-flex">
-          <EyeOutlined
-            className="mx-2"
-            onClick={() => {
+          <EyeOutlined className="mx-2" onClick={() => {
               setSelectedBill(record);
               setPrintBillModalVisibilty(true);
             }}
           />
+          {/* <DeleteOutlined className="mx-2" onClick={() => deleteItem(record)}/> */}
         </div>
       ),
     },
@@ -136,28 +138,43 @@ function Bills() {
               </div>
             </div>
             <div className="bill-customer-details my-2">
-              <p>
-                <b>Tanggal Pemesanan</b> :{" "}
-                {selectedBill.createdAt.toString().substring(0, 10)}
-              </p>
-              <p>
-                <b>Nama</b> : {selectedBill.customerName}
-              </p>
-              <p>
-                <b>Nomor Handphone</b> : {selectedBill.customerPhoneNumber}
-              </p>
+              <table>
+                <tr>
+                  <td><b>Tanggal Pemesanan</b></td>
+                  <td> : {" "}{selectedBill.createdAt.toString().substring(0, 10)}</td>
+                </tr>
+                <tr>
+                  <td><b>Nama</b></td>
+                  <td> : {selectedBill.customerName}</td>
+                </tr>
+                <tr>
+                  <td><b>Nomor Handphone</b></td>
+                  <td> : {selectedBill.customerPhoneNumber}</td>
+                </tr>
+              </table>
             </div>
             <Table dataSource={selectedBill.cartItems} columns={cartcolumns} pagination={false}/>
 
             <div className="dotted-border">
-              <p><b>DP</b> : </p>
-              <p><b>SISA</b> : </p>
-                <p><b>SUB TOTAL</b> : {selectedBill.subTotal}</p>
-                {/* <p><b>Sisa</b> : {selectedBill.tax}</p> */}
+              <table>
+                <tr>
+                  <td><b>DP</b></td>
+                  <td> : Rp {selectedBill.subTotal}</td>
+                </tr>
+                <tr>
+                  <td><b>SISA</b></td>
+                  <td> : Rp {selectedBill.subTotal}</td>
+                  {/* <p><b>Sisa</b> : {selectedBill.tax}</p> */}
+                </tr>
+                <tr>
+                  <td><b>SUB TOTAL</b></td>
+                  <td> : Rp {selectedBill.subTotal}</td>
+                </tr>
+              </table>
             </div>
 
             <div>
-                <h2><b>GRAND TOTAL : {selectedBill.totalAmount}</b></h2>
+                <h2><b>GRAND TOTAL : Rp {selectedBill.totalAmount}</b></h2>
             </div>
             <div className="dotted-border"></div>
 

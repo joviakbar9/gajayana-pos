@@ -105,7 +105,7 @@ const DefaultLayout = (props) => {
         >
           {props.children}
         </Content>
-        <Footer style={{ textAlign: 'center' }}>Gajayana Digital Printing ©2022</Footer>
+        <Footer style={{ textAlign: 'center' }}>Gajayana Digital Printing Malang ©2022</Footer>
       </Layout>
     </Layout>
   );

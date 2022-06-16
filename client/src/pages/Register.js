@@ -3,8 +3,9 @@ import { Button, Col, Form, Input, message, Row } from "antd";
 import '../resources/authentication.css'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom';
-import {useDispatch} from 'react-redux'
-import { BASE_URL } from '../constant/axios'
+import {useDispatch} from 'react-redux';
+import { BASE_URL } from '../constant/axios';
+import logo from "../resources/PrintingLogo.png";
 
 function Register() {
   const dispatch = useDispatch()
@@ -13,10 +14,10 @@ function Register() {
          dispatch({type:'showLoading'})
          axios.post(`${BASE_URL}/api/users/register` , values).then((res)=>{
           dispatch({type:'hideLoading'})
-           message.success('Registration successfull')
+           message.success('Registration Berhasil')
          }).catch(()=>{
           dispatch({type:'hideLoading'})
-           message.error('Something went wrong')
+           message.error('Terjadi Kesalahan')
          })
   }
   useEffect(() => {
@@ -31,10 +32,10 @@ function Register() {
             layout="vertical"
             onFinish={onFinish}
           >
-            <h1><b>GAJAYANA DIGITAL PRINTING</b></h1>
+            <img src={logo} height="70" width="360"/>
             <hr />
             <h3>Register</h3>
-            <Form.Item name="name" label="Name">
+            <Form.Item name="name" label="Nama">
               <Input />
             </Form.Item>
             <Form.Item name="userId" label="User ID">
@@ -44,10 +45,8 @@ function Register() {
               <Input type='password'/>
             </Form.Item>
 
-           
-
             <div className="d-flex justify-content-between align-items-center">
-              <Link to='/login'>Already Registed ? Click Here To Login</Link>
+              <Link to='/login'>Already Registered ? Click Here To Login</Link>
               <Button htmlType="submit" type="primary">
                 Register
               </Button>
