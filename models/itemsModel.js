@@ -5,7 +5,7 @@ const itemsSchema = mongoose.Schema({
   namaproduk: { type: String, required: true },
   harga: { type: Number, required: true },
   kategori: { type: String, required: true },
-  jumlahStok: {type: Number, required: true}
+  jumlahStok: { type: Number, required: true }
 }, {timestamps : true});
 
 const itemsModel = mongoose.model("items", itemsSchema);
