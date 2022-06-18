@@ -13,7 +13,7 @@ import {
 import { useNavigate } from "react-router-dom";
 function CartPage() {
   const { cartItems } = useSelector((state) => state.rootReducer);
-  const [billChargeModal, setBillChargeModal] = useState(false);
+  const [pemesananChargeModal, setPemesananChargeModal] = useState(false);
   const [subTotal, setSubTotal] = useState(0);
   const navigate = useNavigate()
   const dispatch = useDispatch();
@@ -96,13 +96,13 @@ function CartPage() {
     };
 
     axios
-      .post(`${BASE_URL}/api/bills/charge-bill`, reqObject)
+      .post(`${BASE_URL}/api/pemesanan/charge-pemesanan`, reqObject)
       .then(() => {
         message.success("Pemesanan Berhasil");
         navigate('/daftarpemesanan')
       })
       .catch(() => {
-        message.error("Terjadi kesalahan");
+        message.error("Terjadi Kesalahan");
       });
   };
 
@@ -119,16 +119,16 @@ function CartPage() {
           </h3>
         </div>
 
-        <Button type="primary" onClick={() => setBillChargeModal(true)}>
+        <Button type="primary" onClick={() => setPemesananChargeModal(true)}>
           SUBMIT PEMESANAN
         </Button>
       </div>
 
       <Modal
         title="Nota Pemesanan"
-        visible={billChargeModal}
+        visible={pemesananChargeModal}
         footer={false}
-        onCancel={() => setBillChargeModal(false)}
+        onCancel={() => setPemesananChargeModal(false)}
       >
         {" "}
         <Form layout="vertical" onFinish={onFinish}>

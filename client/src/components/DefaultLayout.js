@@ -34,10 +34,10 @@ const DefaultLayout = (props) => {
       {loading && (
         <div className="spinner">
           <div
-          class="spinner-border"
-          role="status"
-        >
-        </div>
+            class="spinner-border"
+            role="status"
+          >
+          </div>
         </div>
       )}
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -64,10 +64,15 @@ const DefaultLayout = (props) => {
           <Menu.Item key="/customers" icon={<UserOutlined />}>
             <Link to="/customers">Customers</Link>
           </Menu.Item>
-          <Menu.Item key="/laporan" icon={<BarChartOutlined />}>
-            <Link to='/laporanpenjualan'>Laporan</Link>
-          </Menu.Item>
-          <Menu.Item key="/logout" icon={<LoginOutlined />} onClick={()=>{
+          <Menu.SubMenu title="Laporan" icon={<BarChartOutlined />}>
+            <Menu.Item key="/laporanpenjualan">
+              <Link to='/laporanpenjualan'>Laporan Penjualan</Link>
+            </Menu.Item>
+            <Menu.Item key="/laporanpembelian">
+              <Link to='/laporanpembelian'>Laporan Pembelian</Link>
+            </Menu.Item>
+          </Menu.SubMenu>
+          <Menu.Item key="/logout" icon={<LoginOutlined />} onClick={() => {
             localStorage.removeItem('pos-user')
             navigate('/login')
           }}>
@@ -100,7 +105,7 @@ const DefaultLayout = (props) => {
           style={{
             margin: "10px",
             padding: 24,
-            minHeight:'80vh'
+            minHeight: '80vh'
           }}
         >
           {props.children}

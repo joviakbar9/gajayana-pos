@@ -6,21 +6,20 @@ import { Link, useNavigate } from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import { BASE_URL } from '../constant/axios';
 import logo from "../resources/PrintingLogo.png";
+
 function Login() {
-
-
   const dispatch = useDispatch()
   const naviate = useNavigate()
   const onFinish=(values)=>{
     dispatch({type:'showLoading'})
     axios.post(`${BASE_URL}/api/users/login` , values).then((res)=>{
      dispatch({type:'hideLoading'})
-      message.success('Login successfull')
+      message.success('Login Berhasil')
       localStorage.setItem('pos-user' , JSON.stringify(res.data))
       naviate('/home')
     }).catch(()=>{
      dispatch({type:'hideLoading'})
-      message.error('Something went wrong')
+      message.error('Terjadi Kesalahan')
     })
 }
 

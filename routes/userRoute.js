@@ -11,7 +11,7 @@ router.post("/login", async (req, res) => {
     if (user) {
       res.send(user);
     } else {
-      res.status(400).json({ message: "Login failed" , user });
+      res.status(400).json({ message: "Login Gagal" , user });
     }
   } catch (error) {
     res.status(400).json(error);

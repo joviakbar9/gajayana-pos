@@ -36,6 +36,12 @@
 .ant-menu-item{
   padding-left: 12px !important;
 }
+.ant-menu-submenu-title{
+  padding-left: 12px !important;
+}
+.ant-menu-item-only-child{
+  padding-left: 28px !important;
+}
 .ant-layout-header{
     margin: 0 10px !important;
     display: flex;

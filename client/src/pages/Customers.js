@@ -9,19 +9,19 @@ import { useReactToPrint } from 'react-to-print';
 import { BASE_URL } from '../constant/axios'
 
 function Customers() {
-    const componentRef = useRef();
-  const [billsData, setBillsData] = useState([]);
+  const componentRef = useRef();
+  const [pemesananData, setPemesananData] = useState([]);
 
   const dispatch = useDispatch();
-  const getAllBills = () => {
+  const getAllPesanan = () => {
     dispatch({ type: "showLoading" });
     axios
-      .get(`${BASE_URL}/api/bills/get-all-bills`)
+      .get(`${BASE_URL}/api/pemesanan/get-all-pemesanan`)
       .then((response) => {
         dispatch({ type: "hideLoading" });
         const data = response.data
         data.reverse()
-        setBillsData(data);
+        setPemesananData(data);
       })
       .catch((error) => {
         dispatch({ type: "hideLoading" });
@@ -42,26 +42,19 @@ function Customers() {
       title: "Created On",
       dataIndex: "createdAt",
       render :(value)=><span>{value.toString().substring(0,10)}</span>
-    },
-   
-    
+    }, 
   ];
- 
 
   useEffect(() => {
-    getAllBills();
+    getAllPesanan();
   }, []);
-
- 
 
   return (
     <DefaultLayout>
       <div className="d-flex justify-content-between">
         <h3>Customers</h3>
       </div>
-      <Table columns={columns} dataSource={billsData} bordered />
-
-     
+      <Table columns={columns} dataSource={pemesananData} bordered />
     </DefaultLayout>
   );
 }

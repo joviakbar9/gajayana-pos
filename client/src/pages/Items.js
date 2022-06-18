@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import DefaultLayout from "../components/DefaultLayout";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { EditTwoTone, DeleteTwoTone } from "@ant-design/icons";
 import { Button, Form, Input, message, Modal, Select, Table } from "antd";
 import { BASE_URL } from '../constant/axios'
 
@@ -36,7 +36,7 @@ function Items() {
       })
       .catch((error) => {
         dispatch({ type: "hideLoading" });
-        message.error('Terjadi kesalahan')
+        message.error('Terjadi Kesalahan')
         console.log(error);
       });
   };
@@ -70,14 +70,12 @@ function Items() {
       dataIndex: "_id",
       render: (id, record) => (
         <div className="d-flex">
-          <EditOutlined
-            className="mx-2"
-            onClick={() => {
+          <EditTwoTone className="mx-2" onClick={() => {
               setEditingItem(record);
               setAddEditModalVisibilty(true);
             }}
           />
-          <DeleteOutlined className="mx-2" onClick={()=>deleteItem(record)}/>
+          <DeleteTwoTone twoToneColor="#eb2f96" className="mx-2" onClick={() => deleteItem(record)}/>
         </div>
       ),
     },
@@ -88,7 +86,6 @@ function Items() {
   }, []);
 
   const onFinish = (values) => {
-
     dispatch({ type: "showLoading" });
     if(editingItem===null)
     {
@@ -102,7 +99,7 @@ function Items() {
       })
       .catch((error) => {
         dispatch({ type: "hideLoading" });
-        message.error("Terjadi kesalahan");
+        message.error("Terjadi Kesalahan");
         console.log(error);
       });
     }
@@ -118,11 +115,12 @@ function Items() {
       })
       .catch((error) => {
         dispatch({ type: "hideLoading" });
-        message.error("Terjadi kesalahan");
+        message.error("Terjadi Kesalahan");
         console.log(error);
       });
     }
   };
+
   return (
     <DefaultLayout>
       <div className="d-flex justify-content-between">

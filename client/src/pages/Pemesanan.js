@@ -2,31 +2,51 @@ import React, { useEffect, useRef, useState } from "react";
 import DefaultLayout from "../components/DefaultLayout";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { EyeOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { EyeOutlined, EditOutlined, DeleteTwoTone } from "@ant-design/icons";
 import { Button, Form, Input, message, Modal, Select, Table } from "antd";
 import ReactToPrint from 'react-to-print';
 import { useReactToPrint } from 'react-to-print';
 import { BASE_URL } from '../constant/axios';
 import logo from "../resources/PrintingLogo.png";
 
-function Bills() {
+function Pemesanan() {
+  const { Search } = Input;
+  const onSearch = (value) => console.log(value);
+
   const componentRef = useRef();
-  const [billsData, setBillsData] = useState([]);
-  const [printBillModalVisibility, setPrintBillModalVisibilty] = useState(false);
-  const [selectedBill, setSelectedBill] = useState(null);
+  const [pemesananData, setPemesananData] = useState([]);
+  const [printPemesananModalVisibility, setPrintPemesananModalVisibilty] = useState(false);
+  const [selectedPemesanan, setSelectedPemesanan] = useState(null);
   const dispatch = useDispatch();
-  const getAllBills = () => {
+
+  const getAllPemesanan = () => {
     dispatch({ type: "showLoading" });
     axios
-      .get(`${BASE_URL}/api/bills/get-all-bills`)
+      .get(`${BASE_URL}/api/pemesanan/get-all-pemesanan`)
       .then((response) => {
         dispatch({ type: "hideLoading" });
-        const data = response.data
-        data.reverse()
-        setBillsData(data);
+        const data = response.data;
+        data.reverse();
+        setPemesananData(data);
       })
       .catch((error) => {
         dispatch({ type: "hideLoading" });
+        console.log(error);
+      });
+  };
+
+  const deletePemesanan = (record) => {
+    dispatch({ type: "showLoading" });
+    axios
+      .post(`${BASE_URL}/api/pemesanan/delete-pemesanan`, { pemesananId: record._id })
+      .then((response) => {
+        dispatch({ type: "hideLoading" });
+        message.success('Produk berhasil dihapus')
+        getAllPemesanan()
+      })
+      .catch((error) => {
+        dispatch({ type: "hideLoading" });
+        message.error('Terjadi Kesalahan')
         console.log(error);
       });
   };
@@ -53,6 +73,10 @@ function Bills() {
       dataIndex: "totalAmount",
     },
     {
+      title: "Tanggal Pemesanan",
+      dataIndex: "tanggalPemesanan",
+    },
+    {
       title: "Status Pembayaran",
       dataIndex: "statusPB",
     },
@@ -62,11 +86,11 @@ function Bills() {
       render: (id, record) => (
         <div className="d-flex">
           <EyeOutlined className="mx-2" onClick={() => {
-              setSelectedBill(record);
-              setPrintBillModalVisibilty(true);
-            }}
+            setSelectedPemesanan(record);
+            setPrintPemesananModalVisibilty(true);
+          }}
           />
-          {/* <DeleteOutlined className="mx-2" onClick={() => deleteItem(record)}/> */}
+          <DeleteTwoTone twoToneColor="#eb2f96" className="mx-2" onClick={() => deletePemesanan(record)} />
         </div>
       ),
     },
@@ -90,18 +114,18 @@ function Bills() {
       ),
     },
     {
-        title: "Total Harga",
-        dataIndex: "_id",
-        render: (id, record) => (
-          <div>
-            <b>{record.quantity * record.harga}</b>
-          </div>
-        ),
-      },
+      title: "Total Harga",
+      dataIndex: "_id",
+      render: (id, record) => (
+        <div>
+          <b>{record.quantity * record.harga}</b>
+        </div>
+      ),
+    },
   ];
 
   useEffect(() => {
-    getAllBills();
+    getAllPemesanan();
   }, []);
 
   const handlePrint = useReactToPrint({
@@ -113,14 +137,25 @@ function Bills() {
       <div className="d-flex justify-content-between">
         <h3>Daftar Pemesanan</h3>
       </div>
-      <Table columns={columns} dataSource={billsData} bordered />
 
-      {printBillModalVisibility && (
+      <div className="d-flex">
+      <Search
+        placeholder="search pemesanan"
+        onSearch={onSearch}
+        style={{
+          width: 240,
+        }}
+      />
+      </div>
+
+      <Table columns={columns} dataSource={pemesananData} bordered />
+
+      {printPemesananModalVisibility && (
         <Modal
           onCancel={() => {
-            setPrintBillModalVisibilty(false);
+            setPrintPemesananModalVisibilty(false);
           }}
-          visible={printBillModalVisibility}
+          visible={printPemesananModalVisibility}
           title="Nota Pemesanan"
           footer={false}
           width={800}
@@ -128,7 +163,7 @@ function Bills() {
           <div className="bill-model p-3" ref={componentRef}>
             <div className="d-flex justify-content-between bill-header pb-2">
               <div>
-                <img src={logo} height="70" width="360"/>
+                <img src={logo} height="70" width="360" />
               </div>
               <div>
                 <p>Jl. Gajayana 14A Kav.2</p>
@@ -141,40 +176,40 @@ function Bills() {
               <table>
                 <tr>
                   <td><b>Tanggal Pemesanan</b></td>
-                  <td> : {" "}{selectedBill.createdAt.toString().substring(0, 10)}</td>
+                  <td> : {" "}{selectedPemesanan.createdAt.toString().substring(0, 10)}</td>
                 </tr>
                 <tr>
                   <td><b>Nama</b></td>
-                  <td> : {selectedBill.customerName}</td>
+                  <td> : {selectedPemesanan.customerName}</td>
                 </tr>
                 <tr>
                   <td><b>Nomor Handphone</b></td>
-                  <td> : {selectedBill.customerPhoneNumber}</td>
+                  <td> : {selectedPemesanan.customerPhoneNumber}</td>
                 </tr>
               </table>
             </div>
-            <Table dataSource={selectedBill.cartItems} columns={cartcolumns} pagination={false}/>
+            <Table dataSource={selectedPemesanan.cartItems} columns={cartcolumns} pagination={false} />
 
             <div className="dotted-border">
               <table>
                 <tr>
                   <td><b>DP</b></td>
-                  <td> : Rp {selectedBill.subTotal}</td>
+                  <td> : Rp {selectedPemesanan.subTotal}</td>
                 </tr>
                 <tr>
                   <td><b>SISA</b></td>
-                  <td> : Rp {selectedBill.subTotal}</td>
-                  {/* <p><b>Sisa</b> : {selectedBill.tax}</p> */}
+                  <td> : Rp {selectedPemesanan.subTotal}</td>
+                  {/* <p><b>Sisa</b> : {selectedPemesanan.tax}</p> */}
                 </tr>
                 <tr>
                   <td><b>SUB TOTAL</b></td>
-                  <td> : Rp {selectedBill.subTotal}</td>
+                  <td> : Rp {selectedPemesanan.subTotal}</td>
                 </tr>
               </table>
             </div>
 
             <div>
-                <h2><b>GRAND TOTAL : Rp {selectedBill.totalAmount}</b></h2>
+              <h2><b>GRAND TOTAL : Rp {selectedPemesanan.totalAmount}</b></h2>
             </div>
             <div className="dotted-border"></div>
 
@@ -186,7 +221,7 @@ function Bills() {
           </div>
 
           <div className="d-flex justify-content-end">
-                  <Button type='primary' onClick={handlePrint}>Cetak Nota</Button>
+            <Button type='primary' onClick={handlePrint}>Cetak Nota</Button>
           </div>
         </Modal>
       )}
@@ -194,4 +229,4 @@ function Bills() {
   );
 }
 
-export default Bills;
+export default Pemesanan;
