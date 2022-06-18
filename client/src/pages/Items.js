@@ -50,13 +50,6 @@ function Items() {
       title: "Nama Produk",
       dataIndex: "namaproduk",
     },
-    // {
-    //   title: "Image",
-    //   dataIndex: "image",
-    //   render: (image, record) => (
-    //     <img src={image} alt="" height="60" width="60" />
-    //   ),
-    // },
     {
       title: "Harga",
       dataIndex: "harga",
