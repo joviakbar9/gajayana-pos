@@ -11,6 +11,7 @@ import {
   MinusCircleOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+
 function CartPage() {
   const { cartItems } = useSelector((state) => state.rootReducer);
   const [pemesananChargeModal, setPemesananChargeModal] = useState(false);
@@ -52,15 +53,9 @@ function CartPage() {
       dataIndex: "_id",
       render: (id, record) => (
         <div>
-          <MinusCircleOutlined
-            className="mx-3"
-            onClick={() => decreaseQuantity(record)}
-          />
+          <MinusCircleOutlined className="mx-3" onClick={() => decreaseQuantity(record)}/>
           <b>{record.quantity}</b>
-          <PlusCircleOutlined
-            className="mx-3"
-            onClick={() => increaseQuantity(record)}
-          />
+          <PlusCircleOutlined className="mx-3" onClick={() => increaseQuantity(record)}/>
         </div>
       ),
     },

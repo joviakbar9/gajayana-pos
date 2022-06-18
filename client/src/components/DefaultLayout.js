@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Dropdown, Space } from "antd";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
+  DownOutlined,
   UserOutlined,
   HomeOutlined,
   CopyOutlined,
@@ -29,6 +30,24 @@ const DefaultLayout = (props) => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
+  const menu = (
+    <Menu
+      items={[
+        {
+          label: 'Profil AKun',
+          key: '0',
+        },
+        {
+          type: 'divider',
+        },
+        {
+          label: 'Logout',
+          key: '3',
+        },
+      ]}
+    />
+  );
+
   return (
     <Layout>
       {loading && (
@@ -51,9 +70,9 @@ const DefaultLayout = (props) => {
         >
           <Menu.Item key="/home" icon={<HomeOutlined />}>
             <Link to="/home">Home</Link>
-          </Menu.Item>
+            {/* </Menu.Item>
           <Menu.Item key="/pemesanan" icon={<ShoppingCartOutlined />}>
-            <Link to="/pemesanan">Pemesanan</Link>
+            <Link to="/pemesanan">Pemesanan</Link> */}
           </Menu.Item>
           <Menu.Item key="/daftarpemesanan" icon={<CopyOutlined />}>
             <Link to="/daftarpemesanan">Daftar Pemesanan</Link>
@@ -89,16 +108,25 @@ const DefaultLayout = (props) => {
               onClick: toggle,
             }
           )}
-          <div
-            className="cart-count d-flex align-items-center"
-            onClick={() => navigate("/pemesanan")}
-          >
+          <div className="cart-count d-flex align-items-center" onClick={() => navigate("/pemesanan")}>
             <b>
               {" "}
               <p className="mt-3 mr-2">{cartItems.length}</p>
             </b>
             <ShoppingCartOutlined />
           </div>
+          
+          <div className="akun-dropdown d-flex">
+            <Dropdown overlay={menu} trigger={['click']}>
+              <a onClick={(e) => e.preventDefault()}>
+                <Space>
+                  (Tipe Akun)
+                  <DownOutlined />
+                </Space>
+              </a>
+            </Dropdown>
+          </div>
+
         </Header>
         <Content
           className="site-layout-background"
