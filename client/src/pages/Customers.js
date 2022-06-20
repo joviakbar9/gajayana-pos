@@ -13,7 +13,7 @@ function Customers() {
   const [pemesananData, setPemesananData] = useState([]);
 
   const dispatch = useDispatch();
-  const getAllPesanan = () => {
+  const getAllPemesanan = () => {
     dispatch({ type: "showLoading" });
     axios
       .get(`${BASE_URL}/api/pemesanan/get-all-pemesanan`)
@@ -46,7 +46,7 @@ function Customers() {
   ];
 
   useEffect(() => {
-    getAllPesanan();
+    getAllPemesanan();
   }, []);
 
   return (

@@ -15,7 +15,7 @@ function Homepage() {
 
   const dispatch = useDispatch();
   function addTocart(item) {
-    dispatch({ type: 'addToCart', payload: { ...item, quantity: 1 } })
+    dispatch({type:'addToCart',payload: {...item, quantity:1}})
   }
   const getAllItems = () => {
     dispatch({ type: "showLoading" });
@@ -51,7 +51,7 @@ function Homepage() {
       dataIndex: "_id",
       render: (id, record) => (
         <div className="d-flex">
-          <Button onClick={() => addTocart(record)}>Tambah</Button>
+          <Button onClick={()=>addTocart(record)}>Tambah</Button>
         </div>
       ),
     },
@@ -63,8 +63,6 @@ function Homepage() {
 
   return (
     <DefaultLayout>
-
-
       <div className="d-flex justify-content-between">
         <h3>Produk</h3>
       </div>

@@ -1,5 +1,5 @@
 const express = require("express");
-const PmesananModel = require("../models/pemesananModel");
+const PemesananModel = require("../models/pemesananModel");
 const router = express.Router();
 
 

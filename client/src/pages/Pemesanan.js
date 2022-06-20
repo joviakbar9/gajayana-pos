@@ -3,7 +3,7 @@ import DefaultLayout from "../components/DefaultLayout";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { EyeOutlined, EditOutlined, DeleteTwoTone } from "@ant-design/icons";
-import { Button, Form, Input, message, Modal, Select, Table } from "antd";
+import { Button, Input, message, Modal, Select, Table } from "antd";
 import ReactToPrint from 'react-to-print';
 import { useReactToPrint } from 'react-to-print';
 import { BASE_URL } from '../constant/axios';
@@ -15,8 +15,8 @@ function Pemesanan() {
 
   const componentRef = useRef();
   const [pemesananData, setPemesananData] = useState([]);
-  const [printPemesananModalVisibility, setPrintPemesananModalVisibilty] = useState(false);
-  const [selectedPemesanan, setSelectedPemesanan] = useState(null);
+  const [printBillModalVisibility, setPrintBillModalVisibilty] = useState(false);
+  const [selectedBill, setSelectedBill] = useState(null);
   const dispatch = useDispatch();
 
   const getAllPemesanan = () => {
@@ -86,8 +86,8 @@ function Pemesanan() {
       render: (id, record) => (
         <div className="d-flex">
           <EyeOutlined className="mx-2" onClick={() => {
-            setSelectedPemesanan(record);
-            setPrintPemesananModalVisibilty(true);
+            setSelectedBill(record);
+            setPrintBillModalVisibilty(true);
           }}
           />
           <DeleteTwoTone twoToneColor="#eb2f96" className="mx-2" onClick={() => deletePemesanan(record)} />
@@ -150,12 +150,12 @@ function Pemesanan() {
 
       <Table columns={columns} dataSource={pemesananData} bordered />
 
-      {printPemesananModalVisibility && (
+      {printBillModalVisibility && (
         <Modal
           onCancel={() => {
-            setPrintPemesananModalVisibilty(false);
+            setPrintBillModalVisibilty(false);
           }}
-          visible={printPemesananModalVisibility}
+          visible={printBillModalVisibility}
           title="Nota Pemesanan"
           footer={false}
           width={800}
@@ -176,40 +176,40 @@ function Pemesanan() {
               <table>
                 <tr>
                   <td><b>Tanggal Pemesanan</b></td>
-                  <td> : {" "}{selectedPemesanan.createdAt.toString().substring(0, 10)}</td>
+                  <td> : {" "}{selectedBill.createdAt.toString().substring(0, 10)}</td>
                 </tr>
                 <tr>
                   <td><b>Nama</b></td>
-                  <td> : {selectedPemesanan.customerName}</td>
+                  <td> : {selectedBill.customerName}</td>
                 </tr>
                 <tr>
                   <td><b>Nomor Handphone</b></td>
-                  <td> : {selectedPemesanan.customerPhoneNumber}</td>
+                  <td> : {selectedBill.customerPhoneNumber}</td>
                 </tr>
               </table>
             </div>
-            <Table dataSource={selectedPemesanan.cartItems} columns={cartcolumns} pagination={false} />
+            <Table dataSource={selectedBill.cartItems} columns={cartcolumns} pagination={false} />
 
             <div className="dotted-border">
               <table>
                 <tr>
                   <td><b>DP</b></td>
-                  <td> : Rp {selectedPemesanan.subTotal}</td>
+                  <td> : Rp {selectedBill.subTotal}</td>
                 </tr>
                 <tr>
                   <td><b>SISA</b></td>
-                  <td> : Rp {selectedPemesanan.subTotal}</td>
+                  <td> : Rp {selectedBill.subTotal}</td>
                   {/* <p><b>Sisa</b> : {selectedPemesanan.tax}</p> */}
                 </tr>
                 <tr>
                   <td><b>SUB TOTAL</b></td>
-                  <td> : Rp {selectedPemesanan.subTotal}</td>
+                  <td> : Rp {selectedBill.subTotal}</td>
                 </tr>
               </table>
             </div>
 
             <div>
-              <h2><b>GRAND TOTAL : Rp {selectedPemesanan.totalAmount}</b></h2>
+              <h2><b>GRAND TOTAL : Rp {selectedBill.totalAmount}</b></h2>
             </div>
             <div className="dotted-border"></div>
 

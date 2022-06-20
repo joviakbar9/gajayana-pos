@@ -1,4 +1,4 @@
-import { Button, Form, Input, message, Modal, Select, Table } from "antd";
+import { Button, Form, Input, message, Modal, Select, Table, Tag } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DefaultLayout from "../components/DefaultLayout";
@@ -14,18 +14,16 @@ import { useNavigate } from "react-router-dom";
 
 function CartPage() {
   const { cartItems } = useSelector((state) => state.rootReducer);
-  const [pemesananChargeModal, setPemesananChargeModal] = useState(false);
+  const [billChargeModal, setBillChargeModal] = useState(false);
   const [subTotal, setSubTotal] = useState(0);
   const navigate = useNavigate()
   const dispatch = useDispatch();
-
   const increaseQuantity = (record) => {
     dispatch({
       type: "updateCart",
       payload: { ...record, quantity: record.quantity + 1 },
     });
   };
-
   const decreaseQuantity = (record) => {
     if (record.quantity !== 1) {
       dispatch({
@@ -34,7 +32,6 @@ function CartPage() {
       });
     }
   };
-
   const columns = [
     {
       title: "Kode Produk",
@@ -53,9 +50,15 @@ function CartPage() {
       dataIndex: "_id",
       render: (id, record) => (
         <div>
-          <MinusCircleOutlined className="mx-3" onClick={() => decreaseQuantity(record)}/>
+          <MinusCircleOutlined
+            className="mx-3"
+            onClick={() => decreaseQuantity(record)}
+          />
           <b>{record.quantity}</b>
-          <PlusCircleOutlined className="mx-3" onClick={() => increaseQuantity(record)}/>
+          <PlusCircleOutlined
+            className="mx-3"
+            onClick={() => increaseQuantity(record)}
+          />
         </div>
       ),
     },
@@ -69,13 +72,12 @@ function CartPage() {
       ),
     },
   ];
-  
+
   useEffect(() => {
     let temp = 0;
     cartItems.forEach((item) => {
       temp = temp + item.harga * item.quantity;
     });
-
     setSubTotal(temp);
   }, [cartItems]);
 
@@ -84,27 +86,27 @@ function CartPage() {
       ...values,
       subTotal,
       cartItems,
-      totalAmount:(
+      totalAmount: (
         subTotal.toFixed(2)
       ),
       userId: JSON.parse(localStorage.getItem("pos-user"))._id,
     };
 
     axios
-      .post(`${BASE_URL}/api/pemesanan/charge-pemesanan`, reqObject)
+      .post(`${BASE_URL}/api/bills/charge-bill`, reqObject)
       .then(() => {
         message.success("Pemesanan Berhasil");
         navigate('/daftarpemesanan')
       })
       .catch(() => {
-        message.error("Terjadi Kesalahan");
+        message.error("Terjadi kesalahan");
       });
   };
 
   return (
     <DefaultLayout>
       <h3>Pemesanan</h3>
-      <Table columns={columns} dataSource={cartItems} bordered pagination={false}/>
+      <Table columns={columns} dataSource={cartItems} bordered pagination={false} />
       <hr />
 
       <div className="d-flex justify-content-end flex-column align-items-end">
@@ -114,23 +116,23 @@ function CartPage() {
           </h3>
         </div>
 
-        <Button type="primary" onClick={() => setPemesananChargeModal(true)}>
+        <Button type="primary" onClick={() => setBillChargeModal(true)}>
           SUBMIT PEMESANAN
         </Button>
       </div>
 
       <Modal
         title="Nota Pemesanan"
-        visible={pemesananChargeModal}
+        visible={billChargeModal}
         footer={false}
-        onCancel={() => setPemesananChargeModal(false)}
+        onCancel={() => setBillChargeModal(false)}
       >
         {" "}
         <Form layout="vertical" onFinish={onFinish}>
-          <Form.Item name="customerName" label="Nama Customer">
+          <Form.Item name="namaCustomer" label="Nama Customer">
             <Input />
           </Form.Item>
-          <Form.Item name="customerPhoneNumber" label="Nomor HP">
+          <Form.Item name="nohpCustomer" label="Nomor HP">
             <Input />
           </Form.Item>
 
@@ -139,6 +141,15 @@ function CartPage() {
               <Select.Option value="cash">Lunas</Select.Option>
               <Select.Option value="card">DP</Select.Option>
             </Select>
+          </Form.Item>
+          <Form.Item name="uangMuka" label="DP">
+            <Input />
+          </Form.Item>
+          <Form.Item label="Sisa">
+            <Input />
+          </Form.Item>
+          <Form.Item name="keterangan" label="Keterangan">
+            <Input.TextArea />
           </Form.Item>
 
           <div className="charge-bill-amount">
