@@ -6,6 +6,7 @@ const pemesananSchema = mongoose.Schema({
   totalHarga: { type: Number, required: true },
   tipePembayaran : { type:Boolean , required:true },
   uangMuka: { type: Number, required: true },
+  sisaPembayaran: { type: Number, required: true },
   cartItems : { type:Array , required:true },
   tanggalPemesanan: { type: Date, required: true },
   statusPembayaran: { type: Boolean, required: true },
