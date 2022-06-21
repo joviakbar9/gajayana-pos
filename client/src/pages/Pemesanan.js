@@ -53,16 +53,24 @@ function Pemesanan() {
 
   const columns = [
     {
+      title: "Tanggal Pemesanan",
+      dataIndex: "tanggalPemesanan",
+    },
+    {
       title: "No. Nota",
       dataIndex: "_id",
     },
     {
-      title: "Customer",
-      dataIndex: "customerName",
+      title: "Nama Customer",
+      dataIndex: "namaCustomer",
     },
     {
       title: "SubTotal",
       dataIndex: "subTotal",
+    },
+    {
+      title: "DP",
+      dataIndex: "uangMuka",
     },
     // {
     //   title: "Tax",
@@ -73,12 +81,8 @@ function Pemesanan() {
       dataIndex: "totalAmount",
     },
     {
-      title: "Tanggal Pemesanan",
-      dataIndex: "tanggalPemesanan",
-    },
-    {
       title: "Status Pembayaran",
-      dataIndex: "statusPB",
+      dataIndex: "statusPembayaran",
     },
     {
       title: "Actions",
@@ -95,6 +99,7 @@ function Pemesanan() {
       ),
     },
   ];
+
   const cartcolumns = [
     {
       title: "Nama Produk",
@@ -198,8 +203,8 @@ function Pemesanan() {
                 </tr>
                 <tr>
                   <td><b>SISA</b></td>
-                  <td> : Rp {selectedBill.subTotal}</td>
-                  {/* <p><b>Sisa</b> : {selectedPemesanan.tax}</p> */}
+                  <td> : Rp {selectedBill.uangMuka}</td>
+                  {/* <p><b>Sisa</b> : {selectedPemesanan--uangMuka}</p> */}
                 </tr>
                 <tr>
                   <td><b>SUB TOTAL</b></td>
