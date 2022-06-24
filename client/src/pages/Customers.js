@@ -9,6 +9,9 @@ import { useReactToPrint } from 'react-to-print';
 import { BASE_URL } from '../constant/axios'
 
 function Customers() {
+  const { Search } = Input;
+  const onSearch = (value) => console.log(value);
+
   const componentRef = useRef();
   const [pemesananData, setPemesananData] = useState([]);
 
@@ -53,6 +56,15 @@ function Customers() {
     <DefaultLayout>
       <div className="d-flex justify-content-between">
         <h3>Customers</h3>
+      </div>
+      <div className="d-flex">
+        <Search
+          placeholder="search customer"
+          onSearch={onSearch}
+          style={{
+            width: 240,
+          }}
+        />
       </div>
       <Table columns={columns} dataSource={pemesananData} bordered />
     </DefaultLayout>

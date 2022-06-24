@@ -7,6 +7,9 @@ import { Button, Form, Input, message, Modal, Select, Table } from "antd";
 import { BASE_URL } from '../constant/axios'
 
 function Items() {
+  const { Search } = Input;
+  const onSearch = (value) => console.log(value);
+
   const [itemsData, setItemsData] = useState([]);
   const [addEditModalVisibilty, setAddEditModalVisibilty] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
@@ -118,6 +121,15 @@ function Items() {
         <Button type="primary" onClick={() => setAddEditModalVisibilty(true)}>
           Tambah Produk
         </Button>
+      </div>
+      <div className="d-flex">
+        <Search
+          placeholder="search produk"
+          onSearch={onSearch}
+          style={{
+            width: 240,
+          }}
+        />
       </div>
       <Table columns={columns} dataSource={itemsData} bordered />
       {addEditModalVisibilty && (
