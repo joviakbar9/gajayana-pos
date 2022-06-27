@@ -93,7 +93,7 @@ function CartPage() {
     };
 
     axios
-      .post(`${BASE_URL}/api/bills/charge-bill`, reqObject)
+      .post(`${BASE_URL}/api/pemesanan/charge-pemesanan`, reqObject)
       .then(() => {
         message.success("Pemesanan Berhasil");
         navigate('/daftarpemesanan')

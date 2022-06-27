@@ -34,7 +34,7 @@ const DefaultLayout = (props) => {
     <Menu
       items={[
         {
-          label: 'Profil AKun',
+          label: <a href="../pages/Akun.js">Edit Profil</a>,
           key: '0',
         },
         {
@@ -42,7 +42,7 @@ const DefaultLayout = (props) => {
         },
         {
           label: 'Logout',
-          key: '3',
+          key: '1',
         },
       ]}
     />

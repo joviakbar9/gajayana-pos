@@ -78,7 +78,7 @@ function Pemesanan() {
     // },
     {
       title: "Total",
-      dataIndex: "totalAmount",
+      dataIndex: "totalHarga",
     },
     {
       title: "Status Pembayaran",
