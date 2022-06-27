@@ -2,15 +2,15 @@ const mongoose = require("mongoose");
 
 const pemesananSchema = mongoose.Schema({
   namaCustomer: { type: String, required: true },
-  nohpCustomer : { type:String , required:true },
-  totalHarga: { type: Number, required: true },
-  tipePembayaran : { type:Boolean , required:true },
-  uangMuka: { type: Number, required: true },
-  sisaPembayaran: { type: Number, required: true },
+  nohpCustomer : { type: String, required:true },
+  totalHarga: { type: Number },
+  tipePembayaran : { type:String },
+  uangMuka: { type: Number },
+  sisaPembayaran: { type: Number},
   cartItems : { type:Array , required:true },
-  tanggalPemesanan: { type: Date, required: true },
-  statusPembayaran: { type: Boolean, required: true },
-  keterangan: { type: String, required: true }
+  tanggalPemesanan: { type: Date },
+  statusPembayaran: { type: Boolean },
+  keterangan: { type: String }
 }, {timestamps : true});
 
 const pemesananModel = mongoose.model("pemesanan", pemesananSchema);

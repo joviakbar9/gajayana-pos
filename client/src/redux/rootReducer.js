@@ -46,6 +46,10 @@ export const rootReducer = (state = initailState, action) => {
         ...state,
         loading:false
     }
+    case "clearCart": return{
+        ...state,
+        cartItems: [],
+      }
     default:
       return state;
   }

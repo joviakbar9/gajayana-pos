@@ -97,6 +97,7 @@ function CartPage() {
       .then(() => {
         message.success("Pemesanan Berhasil");
         navigate('/daftarpemesanan')
+        dispatch({ type: "clearCart" })
       })
       .catch(() => {
         message.error("Terjadi kesalahan");
@@ -136,16 +137,16 @@ function CartPage() {
             <Input />
           </Form.Item>
 
-          <Form.Item name="paymentMode" label="Pembayaran">
+          <Form.Item name="tipePembayaran" label="Pembayaran">
             <Select>
-              <Select.Option value="cash">Lunas</Select.Option>
-              <Select.Option value="card">DP</Select.Option>
+              <Select.Option value="lunas">Lunas</Select.Option>
+              <Select.Option value="dp">DP</Select.Option>
             </Select>
           </Form.Item>
           <Form.Item name="uangMuka" label="DP">
             <Input />
           </Form.Item>
-          <Form.Item label="Sisa">
+          <Form.Item name="sisaPembayaran" label="Sisa">
             <Input />
           </Form.Item>
           <Form.Item name="keterangan" label="Keterangan">

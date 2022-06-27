@@ -72,10 +72,6 @@ function Pemesanan() {
       title: "DP",
       dataIndex: "uangMuka",
     },
-    // {
-    //   title: "Tax",
-    //   dataIndex: "tax",
-    // },
     {
       title: "Total",
       dataIndex: "totalHarga",
