@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DefaultLayout from "../components/DefaultLayout";
 import axios from "axios";
-import { BASE_URL } from '../constant/axios'
+import { BASE_URL } from '../constant/axios';
 
 import {
   DeleteOutlined,
@@ -16,14 +16,18 @@ function CartPage() {
   const { cartItems } = useSelector((state) => state.rootReducer);
   const [billChargeModal, setBillChargeModal] = useState(false);
   const [subTotal, setSubTotal] = useState(0);
+  const [sisa, setSisa] = useState(0);
+  const [form] = Form.useForm();
   const navigate = useNavigate()
   const dispatch = useDispatch();
+
   const increaseQuantity = (record) => {
     dispatch({
       type: "updateCart",
       payload: { ...record, quantity: record.quantity + 1 },
     });
   };
+
   const decreaseQuantity = (record) => {
     if (record.quantity !== 1) {
       dispatch({
@@ -32,6 +36,11 @@ function CartPage() {
       });
     }
   };
+
+  const calculateRemaining = (event) => {
+    setSisa(subTotal - event.target.value);
+  };
+
   const columns = [
     {
       title: "Kode Produk",
@@ -79,6 +88,7 @@ function CartPage() {
       temp = temp + item.harga * item.quantity;
     });
     setSubTotal(temp);
+    setSisa(temp);
   }, [cartItems]);
 
   const onFinish = (values) => {
@@ -100,7 +110,7 @@ function CartPage() {
         dispatch({ type: "clearCart" })
       })
       .catch(() => {
-        message.error("Terjadi kesalahan");
+        message.error("Terjadi Kesalahan");
       });
   };
 
@@ -113,7 +123,7 @@ function CartPage() {
       <div className="d-flex justify-content-end flex-column align-items-end">
         <div className="subtotal">
           <h3>
-            SUB TOTAL : <b>Rp {subTotal}</b>
+            TOTAL HARGA : <b>Rp {subTotal}</b>
           </h3>
         </div>
 
@@ -144,7 +154,9 @@ function CartPage() {
             </Select>
           </Form.Item>
           <Form.Item name="uangMuka" label="DP">
-            <Input />
+            <Input onChange={(e)=>{
+              form.setFieldsValue({sisaPembayaran: subTotal - e.target.value});
+            }}/>
           </Form.Item>
           <Form.Item name="sisaPembayaran" label="Sisa">
             <Input />
@@ -155,10 +167,10 @@ function CartPage() {
 
           <div className="charge-bill-amount">
             <h5>
-              Sub Total : <b>Rp {subTotal}</b>
+              Total Harga : <b>Rp {subTotal}</b>
             </h5>
             {/* <h5>
-              Sisa : <b>{(subTotal - dp)}</b>
+              Sisa : <b>{(subTotal - uangmuka)}</b>
             </h5>
             <hr />
             <h2>

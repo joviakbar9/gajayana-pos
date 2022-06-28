@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import DefaultLayout from "../components/DefaultLayout";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { EyeOutlined, EditOutlined, DeleteTwoTone } from "@ant-design/icons";
-import { Button, Input, message, Modal, Select, Table } from "antd";
+import { EyeOutlined, EditTwoTone, DeleteTwoTone } from "@ant-design/icons";
+import { Button, Input, message, Modal, Select, Table, Form } from "antd";
 import ReactToPrint from 'react-to-print';
 import { useReactToPrint } from 'react-to-print';
 import { BASE_URL } from '../constant/axios';
@@ -15,8 +15,12 @@ function Pemesanan() {
 
   const componentRef = useRef();
   const [pemesananData, setPemesananData] = useState([]);
-  const [printBillModalVisibility, setPrintBillModalVisibilty] = useState(false);
-  const [selectedBill, setSelectedBill] = useState(null);
+  const [
+    printBillModalVisibility, 
+    setPrintBillModalVisibilty, 
+    addEditModalVisibilty, 
+    setAddEditModalVisibilty] = useState(false);
+  const [selectedBill, setSelectedBill, editingBill, setEditingBill] = useState(null);
   const dispatch = useDispatch();
 
   const getAllPemesanan = () => {
@@ -41,7 +45,7 @@ function Pemesanan() {
       .post(`${BASE_URL}/api/pemesanan/delete-pemesanan`, { pemesananId: record._id })
       .then((response) => {
         dispatch({ type: "hideLoading" });
-        message.success('Produk berhasil dihapus')
+        message.success('Data Pemesanan Berhasil Dihapus')
         getAllPemesanan()
       })
       .catch((error) => {
@@ -54,26 +58,26 @@ function Pemesanan() {
   const columns = [
     {
       title: "Tanggal Pemesanan",
-      dataIndex: "tanggalPemesanan",
+      dataIndex: "createdAt",
     },
     {
       title: "No. Nota",
       dataIndex: "_id",
     },
     {
-      title: "Nama Customer",
+      title: "Nama",
       dataIndex: "namaCustomer",
     },
     {
-      title: "SubTotal",
-      dataIndex: "subTotal",
+      title: "No. HP",
+      dataIndex: "nohpCustomer",
     },
     {
       title: "DP",
       dataIndex: "uangMuka",
     },
     {
-      title: "Total",
+      title: "Total Harga",
       dataIndex: "totalHarga",
     },
     {
@@ -90,7 +94,12 @@ function Pemesanan() {
             setPrintBillModalVisibilty(true);
           }}
           />
-          <DeleteTwoTone twoToneColor="#eb2f96" className="mx-2" onClick={() => deletePemesanan(record)} />
+          <EditTwoTone className="mx-2" onClick={() => {
+              setEditingBill(record);
+              setAddEditModalVisibilty(true);
+            }}
+          />
+          <DeleteTwoTone twoToneColor="#eb2f96" className="mx-2" onClick={() => deletePemesanan(record)}/>
         </div>
       ),
     },
@@ -129,6 +138,42 @@ function Pemesanan() {
     getAllPemesanan();
   }, []);
 
+  const onFinish = (values) => {
+    dispatch({ type: "showLoading" });
+    if(editingBill===null)
+    {
+      axios
+      .post(`${BASE_URL}/api/pemesanan/add-pemesanan`, values)
+      .then((response) => {
+        dispatch({ type: "hideLoading" });
+        message.success("Pemesanan Berhasil Ditambah");
+        setAddEditModalVisibilty(false);
+        getAllPemesanan();
+      })
+      .catch((error) => {
+        dispatch({ type: "hideLoading" });
+        message.error("Terjadi Kesalahan");
+        console.log(error);
+      });
+    }
+    else{
+      axios
+      .post(`${BASE_URL}/api/pemesanan/edit-pemesanan`, {...values , billId : editingBill._id})
+      .then((response) => {
+        dispatch({ type: "hideLoading" });
+        message.success("Data produk berhasil diubah");
+        setEditingBill(null)
+        setAddEditModalVisibilty(false);
+        getAllPemesanan();
+      })
+      .catch((error) => {
+        dispatch({ type: "hideLoading" });
+        message.error("Terjadi Kesalahan");
+        console.log(error);
+      });
+    }
+  };
+
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
@@ -150,6 +195,45 @@ function Pemesanan() {
       </div>
 
       <Table columns={columns} dataSource={pemesananData} bordered />
+
+      {addEditModalVisibilty && (
+        <Modal
+          onCancel={() => {
+            setEditingBill(null)
+            setAddEditModalVisibilty(false)
+          }}
+          visible={addEditModalVisibilty}
+          title={`${editingBill !==null ? 'Ubah Data Pemesanan' : 'Tambah Produk'}`}
+          footer={false}
+        >
+          <Form
+            initialValues={editingBill}
+            layout="vertical"
+            onFinish={onFinish}
+          >
+            <Form.Item name="namaCustomer" label="Nama Customer">
+              <Input />
+            </Form.Item>
+            <Form.Item name="nohpCustomer" label="No. HP Customer">
+              <Input />
+            </Form.Item>
+            <Form.Item name="harga" label="Harga">
+              <Input />
+            </Form.Item>
+            <Form.Item name="kategori" label="Kategori">
+              <Select>
+                <Select.Option value="banner">Banner</Select.Option>
+                <Select.Option value="poster">Poster</Select.Option>
+              </Select>
+            </Form.Item>
+            <div className="d-flex justify-content-end">
+              <Button htmlType="submit" type="primary">
+                SIMPAN
+              </Button>
+            </div>
+          </Form>
+        </Modal>
+      )}
 
       {printBillModalVisibility && (
         <Modal
@@ -181,11 +265,11 @@ function Pemesanan() {
                 </tr>
                 <tr>
                   <td><b>Nama</b></td>
-                  <td> : {selectedBill.customerName}</td>
+                  <td> : {selectedBill.namaCustomer}</td>
                 </tr>
                 <tr>
                   <td><b>Nomor Handphone</b></td>
-                  <td> : {selectedBill.customerPhoneNumber}</td>
+                  <td> : {selectedBill.nohpCustomer}</td>
                 </tr>
               </table>
             </div>
@@ -195,22 +279,18 @@ function Pemesanan() {
               <table>
                 <tr>
                   <td><b>DP</b></td>
-                  <td> : Rp {selectedBill.subTotal}</td>
-                </tr>
-                <tr>
-                  <td><b>SISA</b></td>
                   <td> : Rp {selectedBill.uangMuka}</td>
-                  {/* <p><b>Sisa</b> : {selectedPemesanan--uangMuka}</p> */}
                 </tr>
                 <tr>
-                  <td><b>SUB TOTAL</b></td>
-                  <td> : Rp {selectedBill.subTotal}</td>
+                  <td><b>SISA PEMBAYARAN</b></td>
+                  <td> : Rp {selectedBill.totalHarga + - selectedBill.uangMuka}</td>
+                  {/* <p><b>Sisa</b> : {selectedPemesanan--uangMuka}</p> */}
                 </tr>
               </table>
             </div>
 
             <div>
-              <h2><b>GRAND TOTAL : Rp {selectedBill.totalAmount}</b></h2>
+              <h2><b>GRAND TOTAL : Rp {selectedBill.totalHarga}</b></h2>
             </div>
             <div className="dotted-border"></div>
 

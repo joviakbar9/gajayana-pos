@@ -46,6 +46,7 @@ function Items() {
     {
       title: "Kode Produk",
       dataIndex: "kodeproduk",
+      sorter: (a, b) => a.kodeproduk.length - b.kodeproduk.length,
     },
     {
       title: "Nama Produk",
@@ -86,7 +87,7 @@ function Items() {
       .post(`${BASE_URL}/api/items/add-item`, values)
       .then((response) => {
         dispatch({ type: "hideLoading" });
-        message.success("Produk berhasil ditambah");
+        message.success("Produk Berhasil Ditambah");
         setAddEditModalVisibilty(false);
         getAllItems();
       })
