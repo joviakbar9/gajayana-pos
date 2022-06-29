@@ -6,7 +6,7 @@ import "../resources/items.css";
 import { useDispatch } from "react-redux";
 import { BASE_URL } from '../constant/axios'
 
-function Akun() {
+function User() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const onFinish=(values)=>{
@@ -27,7 +27,7 @@ function Akun() {
   return (
     <DefaultLayout>
       <div className="d-flex justify-content-between">
-        <h3>Produk</h3>
+        <h3>User</h3>
       </div>
       <div className='akun'>
         <Row>
@@ -38,7 +38,7 @@ function Akun() {
           >
             <img src={logo} height="70" width="360"/>
             <hr />
-            <h3>Akun</h3>
+            <h3>User</h3>
             <Form.Item name="name" label="Nama">
               <Input />
             </Form.Item>

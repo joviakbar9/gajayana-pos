@@ -15,7 +15,7 @@ router.post("/add-pembelian", async (req, res) => {
   try {
     const newPembelian = new PembelianModel(req.body)
     await newPembelian.save()
-    res.send('Data Pembelian Berhasil DItambah')
+    res.send('Data Pembelian Berhasil Ditambah')
   } catch (error) {
     res.status(400).json(error);
   }

@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Customers from "./pages/Customers";
 import DaftarPemesanan from "./pages/Pemesanan";
 import Pembelian from "./pages/Pembelian";
+import Pegawai from "./pages/Pegawai";
 import LaporanPenjualan from "./pages/LaporanPenjualan";
 import LaporanPembelian from "./pages/LaporanPembelian";
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/daftarpemesanan" element={<ProtectedRoute><DaftarPemesanan /></ProtectedRoute>} />
           <Route path="/customers" element={<ProtectedRoute><Customers /></ProtectedRoute>} />
           <Route path="/pembelian" element={<ProtectedRoute><Pembelian /></ProtectedRoute>} />
+          <Route path="/pegawai" element={<ProtectedRoute><Pegawai /></ProtectedRoute>} />
           <Route path="/laporanpenjualan" element={<ProtectedRoute><LaporanPenjualan /></ProtectedRoute>} />
           <Route path="/laporanpembelian" element={<ProtectedRoute><LaporanPembelian /></ProtectedRoute>} />
           <Route path="/register" element={<Register />} />

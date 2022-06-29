@@ -4,12 +4,14 @@ import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   DownOutlined,
-  UserOutlined,
+  UsergroupAddOutlined,
   HomeOutlined,
   CopyOutlined,
   UnorderedListOutlined,
   BarChartOutlined,
   FormOutlined,
+  UserSwitchOutlined,
+  UserOutlined,
   LoginOutlined,
   ShoppingCartOutlined,
 } from "@ant-design/icons";
@@ -81,11 +83,14 @@ const DefaultLayout = (props) => {
           <Menu.Item key="/produk" icon={<UnorderedListOutlined />}>
             <Link to="/produk">Produk</Link>
           </Menu.Item>
-          <Menu.Item key="/customers" icon={<UserOutlined />}>
+          <Menu.Item key="/customers" icon={<UsergroupAddOutlined />}>
             <Link to="/customers">Customers</Link>
           </Menu.Item>
           <Menu.Item key="/pembelian" icon={<FormOutlined />}>
             <Link to="/pembelian">Pembelian</Link>
+          </Menu.Item>
+          <Menu.Item key="/pegawai" icon={<UserSwitchOutlined />}>
+            <Link to="/pegawai">Pegawai</Link>
           </Menu.Item>
           <Menu.SubMenu title="Laporan" icon={<BarChartOutlined />}>
             <Menu.Item key="/laporanpenjualan">
@@ -95,6 +100,9 @@ const DefaultLayout = (props) => {
               <Link to='/laporanpembelian'>Laporan Pembelian</Link>
             </Menu.Item>
           </Menu.SubMenu>
+          <Menu.Item key="/user" icon={<UserOutlined />}>
+            <Link to="/user">User</Link>
+          </Menu.Item>
           <Menu.Item key="/logout" icon={<LoginOutlined />} onClick={() => {
             localStorage.removeItem('pos-user')
             navigate('/login')
