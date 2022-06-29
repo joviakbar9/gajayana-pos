@@ -11,30 +11,30 @@ router.get("/get-all-pembelian", async (req, res) => {
   }
 });
 
-router.post("/add-item", async (req, res) => {
+router.post("/add-pembelian", async (req, res) => {
   try {
-    const newitem = new ItemModel(req.body)
-    await newitem.save()
-    res.send('Item added successfully')
+    const newPembelian = new PembelianModel(req.body)
+    await newPembelian.save()
+    res.send('Data Pembelian Berhasil DItambah')
   } catch (error) {
     res.status(400).json(error);
   }
 });
 
-router.post("/edit-item", async (req, res) => {
+router.post("/edit-pembelian", async (req, res) => {
   try {
-    await ItemModel.findOneAndUpdate({_id : req.body.itemId} , req.body)
-    res.send('Item updated successfully')
+    await PembelianModel.findOneAndUpdate({_id : req.body.pembelianId} , req.body)
+    res.send('Data Pembelian Berhasil Diubah')
   } catch (error) {
     res.status(400).json(error);
   }
 });
 
 
-router.post("/delete-item", async (req, res) => {
+router.post("/delete-pembelian", async (req, res) => {
   try {
-    await ItemModel.findOneAndDelete({_id : req.body.itemId})
-    res.send('Item deleted successfully')
+    await PembelianModel.findOneAndDelete({_id : req.body.pembelianId})
+    res.send('Data Pembelian Berhasil Dihapus')
   } catch (error) {
     res.status(400).json(error);
   }

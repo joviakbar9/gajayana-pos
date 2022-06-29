@@ -100,3 +100,7 @@ button{
   background-color: white !important;
   color: black !important;
 }
+
+.ant-picker-input{
+  background-color: white !important;
+}

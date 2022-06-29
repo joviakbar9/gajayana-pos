@@ -1,23 +1,26 @@
 import React, { useEffect, useState } from "react";
 import DefaultLayout from "../components/DefaultLayout";
 import axios from "axios";
+import moment from 'moment';
 import { useDispatch } from "react-redux";
 import { EditTwoTone, DeleteTwoTone } from "@ant-design/icons";
-import { Button, Form, Input, message, Modal, Select, Table } from "antd";
+import { Button, Form, Input, message, Modal, Select, Table, DatePicker } from "antd";
 import { BASE_URL } from '../constant/axios'
 
 function Pembelian() {
+  const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
   const [pembelianData, setPembelianData] = useState([]);
   const [addEditModalVisibilty, setAddEditModalVisibilty] = useState(false);
-  const [editingItem, setEditingItem] = useState(null);
+  const [editingPembelian, setEditingPembelian] = useState(null);
   const dispatch = useDispatch();
+
   const getAllPembelian = () => {
     dispatch({ type: "showLoading" });
     axios
       .get(`${BASE_URL}/api/pembelian/get-all-pembelian`)
       .then((response) => {
         dispatch({ type: "hideLoading" });
-        setItemsData(response.data);
+        setPembelianData(response.data);
       })
       .catch((error) => {
         dispatch({ type: "hideLoading" });
@@ -25,7 +28,7 @@ function Pembelian() {
       });
   };
 
-  const deleteItem = (record) => {
+  const deletePembelian = (record) => {
     dispatch({ type: "showLoading" });
     axios
       .post(`${BASE_URL}/api/pembelian/delete-pembelian` , {pembelianId : record._id})
@@ -43,7 +46,7 @@ function Pembelian() {
 
   const columns = [
     {
-      title: "Tanggal Input",
+      title: "Tanggal Pembelian",
       dataIndex: "tanggalpembelian",
     },
     {
@@ -72,31 +75,31 @@ function Pembelian() {
       render: (id, record) => (
         <div className="d-flex">
           <EditTwoTone className="mx-2" onClick={() => {
-              setEditingItem(record);
+              setEditingPembelian(record);
               setAddEditModalVisibilty(true);
             }}
           />
-          <DeleteTwoTone twoToneColor="#eb2f96" className="mx-2" onClick={() => deleteItem(record)}/>
+          <DeleteTwoTone twoToneColor="#eb2f96" className="mx-2" onClick={() => deletePembelian(record)}/>
         </div>
       ),
     },
   ];
 
   useEffect(() => {
-    getAllItems();
+    getAllPembelian();
   }, []);
 
   const onFinish = (values) => {
     dispatch({ type: "showLoading" });
-    if(editingItem===null)
+    if(editingPembelian===null)
     {
       axios
-      .post(`${BASE_URL}/api/items/add-item`, values)
+      .post(`${BASE_URL}/api/pembelian/add-pembelian`, values)
       .then((response) => {
         dispatch({ type: "hideLoading" });
-        message.success("Produk berhasil ditambah");
+        message.success("Data Pembelian Berhasil Ditambah");
         setAddEditModalVisibilty(false);
-        getAllItems();
+        getAllPembelian();
       })
       .catch((error) => {
         dispatch({ type: "hideLoading" });
@@ -106,13 +109,13 @@ function Pembelian() {
     }
     else{
       axios
-      .post(`${BASE_URL}/api/items/edit-item`, {...values , itemId : editingItem._id})
+      .post(`${BASE_URL}/api/pembelian/edit-pembelian`, {...values , pembelianId : editingPembelian._id})
       .then((response) => {
         dispatch({ type: "hideLoading" });
-        message.success("Data produk berhasil diubah");
-        setEditingItem(null)
+        message.success("Data Pembelian Berhasil Diubah");
+        setEditingPembelian(null)
         setAddEditModalVisibilty(false);
-        getAllItems();
+        getAllPembelian();
       })
       .catch((error) => {
         dispatch({ type: "hideLoading" });
@@ -125,28 +128,31 @@ function Pembelian() {
   return (
     <DefaultLayout>
       <div className="d-flex justify-content-between">
-        <h3>Produk</h3>
+        <h3>Pembelian</h3>
         <Button type="primary" onClick={() => setAddEditModalVisibilty(true)}>
-          Tambah Produk
+          Tambah Pembelian
         </Button>
       </div>
-      <Table columns={columns} dataSource={itemsData} bordered />
+      <Table columns={columns} dataSource={pembelianData} bordered />
 
       {addEditModalVisibilty && (
         <Modal
           onCancel={() => {
-            setEditingItem(null)
+            setEditingPembelian(null)
             setAddEditModalVisibilty(false)
           }}
           visible={addEditModalVisibilty}
-          title={`${editingItem !==null ? 'Ubah Data Pembelian' : 'Tambah Data Pembelian'}`}
+          title={`${editingPembelian !==null ? 'Ubah Data Pembelian' : 'Tambah Data Pembelian'}`}
           footer={false}
         >
           <Form
-            initialValues={editingItem}
+            initialValues={editingPembelian}
             layout="vertical"
             onFinish={onFinish}
           >
+            <Form.Item name="tanggalpembelian" label="Tanggal Pembelian">
+              <DatePicker defaultValue={moment()} format={dateFormatList} />
+            </Form.Item>
             <Form.Item name="kodeproduk" label="Kode Produk">
               <Input />
             </Form.Item>
@@ -189,4 +195,4 @@ function Pembelian() {
   );
 }
 
-export default Items;
+export default Pembelian;

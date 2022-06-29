@@ -9,6 +9,7 @@ import {
   CopyOutlined,
   UnorderedListOutlined,
   BarChartOutlined,
+  FormOutlined,
   LoginOutlined,
   ShoppingCartOutlined,
 } from "@ant-design/icons";
@@ -82,6 +83,9 @@ const DefaultLayout = (props) => {
           </Menu.Item>
           <Menu.Item key="/customers" icon={<UserOutlined />}>
             <Link to="/customers">Customers</Link>
+          </Menu.Item>
+          <Menu.Item key="/pembelian" icon={<FormOutlined />}>
+            <Link to="/pembelian">Pembelian</Link>
           </Menu.Item>
           <Menu.SubMenu title="Laporan" icon={<BarChartOutlined />}>
             <Menu.Item key="/laporanpenjualan">

@@ -12,6 +12,7 @@ import logo from "../resources/PrintingLogo.png";
 function Pemesanan() {
   const { Search } = Input;
   const onSearch = (value) => console.log(value);
+  const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
 
   const componentRef = useRef();
   const [pemesananData, setPemesananData] = useState([]);
@@ -58,7 +59,7 @@ function Pemesanan() {
   const columns = [
     {
       title: "Tanggal Pemesanan",
-      dataIndex: "createdAt",
+      dataIndex: "tanggalPemesanan",
     },
     {
       title: "No. Nota",
@@ -261,7 +262,7 @@ function Pemesanan() {
               <table>
                 <tr>
                   <td><b>Tanggal Pemesanan</b></td>
-                  <td> : {" "}{selectedBill.createdAt.toString().substring(0, 10)}</td>
+                  <td> : {" "}{selectedBill.tanggalPemesanan} format={dateFormatList}</td>
                 </tr>
                 <tr>
                   <td><b>Nama</b></td>
@@ -298,6 +299,11 @@ function Pemesanan() {
               <p>Nota harap dibawa untuk pengambilan pesanan</p>
               <p>Pengambilan TANPA NOTA tidak dilayani</p>
               <p>Terimakasih</p>
+            </div>
+
+            <div className="text-left">
+              <p>Ket: </p>
+              {selectedBill.keterangan}
             </div>
           </div>
 

@@ -1,8 +1,9 @@
-import { Button, Form, Input, message, Modal, Select, Table, Tag } from "antd";
+import { Button, Form, Input, message, Modal, Select, Table, Tag, DatePicker } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DefaultLayout from "../components/DefaultLayout";
 import axios from "axios";
+import moment from "moment"
 import { BASE_URL } from '../constant/axios';
 
 import {
@@ -13,6 +14,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 function CartPage() {
+  const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
   const { cartItems } = useSelector((state) => state.rootReducer);
   const [billChargeModal, setBillChargeModal] = useState(false);
   const [subTotal, setSubTotal] = useState(0);
@@ -146,7 +148,9 @@ function CartPage() {
           <Form.Item name="nohpCustomer" label="Nomor HP">
             <Input />
           </Form.Item>
-
+          <Form.Item name="tanggalPemesanan" label="Tanggal Pemesanan">
+            <DatePicker defaultValue={moment()} format={dateFormatList} />
+          </Form.Item>
           <Form.Item name="tipePembayaran" label="Pembayaran">
             <Select>
               <Select.Option value="lunas">Lunas</Select.Option>
@@ -158,8 +162,8 @@ function CartPage() {
               form.setFieldsValue({sisaPembayaran: subTotal - e.target.value});
             }}/>
           </Form.Item>
-          <Form.Item name="sisaPembayaran" label="Sisa">
-            <Input />
+          <Form.Item disabled name="sisaPembayaran" label="Sisa">
+            <Input disabled={true} sisaPembayaran/>
           </Form.Item>
           <Form.Item name="keterangan" label="Keterangan">
             <Input.TextArea />

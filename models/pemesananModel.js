@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const pemesananSchema = mongoose.Schema({
+  tanggalPemesanan: { type: Date },
   namaCustomer: { type: String, required: true },
   nohpCustomer : { type: String, required:true },
   totalHarga: { type: Number },
@@ -8,7 +9,6 @@ const pemesananSchema = mongoose.Schema({
   uangMuka: { type: Number },
   sisaPembayaran: { type: Number},
   cartItems : { type:Array , required:true },
-  tanggalPemesanan: { type: Date },
   statusPembayaran: { type: Boolean },
   keterangan: { type: String }
 }, {timestamps : true});
