@@ -302,7 +302,7 @@ function Pemesanan() {
             </div>
 
             <div className="text-left">
-              <p>Ket: </p>
+              <p>Ket : </p>
               {selectedBill.keterangan}
             </div>
           </div>

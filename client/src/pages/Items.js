@@ -14,6 +14,7 @@ function Items() {
   const [addEditModalVisibilty, setAddEditModalVisibilty] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
   const dispatch = useDispatch();
+
   const getAllItems = () => {
     dispatch({ type: "showLoading" });
     axios
@@ -27,6 +28,7 @@ function Items() {
         console.log(error);
       });
   };
+
   const deleteItem = (record) => {
     dispatch({ type: "showLoading" });
     axios
@@ -42,6 +44,7 @@ function Items() {
         console.log(error);
       });
   };
+
   const columns = [
     {
       title: "Kode Produk",
@@ -75,6 +78,7 @@ function Items() {
       ),
     },
   ];
+  
   useEffect(() => {
     getAllItems();
   }, []);

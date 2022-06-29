@@ -18,7 +18,7 @@ function CartPage() {
   const { cartItems } = useSelector((state) => state.rootReducer);
   const [billChargeModal, setBillChargeModal] = useState(false);
   const [subTotal, setSubTotal] = useState(0);
-  const [sisa, setSisa] = useState(0);
+  const [sisaPembayaran, setSisa] = useState(0);
   const [form] = Form.useForm();
   const navigate = useNavigate()
   const dispatch = useDispatch();
@@ -142,14 +142,14 @@ function CartPage() {
       >
         {" "}
         <Form layout="vertical" onFinish={onFinish}>
+          <Form.Item name="tanggalPemesanan" label="Tanggal Pemesanan">
+            <DatePicker defaultValue={moment()} format={dateFormatList} />
+          </Form.Item>
           <Form.Item name="namaCustomer" label="Nama Customer">
             <Input />
           </Form.Item>
           <Form.Item name="nohpCustomer" label="Nomor HP">
             <Input />
-          </Form.Item>
-          <Form.Item name="tanggalPemesanan" label="Tanggal Pemesanan">
-            <DatePicker defaultValue={moment()} format={dateFormatList} />
           </Form.Item>
           <Form.Item name="tipePembayaran" label="Pembayaran">
             <Select>

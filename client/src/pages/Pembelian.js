@@ -62,12 +62,12 @@ function Pembelian() {
         dataIndex: "kategori",
       },
     {
-        title: "Jumlah Produk",
-        dataIndex: "jumlahproduk",
+        title: "Jumlah Stok",
+        dataIndex: "jumlahStok",
       },
     {
-      title: "Harga",
-      dataIndex: "harga",
+      title: "Total Harga",
+      dataIndex: "hargaPembelian",
     },
     {
       title: "Actions",
@@ -159,9 +159,6 @@ function Pembelian() {
             <Form.Item name="namaproduk" label="Nama Produk">
               <Input />
             </Form.Item>
-            <Form.Item name="harga" label="Harga">
-              <Input />
-            </Form.Item>
 
             <Form.Item name="kategori" label="Kategori">
               <Select>
@@ -181,6 +178,13 @@ function Pembelian() {
                 <Select.Option value="ganci">Gantungan Kunci</Select.Option>
                 <Select.Option value="nametag">Nametag</Select.Option>
               </Select>
+            </Form.Item>
+            
+            <Form.Item name="jumlahStok" label="Jumlah Stok">
+              <Input />
+            </Form.Item>
+            <Form.Item name="hargaPembelian" label="Total Harga">
+              <Input />
             </Form.Item>
 
             <div className="d-flex justify-content-end">

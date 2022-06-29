@@ -89,6 +89,33 @@
   overflow-y: scroll;
 }
 
+
+.ant-picker-month-btn{
+  background-color: white !important;
+  color: black !important;
+}
+.ant-picker-year-btn{
+  background-color: white !important;
+  color: black !important;
+}
+.ant-picker-header-super-prev-btn{
+  background-color: white !important;
+  color: black !important;
+}
+.ant-picker-header-prev-btn{
+  background-color: white !important;
+  color: black !important;
+}
+.ant-picker-header-next-btn{
+  background-color: white !important;
+  color: black !important;
+}
+.ant-picker-header-super-next-btn{
+  background-color: white !important;
+  color: black !important;
+}
+
+
 button{
   background-color: rgb(15, 155, 15) !important;
   color: white !important;
@@ -99,8 +126,4 @@ button{
 .ant-modal-close-x{
   background-color: white !important;
   color: black !important;
-}
-
-.ant-picker-input{
-  background-color: white !important;
 }
