@@ -20,7 +20,7 @@ function CartPage() {
   const [subTotal, setSubTotal] = useState(0);
   const [sisaPembayaran, setSisa] = useState(0);
   const [form] = Form.useForm();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const increaseQuantity = (record) => {

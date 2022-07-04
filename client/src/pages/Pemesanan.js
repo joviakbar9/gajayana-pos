@@ -78,6 +78,10 @@ function Pemesanan() {
       dataIndex: "uangMuka",
     },
     {
+      title: "Sisa Pembayaran",
+      dataIndex: "sisaPembayaran",
+    },
+    {
       title: "Total Harga",
       dataIndex: "totalHarga",
     },
@@ -162,7 +166,7 @@ function Pemesanan() {
       .post(`${BASE_URL}/api/pemesanan/edit-pemesanan`, {...values , billId : editingBill._id})
       .then((response) => {
         dispatch({ type: "hideLoading" });
-        message.success("Data produk berhasil diubah");
+        message.success("Data Pemesanan Berhasil Siubah");
         setEditingBill(null)
         setAddEditModalVisibilty(false);
         getAllPemesanan();
@@ -204,7 +208,7 @@ function Pemesanan() {
             setAddEditModalVisibilty(false)
           }}
           visible={addEditModalVisibilty}
-          title={`${editingBill !==null ? 'Ubah Data Pemesanan' : 'Tambah Produk'}`}
+          title={`${editingBill !==null ? 'Ubah Data Pemesanan' : 'Tambah Pemesanan'}`}
           footer={false}
         >
           <Form
