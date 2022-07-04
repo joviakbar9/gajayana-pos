@@ -55,11 +55,7 @@ const DefaultLayout = (props) => {
     <Layout>
       {loading && (
         <div className="spinner">
-          <div
-            class="spinner-border"
-            role="status"
-          >
-          </div>
+          <div class="spinner-border" role="status"></div>
         </div>
       )}
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -73,9 +69,6 @@ const DefaultLayout = (props) => {
         >
           <Menu.Item key="/home" icon={<HomeOutlined />}>
             <Link to="/home">Home</Link>
-            {/* </Menu.Item>
-          <Menu.Item key="/pemesanan" icon={<ShoppingCartOutlined />}>
-            <Link to="/pemesanan">Pemesanan</Link> */}
           </Menu.Item>
           <Menu.Item key="/daftarpemesanan" icon={<CopyOutlined />}>
             <Link to="/daftarpemesanan">Daftar Pemesanan</Link>
@@ -111,6 +104,7 @@ const DefaultLayout = (props) => {
           </Menu.Item>
         </Menu>
       </Sider>
+
       <Layout className="site-layout">
         <Header className="site-layout-background" style={{ padding: 10 }}>
           {React.createElement(

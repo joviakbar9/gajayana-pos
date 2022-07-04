@@ -262,7 +262,7 @@ function Pemesanan() {
               <table>
                 <tr>
                   <td><b>Tanggal Pemesanan</b></td>
-                  <td> : {" "}{selectedBill.tanggalPemesanan} format={dateFormatList}</td>
+                  <td> : {" "}{selectedBill.tanggalPemesanan.toString().substring(0, 10)}</td>
                 </tr>
                 <tr>
                   <td><b>Nama</b></td>

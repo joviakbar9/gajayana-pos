@@ -98,7 +98,7 @@ function CartPage() {
       ...values,
       subTotal,
       cartItems,
-      totalAmount: (
+      totalHarga: (
         subTotal.toFixed(2)
       ),
       userId: JSON.parse(localStorage.getItem("pos-user"))._id,

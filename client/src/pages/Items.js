@@ -35,7 +35,7 @@ function Items() {
       .post(`${BASE_URL}/api/items/delete-item` , {itemId : record._id})
       .then((response) => {
         dispatch({ type: "hideLoading" });
-        message.success('Produk berhasil dihapus')
+        message.success('Produk berhasil Dihapus')
         getAllItems()
       })
       .catch((error) => {
@@ -106,7 +106,7 @@ function Items() {
       .post(`${BASE_URL}/api/items/edit-item`, {...values , itemId : editingItem._id})
       .then((response) => {
         dispatch({ type: "hideLoading" });
-        message.success("Data produk berhasil diubah");
+        message.success("Data Produk Berhasil Diubah");
         setEditingItem(null)
         setAddEditModalVisibilty(false);
         getAllItems();
@@ -127,6 +127,7 @@ function Items() {
           Tambah Produk
         </Button>
       </div>
+
       <div className="d-flex">
         <Search
           placeholder="search produk"
@@ -136,7 +137,9 @@ function Items() {
           }}
         />
       </div>
+
       <Table columns={columns} dataSource={itemsData} bordered />
+      
       {addEditModalVisibilty && (
         <Modal
           onCancel={() => {
