@@ -62,8 +62,8 @@ function Pembelian() {
         dataIndex: "kategori",
       },
     {
-        title: "Jumlah Stok",
-        dataIndex: "jumlahStok",
+        title: "Jumlah",
+        dataIndex: "jumlah",
       },
     {
       title: "Total Harga",
@@ -145,12 +145,13 @@ function Pembelian() {
           title={`${editingPembelian !==null ? 'Ubah Data Pembelian' : 'Tambah Data Pembelian'}`}
           footer={false}
         >
+          {" "}
           <Form
             initialValues={editingPembelian}
             layout="vertical"
             onFinish={onFinish}
           >
-            <Form.Item name="tanggalpembelian" label="Tanggal Pembelian">
+            <Form.Item name="tanggalPembelian" label="Tanggal Pembelian">
               <DatePicker defaultValue={moment()} format={dateFormatList} />
             </Form.Item>
             <Form.Item name="kodeproduk" label="Kode Produk">
@@ -180,7 +181,7 @@ function Pembelian() {
               </Select>
             </Form.Item>
             
-            <Form.Item name="jumlahStok" label="Jumlah Stok">
+            <Form.Item name="jumlah" label="Jumlah">
               <Input />
             </Form.Item>
             <Form.Item name="hargaPembelian" label="Total Harga">
@@ -192,7 +193,7 @@ function Pembelian() {
                 SIMPAN
               </Button>
             </div>
-          </Form>
+          </Form>{" "}
         </Modal>
       )}
     </DefaultLayout>

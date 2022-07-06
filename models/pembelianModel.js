@@ -5,7 +5,7 @@ const pembelianSchema = mongoose.Schema({
   kodeproduk: { type: String, required: true },
   namaproduk: { type: String, required: true },
   kategori: { type: String, required: true },
-  jumlahStok: { type: Number, required: true },
+  jumlah: { type: Number, required: true },
   hargaPembelian: { type: Number, required: true }
 }, {timestamps : true});
 

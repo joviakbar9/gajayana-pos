@@ -60,6 +60,7 @@ function Pemesanan() {
     {
       title: "Tanggal Pemesanan",
       dataIndex: "tanggalPemesanan",
+
     },
     {
       title: "No. Nota",
@@ -266,7 +267,7 @@ function Pemesanan() {
               <table>
                 <tr>
                   <td><b>Tanggal Pemesanan</b></td>
-                  <td> : {" "}{selectedBill.tanggalPemesanan.toString().substring(0, 10)}</td>
+                  <td> : {" "}{selectedBill.tanggalPemesanan.toLocaleString("id-ID").substring(0, 10)}</td>
                 </tr>
                 <tr>
                   <td><b>Nama</b></td>

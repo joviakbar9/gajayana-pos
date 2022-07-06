@@ -42,13 +42,4 @@ router.post("/delete-pemesanan", async (req, res) => {
   }
 });
 
-router.post("/delete-pesanan", async (req, res) => {
-  try {
-    await PemesananModel.findOneAndDelete({_id : req.body.pemesananId})
-    res.send('Pesanan Berhasil Dihapus')
-  } catch (error) {
-    res.status(400).json(error);
-  }
-});
-
 module.exports = router

@@ -164,6 +164,7 @@ function CartPage() {
           </Form.Item>
           <Form.Item disabled name="sisaPembayaran" label="Sisa">
             <Input disabled={true} sisaPembayaran/>
+            <sisaPembayaran/>
           </Form.Item>
           <Form.Item name="keterangan" label="Keterangan">
             <Input.TextArea />
