@@ -259,7 +259,7 @@ function Pemesanan() {
               <div>
                 <p>Jl. Gajayana 14A Kav.2</p>
                 <p>Malang</p>
-                <p>0341 552080</p>
+                <p>0341-552080</p>
                 <p>E-mail : gajayana.digital@gmail.com</p>
               </div>
             </div>
