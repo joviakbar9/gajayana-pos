@@ -49,15 +49,17 @@ function Items() {
     {
       title: "Kode Produk",
       dataIndex: "kodeproduk",
-      sorter: (a, b) => a.kodeproduk.length - b.kodeproduk.length,
+      sorter: (a, b) => a.kodeproduk.localeCompare(b.kodeproduk),
     },
     {
       title: "Nama Produk",
       dataIndex: "namaproduk",
+      sorter: (a, b) => a.namaproduk.localeCompare(b.namaproduk),
     },
     {
       title: "Harga",
       dataIndex: "harga",
+      sorter: (a, b) => a.harga - b.harga,
     },
     {
       title: "Kategori",

@@ -12,7 +12,6 @@ import logo from "../resources/PrintingLogo.png";
 function Pemesanan() {
   const { Search } = Input;
   const onSearch = (value) => console.log(value);
-  const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
 
   const componentRef = useRef();
   const [pemesananData, setPemesananData] = useState([]);
@@ -56,10 +55,31 @@ function Pemesanan() {
       });
   };
 
+  //date formatting
+  pemesananData.map(e => {
+    var date = new Date(e.tanggalPemesanan)
+    var sdate = {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric"
+    };
+    e.newtanggalPemesanan = date.toLocaleDateString("id-ID", sdate);
+
+    var ldate = {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric"
+    };
+    e.tanggalNota = date.toLocaleDateString("id-ID", ldate);
+    // e.newtanggalPemesanan = date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear()
+  })
+
   const columns = [
     {
       title: "Tanggal Pemesanan",
-      dataIndex: "tanggalPemesanan",
+      dataIndex: "newtanggalPemesanan",
+      sorter: (a, b) => a.newtanggalPemesanan.localeCompare(b.newtanggalPemesanan),
 
     },
     {
@@ -267,7 +287,7 @@ function Pemesanan() {
               <table>
                 <tr>
                   <td><b>Tanggal Pemesanan</b></td>
-                  <td> : {" "}{selectedBill.tanggalPemesanan.toLocaleString("id-ID").substring(0, 10)}</td>
+                  <td> : {" "}{selectedBill.tanggalNota}</td>
                 </tr>
                 <tr>
                   <td><b>Nama</b></td>

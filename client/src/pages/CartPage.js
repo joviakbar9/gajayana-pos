@@ -39,7 +39,7 @@ function CartPage() {
     }
   };
 
-  const calculateRemaining = (event) => {
+  const hitungSisa = (event) => {
     setSisa(subTotal - event.target.value);
   };
 
@@ -162,9 +162,8 @@ function CartPage() {
               form.setFieldsValue({sisaPembayaran: subTotal - e.target.value});
             }}/>
           </Form.Item>
-          <Form.Item disabled name="sisaPembayaran" label="Sisa">
+          <Form.Item name="sisaPembayaran" label="Sisa">
             <Input disabled={true} sisaPembayaran/>
-            <sisaPembayaran/>
           </Form.Item>
           <Form.Item name="keterangan" label="Keterangan">
             <Input.TextArea />

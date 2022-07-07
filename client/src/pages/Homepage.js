@@ -33,10 +33,12 @@ function Homepage() {
     {
       title: "Kode Produk",
       dataIndex: "kodeproduk",
+      sorter: (a, b) => a.kodeproduk.localeCompare(b.kodeproduk),
     },
     {
       title: "Nama Produk",
       dataIndex: "namaproduk",
+      sorter: (a, b) => a.namaproduk.localeCompare(b.namaproduk),
     },
     {
       title: "Harga",
