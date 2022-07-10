@@ -9,9 +9,20 @@ import { BASE_URL } from '../constant/axios'
 
 function Homepage() {
   const { Search } = Input;
-  const onSearch = (value) => console.log(value);
+  const onSearch = (value) => {
+    if (value === "") {
+      setItemsData(itemsDataOri)
+      return
+    }
+
+    const searched = itemsData.filter((v) => {
+      return v.kodeproduk === value
+    })
+    setItemsData(searched)
+  };
 
   const [itemsData, setItemsData] = useState([]);
+  const [itemsDataOri, setItemsDataOri] = useState([]);
 
   const dispatch = useDispatch();
   function addTocart(item) {
@@ -22,6 +33,7 @@ function Homepage() {
     axios.get(`${BASE_URL}/api/items/get-all-items`).then((response) => {
       dispatch({ type: "hideLoading" });
       setItemsData(response.data);
+      setItemsDataOri(response.data);
     })
       .catch((error) => {
         dispatch({ type: "hideLoading" });

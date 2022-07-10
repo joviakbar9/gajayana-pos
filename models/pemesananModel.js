@@ -5,11 +5,10 @@ const pemesananSchema = mongoose.Schema({
   namaCustomer: { type: String, required: true },
   nohpCustomer : { type: String, required: true },
   totalHarga: { type: Number },
-  tipePembayaran : { type:String, required: true },
   uangMuka: { type: Number },
   sisaPembayaran: { type: Number },
   cartItems : { type:Array, required: true },
-  statusPembayaran: { type: Boolean },
+  statusPembayaran: { type:String, required: true },
   keterangan: { type: String }
 }, {timestamps : true});
 
