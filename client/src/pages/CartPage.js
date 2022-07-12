@@ -1,10 +1,11 @@
-import { Button, Form, Input, message, Modal, Select, Table, Tag, DatePicker } from "antd";
+import { Button, Form, Input, message, Modal, Select, Table, Tag, DatePicker, Show } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DefaultLayout from "../components/DefaultLayout";
 import axios from "axios";
 import moment from "moment"
 import { BASE_URL } from '../constant/axios';
+import e from "cors";
 
 import {
   DeleteOutlined,
@@ -12,6 +13,7 @@ import {
   MinusCircleOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import e from "cors";
 
 function CartPage() {
   const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
@@ -98,9 +100,6 @@ function CartPage() {
       ...values,
       subTotal,
       cartItems,
-      totalHarga: (
-        subTotal.toFixed(2)
-      ),
       userId: JSON.parse(localStorage.getItem("pos-user"))._id,
     };
 
@@ -158,16 +157,23 @@ function CartPage() {
             </Select>
           </Form.Item>
           <Form.Item name="uangMuka" label="DP">
-            <Input onChange={(e)=>{
+            <Input onChange={ (e) => {
               form.setFieldsValue({sisaPembayaran: subTotal - e.target.value});
-            }}/>
+              }}
+              // disabled = {e.tipePembayaran="lunas"}
+            />
           </Form.Item>
-          <Form.Item name="sisaPembayaran" label="Sisa">
-            <Input disabled={true} sisaPembayaran/>
-          </Form.Item>
+
+          {/* <Form.Item name="sisaPembayaran" label="Sisa">
+            <Input sisaPembayaran disabled={true} />
+          </Form.Item> */}
           <Form.Item name="keterangan" label="Keterangan">
             <Input.TextArea />
           </Form.Item>
+
+          <div className="sisa-pembayaran">
+            Sisa Pembayaran : Rp {sisaPembayaran}
+          </div>
 
           <div className="charge-bill-amount">
             <h5>

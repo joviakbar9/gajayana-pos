@@ -38,8 +38,18 @@ input:focus{
     outline: none !important;
 }
 
+.sisa-pembayaran{
+    font-size: 15px;
+}
 
-.category{
+.subtotal h3{
+    color: rgb(0, 133, 18) !important;
+    font-size: 35px;
+    padding: 15px;
+}
+
+
+/* .category{
     border: 2px solid rgb(179, 176, 176);
     margin-right: 50px;
     align-items: center;
@@ -58,13 +68,8 @@ input:focus{
 }
 .selected-category{
     border: 3px solid rgb(3, 38, 66);
-}
+} */
 
-.subtotal h3{
-    color: rgb(0, 133, 18) !important;
-    font-size: 35px;
-    padding: 15px;
-}
 
 /* ================================================Bill styling */
 

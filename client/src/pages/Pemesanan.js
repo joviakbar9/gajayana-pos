@@ -8,6 +8,7 @@ import ReactToPrint from 'react-to-print';
 import { useReactToPrint } from 'react-to-print';
 import { BASE_URL } from '../constant/axios';
 import logo from "../resources/PrintingLogo.png";
+import e from "cors";
 
 function Pemesanan() {
   const { Search } = Input;
@@ -74,13 +75,12 @@ function Pemesanan() {
     e.tanggalNota = date.toLocaleDateString("id-ID", ldate);
     // e.newtanggalPemesanan = date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear()
   })
-
+  
   const columns = [
     {
       title: "Tanggal Pemesanan",
       dataIndex: "newtanggalPemesanan",
-      sorter: (a, b) => a.newtanggalPemesanan.localeCompare(b.newtanggalPemesanan),
-
+      sorter: (a, b) => a.newtanggalPemesanan.localeCompare(b.newtanggalPemesanan)
     },
     {
       title: "No. Nota",
@@ -121,9 +121,9 @@ function Pemesanan() {
           }}
           />
           <EditTwoTone className="mx-2" onClick={() => {
-              setEditingBill(record);
-              setAddEditModalVisibilty(true);
-            }}
+            setEditingBill(record);
+            setAddEditModalVisibilty(true);
+          }}
           />
           <DeleteTwoTone twoToneColor="#eb2f96" className="mx-2" onClick={() => deletePemesanan(record)}/>
         </div>
@@ -277,7 +277,7 @@ function Pemesanan() {
                 <img src={logo} height="70" width="360" />
               </div>
               <div>
-                <p>Jl. Gajayana 14A Kav.2</p>
+                <p>Jl. Gajayana 14A Kav. 2</p>
                 <p>Malang</p>
                 <p>0341-552080</p>
                 <p>E-mail : gajayana.digital@gmail.com</p>
