@@ -24,6 +24,7 @@ function CartPage() {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isDp, setIsDp] = useState(false);
 
   const increaseQuantity = (record) => {
     dispatch({
@@ -141,7 +142,7 @@ function CartPage() {
       >
         {" "}
         <Form layout="vertical" onFinish={onFinish}>
-          <Form.Item name="tanggalPemesanan" label="Tanggal Pemesanan">
+          <Form.Item initialValue={moment()} name="tanggalPemesanan" label="Tanggal Pemesanan">
             <DatePicker defaultValue={moment()} format={dateFormatList} />
           </Form.Item>
           <Form.Item name="namaCustomer" label="Nama Customer">
@@ -150,18 +151,25 @@ function CartPage() {
           <Form.Item name="nohpCustomer" label="Nomor HP">
             <Input />
           </Form.Item>
-          <Form.Item name="tipePembayaran" label="Pembayaran">
-            <Select>
+          <Form.Item initialValue={"lunas"} name="statusPembayaran" label="Pembayaran">
+            <Select onChange={(value) => {
+              if (value === "dp"){
+                setIsDp(true)
+                return 
+              }
+              setIsDp(false)
+            }}>
               <Select.Option value="lunas">Lunas</Select.Option>
               <Select.Option value="dp">DP</Select.Option>
             </Select>
           </Form.Item>
-          <Form.Item name="uangMuka" label="DP">
-            <Input onChange={ (e) => {
+          <Form.Item  hidden={!isDp} name="uangMuka" label="DP">
+            <Input onChange={(e)=>{
               form.setFieldsValue({sisaPembayaran: subTotal - e.target.value});
-              }}
-              // disabled = {e.tipePembayaran="lunas"}
-            />
+            }}/>
+          </Form.Item>
+          <Form.Item hidden={!isDp} name="sisaPembayaran" label="Sisa">
+            <Input sisaPembayaran/>
           </Form.Item>
 
           {/* <Form.Item name="sisaPembayaran" label="Sisa">
