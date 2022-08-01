@@ -6,7 +6,7 @@ import "../resources/items.css";
 import { useDispatch } from "react-redux";
 import { BASE_URL } from '../constant/axios'
 
-function User() {
+function Profile() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const onFinish=(values)=>{
@@ -21,15 +21,15 @@ function User() {
     }
     useEffect(() => {
       if(localStorage.getItem('pos-user'))
-      navigate('/akun')
+      navigate('/profile')
   }, [])
 
   return (
     <DefaultLayout>
       <div className="d-flex justify-content-between">
-        <h3>User</h3>
+        <h3>User Profile</h3>
       </div>
-      <div className='akun'>
+      <div className='profile'>
         <Row>
           <Col lg={8} xs={22}>
           <Form

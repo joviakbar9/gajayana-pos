@@ -1,12 +1,10 @@
-import { Button, Form, Input, message, Modal, Select, Table, Tag, DatePicker, Show } from "antd";
+import { Button, Form, Input, message, Modal, Select, Table, Tag, DatePicker } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DefaultLayout from "../components/DefaultLayout";
 import axios from "axios";
 import moment from "moment"
 import { BASE_URL } from '../constant/axios';
-import e from "cors";
-
 import {
   DeleteOutlined,
   PlusCircleOutlined,
@@ -172,9 +170,6 @@ function CartPage() {
             <Input sisaPembayaran/>
           </Form.Item>
 
-          {/* <Form.Item name="sisaPembayaran" label="Sisa">
-            <Input sisaPembayaran disabled={true} />
-          </Form.Item> */}
           <Form.Item name="keterangan" label="Keterangan">
             <Input.TextArea />
           </Form.Item>
