@@ -175,7 +175,7 @@ function CartPage() {
           </Form.Item>
 
           <div className="sisa-pembayaran">
-            Sisa Pembayaran : Rp {sisaPembayaran}
+            Sisa Pembayaran : Rp {subTotal - sisaPembayaran}
           </div>
 
           <div className="charge-bill-amount">

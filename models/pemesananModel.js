@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const pemesananSchema = mongoose.Schema({
+  idnota: { type: mongoose.Types.ObjectId, ref: 'GDP' },
   tanggalPemesanan: { type: Date, required: true },
   namaCustomer: { type: String, required: true },
   nohpCustomer : { type: String, required: true },
