@@ -7,7 +7,7 @@ router.post("/charge-pemesanan", async (req, res) => {
   try {
     const newpemesanan = new PemesananModel(req.body)
     await newpemesanan.save()
-    res.send('Bill charged successfully')
+    res.send('Pemesanan Berhasil Ditambah')
   } catch (error) {
     res.status(400).json(error);
   }

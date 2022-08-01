@@ -4,6 +4,7 @@ import { Button } from "antd";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import Produk from "./pages/Items";
+import KategoriProduk from "./pages/KategoriProduk";
 import Pemesanan from "./pages/CartPage";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path="/home" element={<ProtectedRoute><Homepage /></ProtectedRoute>} />
           <Route path="/produk" element={<ProtectedRoute><Produk /></ProtectedRoute>} />
+          <Route path="/kategoriproduk" element={<ProtectedRoute><KategoriProduk /></ProtectedRoute>} />
           <Route path="/pemesanan" element={<ProtectedRoute><Pemesanan /></ProtectedRoute>} />
           <Route path="/daftarpemesanan" element={<ProtectedRoute><DaftarPemesanan /></ProtectedRoute>} />
           <Route path="/customers" element={<ProtectedRoute><Customers /></ProtectedRoute>} />

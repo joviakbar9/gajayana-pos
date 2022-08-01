@@ -8,6 +8,7 @@ import {
   HomeOutlined,
   CopyOutlined,
   UnorderedListOutlined,
+  AppstoreOutlined,
   BarChartOutlined,
   FormOutlined,
   UserSwitchOutlined,
@@ -75,6 +76,9 @@ const DefaultLayout = (props) => {
           </Menu.Item>
           <Menu.Item key="/produk" icon={<UnorderedListOutlined />}>
             <Link to="/produk">Produk</Link>
+          </Menu.Item>
+          <Menu.Item key="/kategoriproduk" icon={<AppstoreOutlined />}>
+            <Link to="/kategoriproduk">Kategori</Link>
           </Menu.Item>
           <Menu.Item key="/customers" icon={<UsergroupAddOutlined />}>
             <Link to="/customers">Customers</Link>
