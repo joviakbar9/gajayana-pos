@@ -13,6 +13,7 @@ function Items() {
   const [itemsData, setItemsData] = useState([]);
   const [addEditModalVisibilty, setAddEditModalVisibilty] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
+  const [getKategori, setKategori] = useState([]);
   const dispatch = useDispatch();
 
   const getAllItems = () => {
@@ -25,6 +26,18 @@ function Items() {
       })
       .catch((error) => {
         dispatch({ type: "hideLoading" });
+        console.log(error);
+      });
+  };
+
+  const getAllKategori = () => {
+    axios
+      .get(`${BASE_URL}/api/kategori/get-all-kategori`)
+      .then((response) => {
+        setKategori(response.data);
+        console.log(getKategori);
+      })
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -64,6 +77,7 @@ function Items() {
     {
       title: "Kategori",
       dataIndex: "kategori",
+      render: (v) => v.namaKategori,
     },
     {
       title: "Actions",
@@ -83,6 +97,7 @@ function Items() {
   
   useEffect(() => {
     getAllItems();
+    getAllKategori();
   }, []);
 
   const onFinish = (values) => {
@@ -168,21 +183,7 @@ function Items() {
             </Form.Item>
             <Form.Item name="kategori" label="Kategori">
               <Select>
-                <Select.Option value="banner">Banner</Select.Option>
-                <Select.Option value="poster">Poster</Select.Option>
-                <Select.Option value="map">Map</Select.Option>
-                <Select.Option value="jilid">Jilid</Select.Option>
-                <Select.Option value="print">Print</Select.Option>
-                <Select.Option value="stempel">Stempel</Select.Option>
-                <Select.Option value="idcard">ID Card</Select.Option>
-                <Select.Option value="accidcard">Aksesoris ID Card</Select.Option>
-                <Select.Option value="blocknote">Blocknote</Select.Option>
-                <Select.Option value="yasin">Yasin</Select.Option>
-                <Select.Option value="umbul">Umbul Umbul</Select.Option>
-                <Select.Option value="nota">Nota</Select.Option>
-                <Select.Option value="kalender">Kalender</Select.Option>
-                <Select.Option value="ganci">Gantungan Kunci</Select.Option>
-                <Select.Option value="nametag">Nametag</Select.Option>
+                {getKategori.map(v => <Select.Option value = {v._id}>{v.namaKategori}</Select.Option>)}
               </Select>
             </Form.Item>
             <div className="d-flex justify-content-end">

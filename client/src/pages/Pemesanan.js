@@ -18,10 +18,13 @@ function Pemesanan() {
   const [pemesananData, setPemesananData] = useState([]);
   const [
     printBillModalVisibility, 
-    setPrintBillModalVisibilty, 
-    addEditModalVisibilty, 
-    setAddEditModalVisibilty] = useState(false);
-  const [selectedBill, setSelectedBill, editingBill, setEditingBill] = useState(null);
+    setPrintBillModalVisibility, 
+    addEditModalVisibility, 
+    setAddEditModalVisibility,
+    setDeleteModalVisibility,
+    deleteModalVisibility,
+  ] = useState(false);
+  const [selectedBill, setSelectedBill, editingBill, setEditingBill, setDeleteBill, deleteBill] = useState(null);
   const dispatch = useDispatch();
 
   const getAllPemesanan = () => {
@@ -109,6 +112,7 @@ function Pemesanan() {
     {
       title: "Status Pembayaran",
       dataIndex: "statusPembayaran",
+      render: (v) => v === "dp" ? "Belum Lunas" : "Lunas",
     },
     {
       title: "Actions",
@@ -117,15 +121,18 @@ function Pemesanan() {
         <div className="d-flex">
           <EyeOutlined className="mx-2" onClick={() => {
             setSelectedBill(record);
-            setPrintBillModalVisibilty(true);
+            setPrintBillModalVisibility(true);
           }}
           />
           <EditTwoTone className="mx-2" onClick={() => {
             setEditingBill(record);
-            setAddEditModalVisibilty(true);
+            setAddEditModalVisibility(true);
           }}
           />
-          <DeleteTwoTone twoToneColor="#eb2f96" className="mx-2" onClick={() => deletePemesanan(record)}/>
+          <DeleteTwoTone twoToneColor="#eb2f96" className="mx-2" onClick={() => {
+            setDeleteBill(record);
+            setDeleteModalVisibility(true);
+          } }/>
         </div>
       ),
     },
@@ -173,7 +180,7 @@ function Pemesanan() {
       .then((response) => {
         dispatch({ type: "hideLoading" });
         message.success("Pemesanan Berhasil Ditambah");
-        setAddEditModalVisibilty(false);
+        setAddEditModalVisibility(false);
         getAllPemesanan();
       })
       .catch((error) => {
@@ -189,7 +196,7 @@ function Pemesanan() {
         dispatch({ type: "hideLoading" });
         message.success("Data Pemesanan Berhasil Siubah");
         setEditingBill(null)
-        setAddEditModalVisibilty(false);
+        setAddEditModalVisibility(false);
         getAllPemesanan();
       })
       .catch((error) => {
@@ -222,13 +229,13 @@ function Pemesanan() {
 
       <Table columns={columns} dataSource={pemesananData} bordered />
 
-      {addEditModalVisibilty && (
+      {addEditModalVisibility && (
         <Modal
           onCancel={() => {
             setEditingBill(null)
-            setAddEditModalVisibilty(false)
+            setAddEditModalVisibility(false)
           }}
-          visible={addEditModalVisibilty}
+          visible={addEditModalVisibility}
           title={`${editingBill !==null ? 'Ubah Data Pemesanan' : 'Tambah Pemesanan'}`}
           footer={false}
         >
@@ -261,10 +268,24 @@ function Pemesanan() {
         </Modal>
       )}
 
+      {deleteModalVisibility && (
+      <Modal 
+       onCancel={() => {
+        setDeleteModalVisibility(false);
+      }}
+      visible= {deleteModalVisibility} 
+      title="Hapus Pemesanan"
+      footer={false}
+      width
+      >
+        Lorem ipsum
+      </Modal>
+      )}
+
       {printBillModalVisibility && (
         <Modal
           onCancel={() => {
-            setPrintBillModalVisibilty(false);
+            setPrintBillModalVisibility(false);
           }}
           visible={printBillModalVisibility}
           title="Nota Pemesanan"

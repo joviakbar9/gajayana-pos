@@ -4,7 +4,8 @@ const router = express.Router();
 
 router.get("/get-all-items", async (req, res) => {
   try {
-    const items = await ItemModel.find();
+    const items = await ItemModel.find().populate('kategori');
+    console.log(items);
     res.send(items);
   } catch (error) {
     res.status(400).json(error);

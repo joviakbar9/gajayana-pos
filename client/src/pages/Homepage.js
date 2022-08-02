@@ -59,6 +59,7 @@ function Homepage() {
     {
       title: "Kategori",
       dataIndex: "kategori",
+      render: (v) => v.namaKategori,
     },
     {
       title: "Actions",

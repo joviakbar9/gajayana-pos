@@ -41,7 +41,9 @@ function CartPage() {
   };
 
   const hitungSisa = (event) => {
+    console.log(subTotal);
     setSisa(subTotal - event.target.value);
+    form.setFieldsValue({sisaPembayaran: subTotal - event.target.value})
   };
 
   const columns = [
@@ -95,9 +97,10 @@ function CartPage() {
   }, [cartItems]);
 
   const onFinish = (values) => {
+    console.log(values)
     const reqObject = {
       ...values,
-      subTotal,
+      totalHarga: subTotal,
       cartItems,
       userId: JSON.parse(localStorage.getItem("pos-user"))._id,
     };
@@ -139,7 +142,7 @@ function CartPage() {
         onCancel={() => setBillChargeModal(false)}
       >
         {" "}
-        <Form layout="vertical" onFinish={onFinish}>
+        <Form form={form} layout="vertical" onFinish={onFinish}>
           <Form.Item initialValue={moment()} name="tanggalPemesanan" label="Tanggal Pemesanan">
             <DatePicker defaultValue={moment()} format={dateFormatList} />
           </Form.Item>
@@ -149,7 +152,7 @@ function CartPage() {
           <Form.Item name="nohpCustomer" label="Nomor HP">
             <Input />
           </Form.Item>
-          <Form.Item initialValue={"lunas"} name="statusPembayaran" label="Pembayaran">
+          <Form.Item initialValue={"Lunas"} name="statusPembayaran" label="Pembayaran">
             <Select onChange={(value) => {
               if (value === "dp"){
                 setIsDp(true)
@@ -162,31 +165,26 @@ function CartPage() {
             </Select>
           </Form.Item>
           <Form.Item  hidden={!isDp} name="uangMuka" label="DP">
-            <Input onChange={(e)=>{
-              form.setFieldsValue({sisaPembayaran: subTotal - e.target.value});
-            }}/>
+            <Input onChange={hitungSisa}/>
           </Form.Item>
-          <Form.Item hidden={!isDp} name="sisaPembayaran" label="Sisa">
+          <Form.Item disabled hidden={!isDp} name="sisaPembayaran" label="Sisa">
             <Input sisaPembayaran/>
           </Form.Item>
+          
 
           <Form.Item name="keterangan" label="Keterangan">
             <Input.TextArea />
           </Form.Item>
 
           <div className="sisa-pembayaran">
-            Sisa Pembayaran : Rp {subTotal - sisaPembayaran}
+            Sisa Pembayaran : Rp {sisaPembayaran}
           </div>
 
           <div className="charge-bill-amount">
             <h5>
               Total Harga : <b>Rp {subTotal}</b>
             </h5>
-            {/* <h5>
-              Sisa : <b>{(subTotal - uangmuka)}</b>
-            </h5>
-            <hr />
-            <h2>
+            {/* <h2>
               Grand Total : <b>{subTotal + (subTotal / 100) * 10}</b>
             </h2> */}
           </div>

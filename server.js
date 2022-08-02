@@ -6,6 +6,7 @@ const app = express();
 const itemsRoute = require("./routes/itemsRoute");
 const usersRoute = require("./routes/userRoute");
 const pemesananRoute = require('./routes/pemesananRoute')
+const kategoriRoute = require('./routes/kategoriRoute')
 
 app.use(cors());
 
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use("/api/items/", itemsRoute);
 app.use("/api/users/", usersRoute);
 app.use("/api/pemesanan/", pemesananRoute);
+app.use("/api/kategori/", kategoriRoute);
 
 const path = require('path')
 
