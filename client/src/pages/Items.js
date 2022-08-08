@@ -12,7 +12,9 @@ function Items() {
 
   const [itemsData, setItemsData] = useState([]);
   const [addEditModalVisibilty, setAddEditModalVisibilty] = useState(false);
+  const [deleteModalVisibility, setDeleteModalVisibility] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
+  const [delItem, setDelItem] = useState(null);
   const [getKategori, setKategori] = useState([]);
   const dispatch = useDispatch();
 
@@ -38,22 +40,6 @@ function Items() {
         console.log(getKategori);
       })
       .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const deleteItem = (record) => {
-    dispatch({ type: "showLoading" });
-    axios
-      .post(`${BASE_URL}/api/items/delete-item` , {itemId : record._id})
-      .then((response) => {
-        dispatch({ type: "hideLoading" });
-        message.success('Produk berhasil Dihapus')
-        getAllItems()
-      })
-      .catch((error) => {
-        dispatch({ type: "hideLoading" });
-        message.error('Terjadi Kesalahan')
         console.log(error);
       });
   };
@@ -85,11 +71,14 @@ function Items() {
       render: (id, record) => (
         <div className="d-flex">
           <EditTwoTone className="mx-2" onClick={() => {
-              setEditingItem(record);
-              setAddEditModalVisibilty(true);
-            }}
+            setEditingItem(record);
+            setAddEditModalVisibilty(true);
+          }}
           />
-          <DeleteTwoTone twoToneColor="#eb2f96" className="mx-2" onClick={() => deleteItem(record)}/>
+          <DeleteTwoTone twoToneColor="#eb2f96" className="mx-2" onClick={() => {
+            setDelItem(record);
+            setDeleteModalVisibility(true);
+          }}/>
         </div>
       ),
     },
@@ -120,7 +109,7 @@ function Items() {
     }
     else{
       axios
-      .post(`${BASE_URL}/api/items/edit-item`, {...values , itemId : editingItem._id})
+      .post(`${BASE_URL}/api/items/edit-item`, {...values, itemId : editingItem._id})
       .then((response) => {
         dispatch({ type: "hideLoading" });
         message.success("Data Produk Berhasil Diubah");
@@ -134,6 +123,24 @@ function Items() {
         console.log(error);
       });
     }
+  };
+
+  const deleteItem = (values) => {
+    dispatch({ type: "showLoading" });
+    axios
+      .post(`${BASE_URL}/api/items/delete-item`, {...values, itemId : delItem._id})
+      .then((response) => {
+        dispatch({ type: "hideLoading" });
+        message.success('Produk berhasil Dihapus');
+        setDelItem(null)
+        setDeleteModalVisibility(false);
+        getAllItems()
+      })
+      .catch((error) => {
+        dispatch({ type: "hideLoading" });
+        message.error('Terjadi Kesalahan');
+        console.log(error);
+      });
   };
 
   return (
@@ -159,7 +166,7 @@ function Items() {
       
       {addEditModalVisibilty && (
         <Modal
-          onCancel={() => {
+          onCancel = { ()=> {
             setEditingItem(null)
             setAddEditModalVisibilty(false)
           }}
@@ -172,10 +179,10 @@ function Items() {
             layout="vertical"
             onFinish={onFinish}
           >
-            <Form.Item name="kodeproduk" label="Kode Produk">
+            <Form.Item name="namaproduk" label="Nama Produk">
               <Input />
             </Form.Item>
-            <Form.Item name="namaproduk" label="Nama Produk">
+            <Form.Item name="kodeproduk" label="Kode Produk">
               <Input />
             </Form.Item>
             <Form.Item name="harga" label="Harga">
@@ -189,6 +196,32 @@ function Items() {
             <div className="d-flex justify-content-end">
               <Button htmlType="submit" type="primary">
                 SIMPAN
+              </Button>
+            </div>
+          </Form>
+        </Modal>
+      )}
+      {deleteModalVisibility && (
+        <Modal
+          onCancel = { ()=> {
+            setDelItem(null)
+            setDeleteModalVisibility(false)
+          }}
+          visible = {deleteModalVisibility}
+          title = "Hapus Produk"
+          footer = {false}
+        >
+          <Form
+            initialValues = {delItem}
+            layout = "vertical"
+            onFinish = {deleteItem}
+          >
+            <div className="text-left">
+              <p>Apakah anda yakin ingin menghapus produk ini? </p>
+            </div>
+            <div className="d-flex justify-content-end">
+              <Button htmlType="submit" type="danger">
+                HAPUS
               </Button>
             </div>
           </Form>

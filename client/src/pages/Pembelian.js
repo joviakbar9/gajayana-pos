@@ -11,7 +11,9 @@ function Pembelian() {
   const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
   const [pembelianData, setPembelianData] = useState([]);
   const [addEditModalVisibilty, setAddEditModalVisibilty] = useState(false);
+  const [deleteModalVisibility, setDeleteModalVisibility] = useState(false);
   const [editingPembelian, setEditingPembelian] = useState(null);
+  const [getdeletePembelian, setDeletePembelian] = useState(null);
   const dispatch = useDispatch();
 
   const getAllPembelian = () => {
@@ -50,21 +52,13 @@ function Pembelian() {
       dataIndex: "tanggalpembelian",
     },
     {
-      title: "Kode Produk",
-      dataIndex: "kodeproduk",
-    },
-    {
       title: "Nama Produk",
       dataIndex: "namaproduk",
     },
     {
-        title: "Kategori",
-        dataIndex: "kategori",
-      },
-    {
         title: "Jumlah",
         dataIndex: "jumlah",
-      },
+    },
     {
       title: "Total Harga",
       dataIndex: "hargaPembelian",
@@ -154,33 +148,9 @@ function Pembelian() {
             <Form.Item name="tanggalPembelian" label="Tanggal Pembelian">
               <DatePicker defaultValue={moment()} format={dateFormatList} />
             </Form.Item>
-            <Form.Item name="kodeproduk" label="Kode Produk">
-              <Input />
-            </Form.Item>
             <Form.Item name="namaproduk" label="Nama Produk">
               <Input />
             </Form.Item>
-
-            <Form.Item name="kategori" label="Kategori">
-              <Select>
-                <Select.Option value="banner">Banner</Select.Option>
-                <Select.Option value="poster">Poster</Select.Option>
-                <Select.Option value="map">Map</Select.Option>
-                <Select.Option value="jilid">Jilid</Select.Option>
-                <Select.Option value="print">Print</Select.Option>
-                <Select.Option value="stempel">Stempel</Select.Option>
-                <Select.Option value="idcard">ID Card</Select.Option>
-                <Select.Option value="accidcard">Aksesoris ID Card</Select.Option>
-                <Select.Option value="blocknote">Blocknote</Select.Option>
-                <Select.Option value="yasin">Yasin</Select.Option>
-                <Select.Option value="umbul">Umbul Umbul</Select.Option>
-                <Select.Option value="nota">Nota</Select.Option>
-                <Select.Option value="kalender">Kalender</Select.Option>
-                <Select.Option value="ganci">Gantungan Kunci</Select.Option>
-                <Select.Option value="nametag">Nametag</Select.Option>
-              </Select>
-            </Form.Item>
-            
             <Form.Item name="jumlah" label="Jumlah">
               <Input />
             </Form.Item>

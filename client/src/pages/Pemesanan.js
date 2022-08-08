@@ -16,15 +16,12 @@ function Pemesanan() {
 
   const componentRef = useRef();
   const [pemesananData, setPemesananData] = useState([]);
-  const [
-    printBillModalVisibility, 
-    setPrintBillModalVisibility, 
-    addEditModalVisibility, 
-    setAddEditModalVisibility,
-    setDeleteModalVisibility,
-    deleteModalVisibility,
-  ] = useState(false);
-  const [selectedBill, setSelectedBill, editingBill, setEditingBill, setDeleteBill, deleteBill] = useState(null);
+  const [printBillModalVisibility, setPrintBillModalVisibility] = useState(false);
+  const [addEditModalVisibility, setAddEditModalVisibility] = useState(false);
+  const [deleteModalVisibility, setDeleteModalVisibility] = useState(false);
+  const [selectedBill, setSelectedBill] = useState(null);
+  const [editingBill, setEditingBill] = useState(null);
+  const [setDeleteBill, deleteBill] = useState(null);
   const dispatch = useDispatch();
 
   const getAllPemesanan = () => {
