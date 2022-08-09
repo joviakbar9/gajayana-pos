@@ -4,7 +4,8 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { EditTwoTone, DeleteTwoTone } from "@ant-design/icons";
 import { Button, Form, Input, message, Modal, Select, Table } from "antd";
-import { BASE_URL } from '../constant/axios'
+import { BASE_URL } from '../constant/axios';
+import e from "cors";
 
 function Items() {
   const { Search } = Input;
@@ -75,7 +76,7 @@ function Items() {
             setAddEditModalVisibilty(true);
           }}
           />
-          <DeleteTwoTone twoToneColor="#eb2f96" className="mx-2" onClick={() => {
+          <DeleteTwoTone twoToneColor="#eb2f96" className="mx-2" onClick= {() => {
             setDelItem(record);
             setDeleteModalVisibility(true);
           }}/>
@@ -147,7 +148,7 @@ function Items() {
     <DefaultLayout>
       <div className="d-flex justify-content-between">
         <h3>Produk</h3>
-        <Button type="primary" onClick={() => setAddEditModalVisibilty(true)}>
+        <Button type = "primary" onClick={() => setAddEditModalVisibilty(true)}>
           Tambah Produk
         </Button>
       </div>

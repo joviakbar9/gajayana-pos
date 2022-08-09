@@ -6,7 +6,7 @@ import axios from "axios";
 import moment from "moment"
 import { BASE_URL } from '../constant/axios';
 import {
-  DeleteOutlined,
+  DeleteTwoTone,
   PlusCircleOutlined,
   MinusCircleOutlined,
 } from "@ant-design/icons";
@@ -80,8 +80,7 @@ function CartPage() {
       title: "Actions",
       dataIndex: "_id",
       render: (id, record) => (
-        <DeleteOutlined
-          onClick={() => dispatch({ type: "deleteFromCart", payload: record })}
+        <DeleteTwoTone twoToneColor="#eb2f96" onClick = {()=> dispatch({ type: "deleteFromCart", payload: record })}
         />
       ),
     },
@@ -170,8 +169,6 @@ function CartPage() {
           <Form.Item disabled hidden={!isDp} name="sisaPembayaran" label="Sisa">
             <Input sisaPembayaran/>
           </Form.Item>
-          
-
           <Form.Item name="keterangan" label="Keterangan">
             <Input.TextArea />
           </Form.Item>

@@ -51,7 +51,6 @@ function KategoriProduk() {
     {
       title: "Satuan",
       dataIndex: "satuan",
-      sorter: (a, b) => a.harga - b.harga,
     },
     {
       title: "Actions",

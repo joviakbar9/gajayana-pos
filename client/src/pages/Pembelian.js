@@ -4,16 +4,20 @@ import axios from "axios";
 import moment from 'moment';
 import { useDispatch } from "react-redux";
 import { EditTwoTone, DeleteTwoTone } from "@ant-design/icons";
-import { Button, Form, Input, message, Modal, Select, Table, DatePicker } from "antd";
+import { Button, Form, Input, message, Modal, Table, DatePicker } from "antd";
 import { BASE_URL } from '../constant/axios'
+import e from "cors";
 
 function Pembelian() {
   const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
+  const { Search } = Input;
+  const onSearch = (value) => console.log(value);
+  
   const [pembelianData, setPembelianData] = useState([]);
-  const [addEditModalVisibilty, setAddEditModalVisibilty] = useState(false);
+  const [addEditModalVisibility, setAddEditModalVisibility] = useState(false);
   const [deleteModalVisibility, setDeleteModalVisibility] = useState(false);
   const [editingPembelian, setEditingPembelian] = useState(null);
-  const [getdeletePembelian, setDeletePembelian] = useState(null);
+  const [delPembelian, setDelPembelian] = useState(null);
   const dispatch = useDispatch();
 
   const getAllPembelian = () => {
@@ -30,30 +34,27 @@ function Pembelian() {
       });
   };
 
-  const deletePembelian = (record) => {
-    dispatch({ type: "showLoading" });
-    axios
-      .post(`${BASE_URL}/api/pembelian/delete-pembelian` , {pembelianId : record._id})
-      .then((response) => {
-        dispatch({ type: "hideLoading" });
-        message.success('Data Pembelian Berhasil Dihapus')
-        getAllPembelian()
-      })
-      .catch((error) => {
-        dispatch({ type: "hideLoading" });
-        message.error('Terjadi Kesalahan')
-        console.log(error);
-      });
-  };
+  //date formatting
+  pembelianData.map((e) => {
+    var date = new Date(e.tanggalPembelian);
+    var sdate = {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    };
+    e.newtanggalPembelian = date.toLocaleDateString("id-ID", sdate);
+  })
 
   const columns = [
     {
       title: "Tanggal Pembelian",
-      dataIndex: "tanggalpembelian",
+      dataIndex: "newtanggalPembelian",
+      sorter: (a, b) => a.newtanggalPembelian.localeCompare(b.newtanggalPembelian),
     },
     {
       title: "Nama Produk",
-      dataIndex: "namaproduk",
+      dataIndex: "namaProduk",
+      sorter: (a, b) => a.namaProduk.localeCompare(b.namaProduk),
     },
     {
         title: "Jumlah",
@@ -62,6 +63,7 @@ function Pembelian() {
     {
       title: "Total Harga",
       dataIndex: "hargaPembelian",
+      sorter: (a, b) => a.hargaPembelian - b.hargaPembelian,
     },
     {
       title: "Actions",
@@ -69,11 +71,14 @@ function Pembelian() {
       render: (id, record) => (
         <div className="d-flex">
           <EditTwoTone className="mx-2" onClick={() => {
-              setEditingPembelian(record);
-              setAddEditModalVisibilty(true);
-            }}
+            setEditingPembelian(record);
+            setAddEditModalVisibility(true);
+          }}
           />
-          <DeleteTwoTone twoToneColor="#eb2f96" className="mx-2" onClick={() => deletePembelian(record)}/>
+          <DeleteTwoTone twoToneColor="#eb2f96" className="mx-2" onClick= {() => {
+            setDelPembelian(record);
+            setDeleteModalVisibility(true);
+          }}/>
         </div>
       ),
     },
@@ -92,7 +97,7 @@ function Pembelian() {
       .then((response) => {
         dispatch({ type: "hideLoading" });
         message.success("Data Pembelian Berhasil Ditambah");
-        setAddEditModalVisibilty(false);
+        setAddEditModalVisibility(false);
         getAllPembelian();
       })
       .catch((error) => {
@@ -108,7 +113,7 @@ function Pembelian() {
         dispatch({ type: "hideLoading" });
         message.success("Data Pembelian Berhasil Diubah");
         setEditingPembelian(null)
-        setAddEditModalVisibilty(false);
+        setAddEditModalVisibility(false);
         getAllPembelian();
       })
       .catch((error) => {
@@ -119,23 +124,52 @@ function Pembelian() {
     }
   };
 
+  const deletePembelian = (values) => {
+    dispatch({ type: "showLoading" });
+    axios
+      .post(`${BASE_URL}/api/pembelian/delete-pembelian`, {...values, pembelianId : delPembelian._id})
+      .then((response) => {
+        dispatch({ type: "hideLoading" });
+        message.success('Produk berhasil Dihapus');
+        setDelPembelian(null)
+        setDeleteModalVisibility(false);
+        getAllPembelian()
+      })
+      .catch((error) => {
+        dispatch({ type: "hideLoading" });
+        message.error('Terjadi Kesalahan');
+        console.log(error);
+      });
+  };
+
   return (
     <DefaultLayout>
       <div className="d-flex justify-content-between">
         <h3>Pembelian</h3>
-        <Button type="primary" onClick={() => setAddEditModalVisibilty(true)}>
+        <Button type="primary" onClick={() => setAddEditModalVisibility(true)}>
           Tambah Pembelian
         </Button>
       </div>
+
+      <div className="d-flex">
+        <Search
+          placeholder="search pembelian"
+          onSearch={onSearch}
+          style={{
+            width: 240,
+          }}
+        />
+      </div>
+
       <Table columns={columns} dataSource={pembelianData} bordered />
 
-      {addEditModalVisibilty && (
+      {addEditModalVisibility && (
         <Modal
           onCancel={() => {
             setEditingPembelian(null)
-            setAddEditModalVisibilty(false)
+            setAddEditModalVisibility(false)
           }}
-          visible={addEditModalVisibilty}
+          visible={addEditModalVisibility}
           title={`${editingPembelian !==null ? 'Ubah Data Pembelian' : 'Tambah Data Pembelian'}`}
           footer={false}
         >
@@ -148,7 +182,7 @@ function Pembelian() {
             <Form.Item name="tanggalPembelian" label="Tanggal Pembelian">
               <DatePicker defaultValue={moment()} format={dateFormatList} />
             </Form.Item>
-            <Form.Item name="namaproduk" label="Nama Produk">
+            <Form.Item name="namaProduk" label="Nama Produk">
               <Input />
             </Form.Item>
             <Form.Item name="jumlah" label="Jumlah">
@@ -157,6 +191,9 @@ function Pembelian() {
             <Form.Item name="hargaPembelian" label="Total Harga">
               <Input />
             </Form.Item>
+            <Form.Item name="keterangan" label="Keterangan">
+              <Input.TextArea />
+            </Form.Item>
 
             <div className="d-flex justify-content-end">
               <Button htmlType="submit" type="primary">
@@ -164,6 +201,32 @@ function Pembelian() {
               </Button>
             </div>
           </Form>{" "}
+        </Modal>
+      )}
+      {deleteModalVisibility && (
+        <Modal
+          onCancel = { ()=> {
+            setDelPembelian(null)
+            setDeleteModalVisibility(false)
+          }}
+          visible = {deleteModalVisibility}
+          title = "Hapus Data Pembelian"
+          footer = {false}
+        >
+          <Form
+            initialValues = {delPembelian}
+            layout = "vertical"
+            onFinish = {deletePembelian}
+          >
+            <div className="text-left">
+              <p>Apakah anda yakin ingin menghapus data pembelian ini? </p>
+            </div>
+            <div className="d-flex justify-content-end">
+              <Button htmlType="submit" type="danger">
+                HAPUS
+              </Button>
+            </div>
+          </Form>
         </Modal>
       )}
     </DefaultLayout>

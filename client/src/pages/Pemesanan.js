@@ -4,9 +4,9 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { EyeOutlined, EditTwoTone, DeleteTwoTone } from "@ant-design/icons";
 import { Button, Input, message, Modal, Select, Table, Form } from "antd";
-import ReactToPrint from 'react-to-print';
-import { useReactToPrint } from 'react-to-print';
-import { BASE_URL } from '../constant/axios';
+import ReactToPrint from "react-to-print";
+import { useReactToPrint } from "react-to-print";
+import { BASE_URL } from "../constant/axios";
 import logo from "../resources/PrintingLogo.png";
 import e from "cors";
 
@@ -40,29 +40,13 @@ function Pemesanan() {
       });
   };
 
-  const deletePemesanan = (record) => {
-    dispatch({ type: "showLoading" });
-    axios
-      .post(`${BASE_URL}/api/pemesanan/delete-pemesanan`, { pemesananId: record._id })
-      .then((response) => {
-        dispatch({ type: "hideLoading" });
-        message.success('Data Pemesanan Berhasil Dihapus')
-        getAllPemesanan()
-      })
-      .catch((error) => {
-        dispatch({ type: "hideLoading" });
-        message.error('Terjadi Kesalahan')
-        console.log(error);
-      });
-  };
-
   //date formatting
-  pemesananData.map(e => {
-    var date = new Date(e.tanggalPemesanan)
+  pemesananData.map((e) => {
+    var date = new Date(e.tanggalPemesanan);
     var sdate = {
       day: "2-digit",
       month: "2-digit",
-      year: "numeric"
+      year: "numeric",
     };
     e.newtanggalPemesanan = date.toLocaleDateString("id-ID", sdate);
 
@@ -70,17 +54,17 @@ function Pemesanan() {
       weekday: "long",
       day: "numeric",
       month: "long",
-      year: "numeric"
+      year: "numeric",
     };
     e.tanggalNota = date.toLocaleDateString("id-ID", ldate);
     // e.newtanggalPemesanan = date.getDay() + "/" + date.getMonth() + "/" + date.getFullYear()
-  })
-  
+  });
+
   const columns = [
     {
       title: "Tanggal Pemesanan",
       dataIndex: "newtanggalPemesanan",
-      sorter: (a, b) => a.newtanggalPemesanan.localeCompare(b.newtanggalPemesanan)
+      sorter: (a, b) => a.newtanggalPemesanan.localeCompare(b.newtanggalPemesanan),
     },
     {
       title: "No. Nota",
@@ -109,27 +93,35 @@ function Pemesanan() {
     {
       title: "Status Pembayaran",
       dataIndex: "statusPembayaran",
-      render: (v) => v === "dp" ? "Belum Lunas" : "Lunas",
+      render: (v) => (v === "dp" ? "Belum Lunas" : "Lunas"),
     },
     {
       title: "Actions",
       dataIndex: "_id",
       render: (id, record) => (
         <div className="d-flex">
-          <EyeOutlined className="mx-2" onClick={() => {
-            setSelectedBill(record);
-            setPrintBillModalVisibility(true);
-          }}
+          <EyeOutlined
+            className="mx-2"
+            onClick={() => {
+              setSelectedBill(record);
+              setPrintBillModalVisibility(true);
+            }}
           />
-          <EditTwoTone className="mx-2" onClick={() => {
-            setEditingBill(record);
-            setAddEditModalVisibility(true);
-          }}
+          <EditTwoTone
+            className="mx-2"
+            onClick={() => {
+              setEditingBill(record);
+              setAddEditModalVisibility(true);
+            }}
           />
-          <DeleteTwoTone twoToneColor="#eb2f96" className="mx-2" onClick={() => {
-            setDeleteBill(record);
-            setDeleteModalVisibility(true);
-          } }/>
+          <DeleteTwoTone
+            twoToneColor="#eb2f96"
+            className="mx-2"
+            onClick={() => {
+              setDeleteBill(record);
+              setDeleteModalVisibility(true);
+            }}
+          />
         </div>
       ),
     },
@@ -170,14 +162,50 @@ function Pemesanan() {
 
   const onFinish = (values) => {
     dispatch({ type: "showLoading" });
-    if(editingBill===null)
-    {
+    if (editingBill === null) {
       axios
-      .post(`${BASE_URL}/api/pemesanan/add-pemesanan`, values)
+        .post(`${BASE_URL}/api/pemesanan/add-pemesanan`, values)
+        .then((response) => {
+          dispatch({ type: "hideLoading" });
+          message.success("Pemesanan Berhasil Ditambah");
+          setAddEditModalVisibility(false);
+          getAllPemesanan();
+        })
+        .catch((error) => {
+          dispatch({ type: "hideLoading" });
+          message.error("Terjadi Kesalahan");
+          console.log(error);
+        });
+    } else {
+      axios
+        .post(`${BASE_URL}/api/pemesanan/edit-pemesanan`, {
+          ...values,
+          billId: editingBill._id,
+        })
+        .then((response) => {
+          dispatch({ type: "hideLoading" });
+          message.success("Data Pemesanan Berhasil Siubah");
+          setEditingBill(null);
+          setAddEditModalVisibility(false);
+          getAllPemesanan();
+        })
+        .catch((error) => {
+          dispatch({ type: "hideLoading" });
+          message.error("Terjadi Kesalahan");
+          console.log(error);
+        });
+    }
+  };
+  
+  const deletePemesanan = (record) => {
+    dispatch({ type: "showLoading" });
+    axios
+      .post(`${BASE_URL}/api/pemesanan/delete-pemesanan`, {
+        pemesananId: record._id,
+      })
       .then((response) => {
         dispatch({ type: "hideLoading" });
-        message.success("Pemesanan Berhasil Ditambah");
-        setAddEditModalVisibility(false);
+        message.success("Data Pemesanan Berhasil Dihapus");
         getAllPemesanan();
       })
       .catch((error) => {
@@ -185,23 +213,6 @@ function Pemesanan() {
         message.error("Terjadi Kesalahan");
         console.log(error);
       });
-    }
-    else{
-      axios
-      .post(`${BASE_URL}/api/pemesanan/edit-pemesanan`, {...values , billId : editingBill._id})
-      .then((response) => {
-        dispatch({ type: "hideLoading" });
-        message.success("Data Pemesanan Berhasil Siubah");
-        setEditingBill(null)
-        setAddEditModalVisibility(false);
-        getAllPemesanan();
-      })
-      .catch((error) => {
-        dispatch({ type: "hideLoading" });
-        message.error("Terjadi Kesalahan");
-        console.log(error);
-      });
-    }
   };
 
   const handlePrint = useReactToPrint({
@@ -215,13 +226,13 @@ function Pemesanan() {
       </div>
 
       <div className="d-flex">
-      <Search
-        placeholder="search pemesanan"
-        onSearch={onSearch}
-        style={{
-          width: 240,
-        }}
-      />
+        <Search
+          placeholder="search pemesanan"
+          onSearch={onSearch}
+          style={{
+            width: 240,
+          }}
+        />
       </div>
 
       <Table columns={columns} dataSource={pemesananData} bordered />
@@ -229,11 +240,13 @@ function Pemesanan() {
       {addEditModalVisibility && (
         <Modal
           onCancel={() => {
-            setEditingBill(null)
-            setAddEditModalVisibility(false)
+            setEditingBill(null);
+            setAddEditModalVisibility(false);
           }}
           visible={addEditModalVisibility}
-          title={`${editingBill !==null ? 'Ubah Data Pemesanan' : 'Tambah Pemesanan'}`}
+          title={`${
+            editingBill !== null ? "Ubah Data Pemesanan" : "Tambah Pemesanan"
+          }`}
           footer={false}
         >
           <Form
@@ -247,13 +260,10 @@ function Pemesanan() {
             <Form.Item name="nohpCustomer" label="No. HP Customer">
               <Input />
             </Form.Item>
-            <Form.Item name="harga" label="Harga">
-              <Input />
-            </Form.Item>
-            <Form.Item name="kategori" label="Kategori">
+            <Form.Item initialValue={"Lunas"} name="statusPembayaran" label="Status Pembayaran">
               <Select>
-                <Select.Option value="banner">Banner</Select.Option>
-                <Select.Option value="poster">Poster</Select.Option>
+                <Select.Option value="lunas">Lunas</Select.Option>
+                <Select.Option value="dp">Belum Lunas</Select.Option>
               </Select>
             </Form.Item>
             <div className="d-flex justify-content-end">
@@ -266,17 +276,17 @@ function Pemesanan() {
       )}
 
       {deleteModalVisibility && (
-      <Modal 
-       onCancel={() => {
-        setDeleteModalVisibility(false);
-      }}
-      visible= {deleteModalVisibility} 
-      title="Hapus Pemesanan"
-      footer={false}
-      width
-      >
-        Lorem ipsum
-      </Modal>
+        <Modal
+          onCancel={() => {
+            setDeleteModalVisibility(false);
+          }}
+          visible={deleteModalVisibility}
+          title="Hapus Pemesanan"
+          footer={false}
+          width
+        >
+          Lorem ipsum
+        </Modal>
       )}
 
       {printBillModalVisibility && (
@@ -304,37 +314,56 @@ function Pemesanan() {
             <div className="bill-customer-details my-2">
               <table>
                 <tr>
-                  <td><b>Tanggal Pemesanan</b></td>
-                  <td> : {" "}{selectedBill.tanggalNota}</td>
+                  <td>
+                    <b>Tanggal Pemesanan</b>
+                  </td>
+                  <td> : {selectedBill.tanggalNota}</td>
                 </tr>
                 <tr>
-                  <td><b>Nama</b></td>
+                  <td>
+                    <b>Nama</b>
+                  </td>
                   <td> : {selectedBill.namaCustomer}</td>
                 </tr>
                 <tr>
-                  <td><b>Nomor Handphone</b></td>
+                  <td>
+                    <b>Nomor Handphone</b>
+                  </td>
                   <td> : {selectedBill.nohpCustomer}</td>
                 </tr>
               </table>
             </div>
-            <Table dataSource={selectedBill.cartItems} columns={cartcolumns} pagination={false} />
+            <Table
+              dataSource={selectedBill.cartItems}
+              columns={cartcolumns}
+              pagination={false}
+            />
 
             <div className="dotted-border">
               <table>
                 <tr>
-                  <td><b>DP</b></td>
+                  <td>
+                    <b>DP</b>
+                  </td>
                   <td> : Rp {selectedBill.uangMuka}</td>
                 </tr>
                 <tr>
-                  <td><b>SISA PEMBAYARAN</b></td>
-                  <td> : Rp {selectedBill.totalHarga + - selectedBill.uangMuka}</td>
+                  <td>
+                    <b>SISA PEMBAYARAN</b>
+                  </td>
+                  <td>
+                    {" "}
+                    : Rp {selectedBill.totalHarga + -selectedBill.uangMuka}
+                  </td>
                   {/* <p><b>Sisa</b> : {selectedPemesanan--uangMuka}</p> */}
                 </tr>
               </table>
             </div>
 
             <div>
-              <h2><b>GRAND TOTAL : Rp {selectedBill.totalHarga}</b></h2>
+              <h2>
+                <b>GRAND TOTAL : Rp {selectedBill.totalHarga}</b>
+              </h2>
             </div>
             <div className="dotted-border"></div>
 
@@ -351,7 +380,9 @@ function Pemesanan() {
           </div>
 
           <div className="d-flex justify-content-end">
-            <Button type='primary' onClick={handlePrint}>Cetak Nota</Button>
+            <Button type="primary" onClick={handlePrint}>
+              Cetak Nota
+            </Button>
           </div>
         </Modal>
       )}

@@ -5,7 +5,7 @@ const router = express.Router();
 router.get("/get-all-pembelian", async (req, res) => {
   try {
     const pembelian = await PembelianModel.find();
-    res.send(items);
+    res.send(pembelian);
   } catch (error) {
     res.status(400).json(error);
   }
@@ -29,7 +29,6 @@ router.post("/edit-pembelian", async (req, res) => {
     res.status(400).json(error);
   }
 });
-
 
 router.post("/delete-pembelian", async (req, res) => {
   try {

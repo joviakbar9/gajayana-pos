@@ -66,7 +66,7 @@ function Homepage() {
       dataIndex: "_id",
       render: (id, record) => (
         <div className="d-flex">
-          <Button onClick={()=>addTocart(record)}>Tambah</Button>
+          <Button onClick = {()=> addTocart(record)} type = "primary">Tambah</Button>
         </div>
       ),
     },

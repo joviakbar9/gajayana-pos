@@ -75,8 +75,8 @@
   cursor: pointer;
   position: absolute;
   right: 11%;
-
 }
+
 .spinner{
   z-index: 10;
   position: absolute;
@@ -93,7 +93,7 @@
   overflow-y: scroll;
 }
 
-
+/* date picker style */
 .ant-picker-month-btn{
   background-color: white !important;
   color: black !important;
@@ -120,13 +120,13 @@
 }
 
 
-button{
+/* button{
   background-color: rgb(15, 155, 15) !important;
   color: white !important;
   border: none !important;
   box-shadow: none;
   outline: none;
-}
+} */
 .ant-modal-close-x{
   background-color: white !important;
   color: black !important;
