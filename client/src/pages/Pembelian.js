@@ -194,7 +194,6 @@ function Pembelian() {
             <Form.Item name="keterangan" label="Keterangan">
               <Input.TextArea />
             </Form.Item>
-
             <div className="d-flex justify-content-end">
               <Button htmlType="submit" type="primary">
                 SIMPAN
@@ -203,6 +202,7 @@ function Pembelian() {
           </Form>{" "}
         </Modal>
       )}
+      
       {deleteModalVisibility && (
         <Modal
           onCancel = { ()=> {

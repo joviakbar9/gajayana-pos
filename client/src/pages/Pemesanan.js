@@ -21,7 +21,7 @@ function Pemesanan() {
   const [deleteModalVisibility, setDeleteModalVisibility] = useState(false);
   const [selectedBill, setSelectedBill] = useState(null);
   const [editingBill, setEditingBill] = useState(null);
-  const [setDeleteBill, deleteBill] = useState(null);
+  const [delBill, setDelBill] = useState(null);
   const dispatch = useDispatch();
 
   const getAllPemesanan = () => {
@@ -118,7 +118,7 @@ function Pemesanan() {
             twoToneColor="#eb2f96"
             className="mx-2"
             onClick={() => {
-              setDeleteBill(record);
+              setDelBill(record);
               setDeleteModalVisibility(true);
             }}
           />
@@ -178,13 +178,10 @@ function Pemesanan() {
         });
     } else {
       axios
-        .post(`${BASE_URL}/api/pemesanan/edit-pemesanan`, {
-          ...values,
-          billId: editingBill._id,
-        })
+        .post(`${BASE_URL}/api/pemesanan/edit-pemesanan`, {...values, pemesananId: editingBill._id,})
         .then((response) => {
           dispatch({ type: "hideLoading" });
-          message.success("Data Pemesanan Berhasil Siubah");
+          message.success("Data Pemesanan Berhasil Diubah");
           setEditingBill(null);
           setAddEditModalVisibility(false);
           getAllPemesanan();
@@ -197,15 +194,15 @@ function Pemesanan() {
     }
   };
   
-  const deletePemesanan = (record) => {
+  const deletePemesanan = (values) => {
     dispatch({ type: "showLoading" });
     axios
-      .post(`${BASE_URL}/api/pemesanan/delete-pemesanan`, {
-        pemesananId: record._id,
-      })
+      .post(`${BASE_URL}/api/pemesanan/delete-pemesanan`, {...values, pemesananId: delBill._id,})
       .then((response) => {
         dispatch({ type: "hideLoading" });
         message.success("Data Pemesanan Berhasil Dihapus");
+        setDelBill(null);
+        setDeleteModalVisibility(false);
         getAllPemesanan();
       })
       .catch((error) => {
@@ -274,18 +271,31 @@ function Pemesanan() {
           </Form>
         </Modal>
       )}
-
+      
       {deleteModalVisibility && (
         <Modal
-          onCancel={() => {
-            setDeleteModalVisibility(false);
+          onCancel = { ()=> {
+            setDelBill(null)
+            setDeleteModalVisibility(false)
           }}
-          visible={deleteModalVisibility}
-          title="Hapus Pemesanan"
-          footer={false}
-          width
+          visible = {deleteModalVisibility}
+          title = "Hapus Data Pemesanan"
+          footer = {false}
         >
-          Lorem ipsum
+          <Form
+            initialValues = {delBill}
+            layout = "vertical"
+            onFinish = {deletePemesanan}
+          >
+            <div className="text-left">
+              <p>Apakah anda yakin ingin menghapus data pemesanan ini? </p>
+            </div>
+            <div className="d-flex justify-content-end">
+              <Button htmlType="submit" type="danger">
+                HAPUS
+              </Button>
+            </div>
+          </Form>
         </Modal>
       )}
 
