@@ -14,6 +14,7 @@ import Pembelian from "./pages/Pembelian";
 import Pegawai from "./pages/Pegawai";
 import LaporanPenjualan from "./pages/LaporanPenjualan";
 import LaporanPembelian from "./pages/LaporanPembelian";
+import User from "./pages/User";
 import DefaultLayout from './components/DefaultLayout';
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
             <Route path="/pegawai" element={<ProtectedRoute><Pegawai /></ProtectedRoute>} />
             <Route path="/laporanpenjualan" element={<ProtectedRoute><LaporanPenjualan /></ProtectedRoute>} />
             <Route path="/laporanpembelian" element={<ProtectedRoute><LaporanPembelian /></ProtectedRoute>} />
+            <Route path="/user" element={<ProtectedRoute><User /></ProtectedRoute>} />
             <Route path="/register" element={<Register />} />
           </Route>
           <Route path="/login" element={<Login />} />

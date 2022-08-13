@@ -96,7 +96,7 @@ function Items() {
       axios
         .post(`${BASE_URL}/api/users/edit-user`, {
           ...values,
-          userId: editingItem._id,
+          usersId: editingItem._id,
         })
         .then((response) => {
           dispatch({ type: 'hideLoading' });
@@ -116,9 +116,9 @@ function Items() {
   const deleteItem = (values) => {
     dispatch({ type: 'showLoading' });
     axios
-      .post(`${BASE_URL}/api/users/delete-item`, {
+      .post(`${BASE_URL}/api/users/delete-user`, {
         ...values,
-        userId: delItem._id,
+        usersId: delItem._id,
       })
       .then((response) => {
         dispatch({ type: 'hideLoading' });
@@ -177,7 +177,7 @@ function Items() {
               <Input />
             </Form.Item>
             <Form.Item name='password' label='Password'>
-              <Input />
+              <Input type='password'/>
             </Form.Item>
             <Form.Item name='role' label='Role'>
               <Input />

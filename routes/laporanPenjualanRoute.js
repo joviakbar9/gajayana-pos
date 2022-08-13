@@ -11,7 +11,7 @@ router.get('/get-sum', async (req, res) => {
       {
         $project: {
           yearMonthDay: {
-            $dateToString: { format: '%Y-%m-%d', date: '$tanggalPemesanan' },
+            $dateToString: { format: '%d-%m-%Y', date: '$tanggalPemesanan' },
           },
           time: {
             $dateToString: { format: '%H:%M:%S:%L', date: '$tanggalPemesanan' },

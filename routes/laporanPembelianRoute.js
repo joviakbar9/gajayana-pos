@@ -2,16 +2,16 @@ const express = require('express');
 const PembelianModel = require('../models/pembelianModel');
 const router = express.Router();
 
-router.get('/get-sum', async (req, res) => {
+router.get('/get-total-pembelian', async (req, res) => {
   try {
     const data = [
       {
         $project: {
           yearMonthDay: {
-            $dateToString: { format: '%Y-%m-%d', date: '$tanggalPemesanan' },
+            $dateToString: { format: '%d-%m-%Y', date: '$tanggalPembelian' },
           },
           time: {
-            $dateToString: { format: '%H:%M:%S:%L', date: '$tanggalPemesanan' },
+            $dateToString: { format: '%H:%M:%S:%L', date: '$tanggalPembelian' },
           },
           totalHarga: '$hargaPembelian',
         },

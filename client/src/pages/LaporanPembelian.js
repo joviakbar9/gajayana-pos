@@ -12,7 +12,7 @@ function LaporanPembelian() {
   const getAllPembelian = () => {
     dispatch({ type: 'showLoading' });
     axios
-      .get(`${BASE_URL}/api/laporanPembelian/get-sum`)
+      .get(`${BASE_URL}/api/laporanPembelian/get-total-pembelian`)
       .then((response) => {
         dispatch({ type: 'hideLoading' });
         setItemsData(response.data);

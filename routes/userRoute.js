@@ -40,7 +40,7 @@ router.post('/add-user', async (req, res) => {
 router.post('/edit-user', async (req, res) => {
   try {
     await UserModel.findOneAndUpdate(
-      { _id: req.body.userId },
+      { _id: req.body.usersId },
       req.body
     );
     res.send('User Berhasil Diubah');
@@ -51,7 +51,7 @@ router.post('/edit-user', async (req, res) => {
 
 router.post('/delete-user', async (req, res) => {
   try {
-    await UserModel.findOneAndDelete({ _id: req.body.userId });
+    await UserModel.findOneAndDelete({ _id: req.body.usersId });
     res.send('User Berhasil Dihapus');
   } catch (error) {
     res.status(400).json(error);

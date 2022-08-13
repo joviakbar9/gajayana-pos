@@ -25,7 +25,7 @@ app.use('/api/pembelian/', pembelianRoute);
 app.use('/api/customer/', customerRoute);
 app.use('/api/pegawai/', pegawaiRoute);
 app.use('/api/laporanPenjualan/', laporanPenjualanRoute);
-// app.use('/api/laporanPembelian/', laporanPembelianRoute);
+// app.use('/api/laporanPembelian', laporanPembelianRoute);
 
 const path = require('path');
 
