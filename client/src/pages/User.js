@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { EditTwoTone, DeleteTwoTone } from '@ant-design/icons';
-import { Button, Form, Input, message, Modal, Table } from 'antd';
+import { Button, Form, Input, message, Modal, Select, Table } from 'antd';
 import { BASE_URL } from '../constant/axios';
 
 function Items() {
@@ -19,7 +19,7 @@ function Items() {
   const getAllItems = () => {
     dispatch({ type: 'showLoading' });
     axios
-      .get(`${BASE_URL}/api/customer/get-all-customer`)
+      .get(`${BASE_URL}/api/users/get-all-user`)
       .then((response) => {
         dispatch({ type: 'hideLoading' });
         setItemsData(response.data);
@@ -30,27 +30,22 @@ function Items() {
       });
   };
 
-  // const getAllKategori = () => {
-  //   axios
-  //     .get(`${BASE_URL}/api/kategori/get-all-kategori`)
-  //     .then((response) => {
-  //       setKategori(response.data);
-  //       console.log(getKategori);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-
   const columns = [
     {
-      title: 'Nama Customer',
-      dataIndex: 'namaCustomer',
-      sorter: (a, b) => a.namaCustomer.localeCompare(b.namaCustomer),
+      title: 'Nama',
+      dataIndex: 'name',
     },
     {
-      title: 'No. HP',
-      dataIndex: 'noHpCustomer',
+      title: 'User ID',
+      dataIndex: 'userId',
+    },
+    {
+      title: 'Password',
+      dataIndex: 'password',
+    },
+    {
+      title: 'Role',
+      dataIndex: 'role',
     },
     {
       title: 'Actions',
@@ -85,10 +80,10 @@ function Items() {
     dispatch({ type: 'showLoading' });
     if (editingItem === null) {
       axios
-        .post(`${BASE_URL}/api/customer/add-customer`, values)
+        .post(`${BASE_URL}/api/users/add-user`, values)
         .then((response) => {
           dispatch({ type: 'hideLoading' });
-          message.success('Customer Berhasil Ditambah');
+          message.success('User Berhasil Ditambah');
           setAddEditModalVisibilty(false);
           getAllItems();
         })
@@ -99,13 +94,13 @@ function Items() {
         });
     } else {
       axios
-        .post(`${BASE_URL}/api/customer/edit-customer`, {
+        .post(`${BASE_URL}/api/users/edit-user`, {
           ...values,
-          itemId: editingItem._id,
+          userId: editingItem._id,
         })
         .then((response) => {
           dispatch({ type: 'hideLoading' });
-          message.success('Data Customer Berhasil Diubah');
+          message.success('Data User Berhasil Diubah');
           setEditingItem(null);
           setAddEditModalVisibilty(false);
           getAllItems();
@@ -121,13 +116,13 @@ function Items() {
   const deleteItem = (values) => {
     dispatch({ type: 'showLoading' });
     axios
-      .post(`${BASE_URL}/api/customer/delete-customer`, {
+      .post(`${BASE_URL}/api/users/delete-item`, {
         ...values,
-        itemId: delItem._id,
+        userId: delItem._id,
       })
       .then((response) => {
         dispatch({ type: 'hideLoading' });
-        message.success('Customer berhasil Dihapus');
+        message.success('User berhasil Dihapus');
         setDelItem(null);
         setDeleteModalVisibility(false);
         getAllItems();
@@ -142,15 +137,15 @@ function Items() {
   return (
     <div>
       <div className='d-flex justify-content-between'>
-        <h3>Customer</h3>
+        <h3>User</h3>
         <Button type='primary' onClick={() => setAddEditModalVisibilty(true)}>
-          Tambah Customer
+          Tambah User
         </Button>
       </div>
 
       <div className='d-flex'>
         <Search
-          placeholder='search customer'
+          placeholder='search user'
           onSearch={onSearch}
           style={{
             width: 240,
@@ -167,9 +162,7 @@ function Items() {
             setAddEditModalVisibilty(false);
           }}
           visible={addEditModalVisibilty}
-          title={`${
-            editingItem !== null ? 'Ubah Customer' : 'Tambah Costumer'
-          }`}
+          title={`${editingItem !== null ? 'Ubah User' : 'Tambah User'}`}
           footer={false}
         >
           <Form
@@ -177,10 +170,16 @@ function Items() {
             layout='vertical'
             onFinish={onFinish}
           >
-            <Form.Item name='namaCustomer' label='Nama Customer'>
+            <Form.Item name='name' label='Nama'>
               <Input />
             </Form.Item>
-            <Form.Item name='noHpCustomer' label='No. HP'>
+            <Form.Item name='userId' label='User ID'>
+              <Input />
+            </Form.Item>
+            <Form.Item name='password' label='Password'>
+              <Input />
+            </Form.Item>
+            <Form.Item name='role' label='Role'>
               <Input />
             </Form.Item>
             <div className='d-flex justify-content-end'>
@@ -198,12 +197,12 @@ function Items() {
             setDeleteModalVisibility(false);
           }}
           visible={deleteModalVisibility}
-          title='Hapus Customer'
+          title='Hapus User'
           footer={false}
         >
           <Form initialValues={delItem} layout='vertical' onFinish={deleteItem}>
             <div className='text-left'>
-              <p>Apakah anda yakin ingin menghapus customer ini? </p>
+              <p>Apakah anda yakin ingin menghapus user ini? </p>
             </div>
             <div className='d-flex justify-content-end'>
               <Button htmlType='submit' type='danger'>

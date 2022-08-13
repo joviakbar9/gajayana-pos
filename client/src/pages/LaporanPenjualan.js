@@ -1,39 +1,37 @@
-import React, { useEffect, useState } from "react";
-import DefaultLayout from "../components/DefaultLayout";
-import axios from "axios";
-import { Button, Form, Input, message, Modal, Row, Table } from "antd";
-import Item from "../components/Item";
-import "../resources/items.css";
-import { useDispatch } from "react-redux";
-import { BASE_URL } from "../constant/axios";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Table } from 'antd';
+import '../resources/items.css';
+import { useDispatch } from 'react-redux';
+import { BASE_URL } from '../constant/axios';
 
 function LaporanPenjualan() {
   const [itemsData, setItemsData] = useState([]);
-  const [editingItem, setEditingItem] = useState(null);
   const dispatch = useDispatch();
-  
+
   const getAllItems = () => {
-    dispatch({ type: "showLoading" });
+    dispatch({ type: 'showLoading' });
     axios
-      .get(`${BASE_URL}/api/items/get-all-items`)
+      .get(`${BASE_URL}/api/laporanPenjualan/get-sum`)
       .then((response) => {
-        dispatch({ type: "hideLoading" });
+        dispatch({ type: 'hideLoading' });
         setItemsData(response.data);
       })
       .catch((error) => {
-        dispatch({ type: "hideLoading" });
+        dispatch({ type: 'hideLoading' });
         console.log(error);
       });
   };
 
   const columns = [
     {
-      title: "Tanggal Pemesanan",
-      dataIndex: "tanggalpemesanan",
+      title: 'Tanggal Pemesanan',
+      dataIndex: '_id',
+      sorter: (a, b) => a._id.localeCompare(b._id),
     },
     {
-      title: "Total Penjualan",
-      dataIndex: "totalpenjualan",
+      title: 'Total Penjualan',
+      dataIndex: 'totalAmount',
     },
   ];
 
@@ -41,13 +39,12 @@ function LaporanPenjualan() {
     getAllItems();
   }, []);
   return (
-    <DefaultLayout>
-      <Row>{itemsData.map(() => {})}</Row>
-      <div className="d-flex justify-content-between">
+    <div>
+      <div className='d-flex justify-content-between'>
         <h3>Laporan Penjualan</h3>
       </div>
-      <Table columns={columns} dataSource={itemsData} bordered />
-    </DefaultLayout>
+      <Table columns={columns} dataSource={itemsData} bordered rowKey='_id' />
+    </div>
   );
 }
 

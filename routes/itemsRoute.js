@@ -1,43 +1,15 @@
-const express = require("express");
-const ItemModel = require("../models/itemsModel");
+const express = require('express');
 const router = express.Router();
+const {
+  getProducts,
+  addProduct,
+  editProduct,
+  deleteProduct,
+} = require('../controllers/itemsController');
 
-router.get("/get-all-items", async (req, res) => {
-  try {
-    const items = await ItemModel.find().populate('kategori');
-    console.log(items);
-    res.send(items);
-  } catch (error) {
-    res.status(400).json(error);
-  }
-});
+router.get('/get-all-items', getProducts);
+router.post('/add-item', addProduct);
+router.post('/edit-item', editProduct);
+router.post('/delete-item', deleteProduct);
 
-router.post("/add-item", async (req, res) => {
-  try {
-    const newitem = new ItemModel(req.body)
-    await newitem.save()
-    res.send('Item added successfully')
-  } catch (error) {
-    res.status(400).json(error);
-  }
-});
-
-router.post("/edit-item", async (req, res) => {
-  try {
-    await ItemModel.findOneAndUpdate({_id : req.body.itemId} , req.body)
-    res.send('Item updated successfully')
-  } catch (error) {
-    res.status(400).json(error);
-  }
-});
-
-router.post("/delete-item", async (req, res) => {
-  try {
-    await ItemModel.findOneAndDelete({_id : req.body.itemId})
-    res.send('Item deleted successfully')
-  } catch (error) {
-    res.status(400).json(error);
-  }
-});
-
-module.exports = router
+module.exports = router;

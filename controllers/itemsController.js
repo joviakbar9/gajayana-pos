@@ -1,74 +1,38 @@
-function Items() {
-    const [itemsData, setItemsData] = useState([]);
-    const [addEditModalVisibilty, setAddEditModalVisibilty] = useState(false);
-    const [editingItem, setEditingItem] = useState(null);
-    const dispatch = useDispatch();
-    const getAllItems = () => {
-      dispatch({ type: "showLoading" });
-      axios
-        .get(`${BASE_URL}/api/items/get-all-items`)
-        .then((response) => {
-          dispatch({ type: "hideLoading" });
-          setItemsData(response.data);
-        })
-        .catch((error) => {
-          dispatch({ type: "hideLoading" });
-          console.log(error);
-        });
-    };
-  
-    const deleteItem = (record) => {
-      dispatch({ type: "showLoading" });
-      axios
-        .post(`${BASE_URL}/api/items/delete-item` , {itemId : record._id})
-        .then((response) => {
-          dispatch({ type: "hideLoading" });
-          message.success('Produk berhasil dihapus')
-          getAllItems()
-        })
-        .catch((error) => {
-          dispatch({ type: "hideLoading" });
-          message.error('Terjadi Kesalahan')
-          console.log(error);
-        });
-    };
+const ItemModel = require('../models/itemsModel');
 
-    useEffect(() => {
-        getAllItems();
-      }, []);
-    
-      const onFinish = (values) => {
-        dispatch({ type: "showLoading" });
-        if(editingItem===null)
-        {
-          axios
-          .post(`${BASE_URL}/api/items/add-item`, values)
-          .then((response) => {
-            dispatch({ type: "hideLoading" });
-            message.success("Produk berhasil ditambah");
-            setAddEditModalVisibilty(false);
-            getAllItems();
-          })
-          .catch((error) => {
-            dispatch({ type: "hideLoading" });
-            message.error("Terjadi Kesalahan");
-            console.log(error);
-          });
-        }
-        else{
-          axios
-          .post(`${BASE_URL}/api/items/edit-item`, {...values , itemId : editingItem._id})
-          .then((response) => {
-            dispatch({ type: "hideLoading" });
-            message.success("Data produk berhasil diubah");
-            setEditingItem(null)
-            setAddEditModalVisibilty(false);
-            getAllItems();
-          })
-          .catch((error) => {
-            dispatch({ type: "hideLoading" });
-            message.error("Terjadi Kesalahan");
-            console.log(error);
-          });
-        }
-      };
+module.exports = {
+  getProducts: async (req, res) => {
+    try {
+      const items = await ItemModel.find().populate('kategori');
+      console.log(items);
+      res.send(items);
+    } catch (error) {
+      res.status(400).json(error);
+    }
+  },
+  addProduct: async (req, res) => {
+    try {
+      const newitem = new ItemModel(req.body);
+      await newitem.save();
+      res.send('Item added successfully');
+    } catch (error) {
+      res.status(400).json(error);
+    }
+  },
+  editProduct: async (req, res) => {
+    try {
+      await ItemModel.findOneAndUpdate({ _id: req.body.itemId }, req.body);
+      res.send('Item updated successfully');
+    } catch (error) {
+      res.status(400).json(error);
+    }
+  },
+  deleteProduct: async (req, res) => {
+    try {
+      await ItemModel.findOneAndDelete({ _id: req.body.itemId });
+      res.send('Item deleted successfully');
+    } catch (error) {
+      res.status(400).json(error);
+    }
+  },
+};
