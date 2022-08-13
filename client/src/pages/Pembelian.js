@@ -180,9 +180,7 @@ function Pembelian() {
           }}
           visible={addEditModalVisibility}
           title={`${
-            editingPembelian !== null
-              ? 'Ubah Data Pembelian'
-              : 'Tambah Data Pembelian'
+            editingPembelian !== null ? 'Ubah Data Pembelian' : 'Tambah Data Pembelian'
           }`}
           footer={false}
         >

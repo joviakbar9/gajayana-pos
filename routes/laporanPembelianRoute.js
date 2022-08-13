@@ -13,7 +13,7 @@ router.get('/get-total-pembelian', async (req, res) => {
           time: {
             $dateToString: { format: '%H:%M:%S:%L', date: '$tanggalPembelian' },
           },
-          totalHarga: '$hargaPembelian',
+          hargaPembelian: '$hargaPembelian',
         },
       },
       {
@@ -23,6 +23,10 @@ router.get('/get-total-pembelian', async (req, res) => {
         },
       },
     ];
+    const kategori = await PembelianModel.aggregate(data);
+    res.send(kategori);
+  } catch (error) {
+    res.status(400).json(error);
   }
 });
 

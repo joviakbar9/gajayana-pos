@@ -11,7 +11,7 @@ const pembelianRoute = require('./routes/pembelianRoute');
 const customerRoute = require('./routes/customerRoute');
 const pegawaiRoute = require('./routes/pegawaiRoute');
 const laporanPenjualanRoute = require('./routes/laporanPenjualanRoute');
-// const laporanPembelianRoute = require('./routes/laporanPembelianRoute');
+const laporanPembelianRoute = require('./routes/laporanPembelianRoute');
 
 app.use(cors());
 
@@ -25,7 +25,7 @@ app.use('/api/pembelian/', pembelianRoute);
 app.use('/api/customer/', customerRoute);
 app.use('/api/pegawai/', pegawaiRoute);
 app.use('/api/laporanPenjualan/', laporanPenjualanRoute);
-// app.use('/api/laporanPembelian', laporanPembelianRoute);
+app.use('/api/laporanPembelian', laporanPembelianRoute);
 
 const path = require('path');
 
