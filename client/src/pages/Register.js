@@ -24,7 +24,7 @@ function Register() {
       });
   };
   useEffect(() => {
-    if (localStorage.getItem('pos-user')) navigate('/home');
+    if (localStorage.getItem('pos-user')) navigate('/pemesanan');
   }, []);
 
   return (

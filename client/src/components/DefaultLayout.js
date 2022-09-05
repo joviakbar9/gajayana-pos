@@ -165,7 +165,7 @@ const DefaultLayout = (props) => {
             <ShoppingCartOutlined />
           </div>
 
-          <div className='akun-dropdown d-flex'>
+          {/* <div className='akun-dropdown d-flex'>
             <Dropdown overlay={menu} trigger={['click']}>
               <a onClick={(e) => e.preventDefault()}>
                 <Space>
@@ -174,7 +174,7 @@ const DefaultLayout = (props) => {
                 </Space>
               </a>
             </Dropdown>
-          </div>
+          </div> */}
         </Header>
         <main
           className='site-layout-background'

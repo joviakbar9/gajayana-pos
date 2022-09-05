@@ -354,13 +354,13 @@ function Pemesanan() {
                   <td>
                     <b>Nama</b>
                   </td>
-                  <td> : {selectedBill.namaCustomer}</td>
+                  <td> : {selectedBill.v.namaCustomer}</td>
                 </tr>
                 <tr>
                   <td>
                     <b>Nomor Handphone</b>
                   </td>
-                  <td> : {selectedBill.nohpCustomer}</td>
+                  <td> : {selectedBill.v.noHpCustomer}</td>
                 </tr>
               </table>
             </div>

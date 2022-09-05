@@ -18,7 +18,7 @@ function Login() {
         dispatch({ type: 'hideLoading' });
         message.success('Login Berhasil');
         localStorage.setItem('pos-user', JSON.stringify(res.data));
-        naviate('/home');
+        naviate('/daftarpemesanan');
       })
       .catch(() => {
         dispatch({ type: 'hideLoading' });
@@ -27,7 +27,7 @@ function Login() {
   };
 
   useEffect(() => {
-    if (localStorage.getItem('pos-user')) naviate('/home');
+    if (localStorage.getItem('pos-user')) naviate('/daftarpemesanan');
   }, []);
 
   return (
@@ -46,10 +46,10 @@ function Login() {
               <Input type='password' />
             </Form.Item>
 
-            <div className='d-flex justify-content-between align-items-center'>
-              <Link to='/register'>
+            <div className='d-flex-justify-content-between-align-items-right'>
+              {/* <Link to='/register'>
                 Not Yet Registered ? Click Here To Register
-              </Link>
+              </Link> */}
               <Button htmlType='submit' type='primary'>
                 Login
               </Button>

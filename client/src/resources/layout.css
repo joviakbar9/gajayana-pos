@@ -74,7 +74,7 @@
 .cart-count{
   cursor: pointer;
   position: absolute;
-  right: 11%;
+  right: 3%;
 }
 
 .spinner{
@@ -130,4 +130,8 @@
 .ant-modal-close-x{
   background-color: white !important;
   color: black !important;
+}
+
+.d-flex-justify-content-between-align-items-right{
+  padding-left: 85% !important;
 }
