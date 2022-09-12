@@ -63,8 +63,7 @@ function Pemesanan() {
     {
       title: 'Tanggal Pemesanan',
       dataIndex: 'newtanggalPemesanan',
-      sorter: (a, b) =>
-        a.newtanggalPemesanan.localeCompare(b.newtanggalPemesanan),
+      sorter: (a, b) => a.newtanggalPemesanan.localeCompare(b.newtanggalPemesanan),
     },
     {
       title: 'No. Nota',
@@ -354,13 +353,13 @@ function Pemesanan() {
                   <td>
                     <b>Nama</b>
                   </td>
-                  <td> : {selectedBill.v.namaCustomer}</td>
+                  <td> : {selectedBill.customerId.namaCustomer}</td>
                 </tr>
                 <tr>
                   <td>
                     <b>Nomor Handphone</b>
                   </td>
-                  <td> : {selectedBill.v.noHpCustomer}</td>
+                  <td> : {selectedBill.customerId.noHpCustomer}</td>
                 </tr>
               </table>
             </div>
@@ -386,9 +385,7 @@ function Pemesanan() {
                   <td>
                     {' '}
                     : Rp{' '}
-                    {selectedBill.sisaPembayaran !== 0
-                      ? selectedBill.totalHarga + -selectedBill.uangMuka
-                      : 0}
+                    {selectedBill.sisaPembayaran !== 0 ? selectedBill.totalHarga +-selectedBill.uangMuka : 0}
                   </td>
                   {/* <p><b>Sisa</b> : {selectedPemesanan--uangMuka}</p> */}
                 </tr>
