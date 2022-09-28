@@ -7,6 +7,7 @@ const pemesananSchema = mongoose.Schema(
     customerId: { type: mongoose.Types.ObjectId, ref: 'customer' },
     totalHarga: { type: Number },
     uangMuka: { type: Number },
+    diskon: { type: Number },
     sisaPembayaran: { type: Number },
     cartItems: { type: Array, required: true },
     statusPembayaran: { type: String, required: true },

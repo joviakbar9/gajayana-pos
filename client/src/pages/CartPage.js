@@ -26,6 +26,8 @@ function CartPage() {
   const [billChargeModal, setBillChargeModal] = useState(false);
   const [subTotal, setSubTotal] = useState(0);
   const [sisaPembayaran, setSisa] = useState(0);
+  const [grandTotall, setGrandTotal] = useState(0);
+  const [diskon, setDiskon] = useState(0);
   const [getCustomer, setCustomer] = useState([]);
   const [form] = Form.useForm();
   const navigate = useNavigate();
@@ -52,6 +54,10 @@ function CartPage() {
     setSisa(subTotal - event.target.value);
     form.setFieldsValue({ sisaPembayaran: subTotal - event.target.value });
   };
+
+  const grandTotal = (event) => {
+    setGrandTotal(subTotal - (subTotal / 100) * event.target.value)
+  }
 
   const getAllCustomer = () => {
     axios
@@ -220,6 +226,9 @@ function CartPage() {
           <Form.Item disabled hidden={!isDp} name='sisaPembayaran' label='Sisa'>
             <Input sisaPembayaran />
           </Form.Item>
+          <Form.Item initialValue={0} name='diskon' label='Diskon (%)'>
+            <Input onChange={setDiskon} />
+          </Form.Item>
           <Form.Item name='keterangan' label='Keterangan'>
             <Input.TextArea />
           </Form.Item>
@@ -230,10 +239,10 @@ function CartPage() {
 
           <div className='charge-bill-amount'>
             <h5>
-              Total Harga : <b>Rp {subTotal}</b>
+              Total Harga : <b>Rp {grandTotal} {subTotal - (subTotal / 100) * diskon}</b>
             </h5>
             {/* <h2>
-              Grand Total : <b>{subTotal + (subTotal / 100) * 10}</b>
+              Grand Total : <b>{subTotal - (subTotal / 100) * diskon}</b>
             </h2> */}
           </div>
 

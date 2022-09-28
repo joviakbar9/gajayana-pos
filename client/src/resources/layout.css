@@ -39,9 +39,16 @@
 .ant-menu-submenu-title{
   padding-left: 12px !important;
 }
-.ant-menu-item-only-child{
-  padding-left: 28px !important;
+
+.ant-menu-sub{
+  padding-left: 16px !important;
 }
+
+/* sub menu laporan */
+/* .ant-menu-item-only-child{
+  padding-left: 28px !important;
+} */
+
 .ant-layout-header{
     margin: 0 10px !important;
     display: flex;

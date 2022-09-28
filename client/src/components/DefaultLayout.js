@@ -89,6 +89,9 @@ const DefaultLayout = (props) => {
             <Menu.Item key='/kategoriproduk' icon={<AppstoreOutlined />}>
               <Link to='/kategoriproduk'>Kategori</Link>
             </Menu.Item>
+            <Menu.Item key='/customers' icon={<UsergroupAddOutlined />}>
+              <Link to='/customers'>Customers</Link>
+            </Menu.Item>
             <Menu.Item key='/pegawai' icon={<UserSwitchOutlined />}>
               <Link to='/pegawai'>Pegawai</Link>
             </Menu.Item>
@@ -97,13 +100,6 @@ const DefaultLayout = (props) => {
             <Link to='/daftarpemesanan'>Daftar Pemesanan</Link>
           </Menu.Item>
 
-          <Menu.Item
-            hidden={role === 'kasir'}
-            key='/customers'
-            icon={<UsergroupAddOutlined />}
-          >
-            <Link to='/customers'>Customers</Link>
-          </Menu.Item>
           <Menu.Item
             hidden={role === 'kasir'}
             key='/pembelian'

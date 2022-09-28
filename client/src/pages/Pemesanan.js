@@ -14,8 +14,7 @@ function Pemesanan() {
 
   const componentRef = useRef();
   const [pemesananData, setPemesananData] = useState([]);
-  const [printBillModalVisibility, setPrintBillModalVisibility] =
-    useState(false);
+  const [printBillModalVisibility, setPrintBillModalVisibility] = useState(false);
   const [addEditModalVisibility, setAddEditModalVisibility] = useState(false);
   const [deleteModalVisibility, setDeleteModalVisibility] = useState(false);
   const [selectedBill, setSelectedBill] = useState(null);
@@ -82,6 +81,10 @@ function Pemesanan() {
     {
       title: 'DP',
       dataIndex: 'uangMuka',
+    },
+    {
+      title: 'Diskon (%)',
+      dataIndex: 'diskon',
     },
     {
       title: 'Sisa Pembayaran',
@@ -243,12 +246,7 @@ function Pemesanan() {
         />
       </div>
 
-      <Table
-        columns={columns}
-        dataSource={pemesananData}
-        bordered
-        rowKey='_id'
-      />
+      <Table columns={columns} dataSource={pemesananData} bordered rowKey='_id'/>
 
       {addEditModalVisibility && (
         <Modal
@@ -363,6 +361,7 @@ function Pemesanan() {
                 </tr>
               </table>
             </div>
+
             <Table
               dataSource={selectedBill.cartItems}
               columns={cartcolumns}
@@ -374,6 +373,18 @@ function Pemesanan() {
               <table>
                 <tr>
                   <td>
+                    <b>SUB TOTAL</b>
+                  </td>
+                  <td> : Rp {selectedBill.totalHarga}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>DISKON</b>
+                  </td>
+                  <td> : {selectedBill.diskon} %</td>
+                </tr>
+                <tr>
+                  <td>
                     <b>DP</b>
                   </td>
                   <td> : Rp {selectedBill.uangMuka}</td>
@@ -382,19 +393,16 @@ function Pemesanan() {
                   <td>
                     <b>SISA PEMBAYARAN</b>
                   </td>
-                  <td>
-                    {' '}
-                    : Rp{' '}
-                    {selectedBill.sisaPembayaran !== 0 ? selectedBill.totalHarga +-selectedBill.uangMuka : 0}
+                  <td> : Rp {selectedBill.sisaPembayaran !== 0 ? selectedBill.totalHarga - (selectedBill.totalHarga / 100) * selectedBill.diskon - selectedBill.uangMuka : 0}
                   </td>
-                  {/* <p><b>Sisa</b> : {selectedPemesanan--uangMuka}</p> */}
+                  {/* <p><b>Sisa</b> : {selectedPemesanan-uangMuka}</p> */}
                 </tr>
               </table>
             </div>
 
             <div>
               <h2>
-                <b>GRAND TOTAL : Rp {selectedBill.totalHarga}</b>
+                <b>GRAND TOTAL : Rp {selectedBill.totalHarga - (selectedBill.totalHarga / 100) * selectedBill.diskon}</b>
               </h2>
             </div>
             <div className='dotted-border'></div>
