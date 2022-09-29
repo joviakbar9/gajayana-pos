@@ -143,16 +143,6 @@ function Items() {
         </Button>
       </div>
 
-      <div className='d-flex'>
-        <Search
-          placeholder='search user'
-          onSearch={onSearch}
-          style={{
-            width: 240,
-          }}
-        />
-      </div>
-
       <Table columns={columns} dataSource={itemsData} bordered rowKey='_id' />
 
       {addEditModalVisibilty && (

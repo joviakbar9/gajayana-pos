@@ -63,8 +63,25 @@ function LaporanPenjualan() {
       <Table columns={columns} dataSource={itemsData} bordered rowKey='_id' />
     </div>
     
+    {/* <div className='d-flex justify-content-end'>
+      <Button 
+        type='primary' 
+        onClick={handlePrint}>
+        Cetak Laporan
+      </Button>
+    </div> */}
+
+    <ReactToPrint
+      trigger = {() => 
+      <><div className='d-flex justify-content-end'>
+          <Button type='primary' onClick={handlePrint}>Cetak Laporan</Button>
+        </div></>
+      }
+      content={() => componentRef}
+    />
+
       <div className='laporan-penjualan-model' ref={componentRef}>
-        <div className='d-flex justify-content-between bill-header pb-2'>
+        <div className='d-flex justify-content-between laporan-header pb-2'>
           <div>
             <img src={logo} height='70' width='360' />
           </div>
@@ -81,15 +98,6 @@ function LaporanPenjualan() {
       
         <Table dataSource={itemsData} columns={columns} pagination={false} rowKey='_id'/>
       </div>
-
-    <div className='d-flex justify-content-end'>
-      <Button 
-        type='primary' 
-        onClick={handlePrint}>
-        Cetak Laporan
-      </Button>
-    </div>
-
     </>
   );
 }

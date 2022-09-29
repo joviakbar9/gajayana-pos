@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const pegawaiSchema = mongoose.Schema(
   {
     namaPegawai: { type: String, required: true },
-    nohpPegawai: { type: Number, required: true },
+    nohpPegawai: { type: String, required: true },
     tugas: { type: String, required: true },
     gajiPokok: { type: Number, required: true },
   },
