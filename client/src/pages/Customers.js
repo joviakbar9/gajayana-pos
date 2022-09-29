@@ -14,9 +14,10 @@ function Items() {
   const [deleteModalVisibility, setDeleteModalVisibility] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
   const [delItem, setDelItem] = useState(null);
+  const [page, setPage] = React.useState(1);
   const dispatch = useDispatch();
 
-  const getAllItems = () => {
+  const getAllCustomer = () => {
     dispatch({ type: 'showLoading' });
     axios
       .get(`${BASE_URL}/api/customer/get-all-customer`)
@@ -30,19 +31,12 @@ function Items() {
       });
   };
 
-  // const getAllKategori = () => {
-  //   axios
-  //     .get(`${BASE_URL}/api/kategori/get-all-kategori`)
-  //     .then((response) => {
-  //       setKategori(response.data);
-  //       console.log(getKategori);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-
   const columns = [
+    {
+      title: 'No.',
+      key: 'index',
+      render: (text, record, index) => (page - 1) * 10 + (index + 1),
+    },
     {
       title: 'Nama Customer',
       dataIndex: 'namaCustomer',
@@ -78,7 +72,7 @@ function Items() {
   ];
 
   useEffect(() => {
-    getAllItems();
+    getAllCustomer();
   }, []);
 
   const onFinish = (values) => {
@@ -90,7 +84,7 @@ function Items() {
           dispatch({ type: 'hideLoading' });
           message.success('Customer Berhasil Ditambah');
           setAddEditModalVisibilty(false);
-          getAllItems();
+          getAllCustomer();
         })
         .catch((error) => {
           dispatch({ type: 'hideLoading' });
@@ -108,7 +102,7 @@ function Items() {
           message.success('Data Customer Berhasil Diubah');
           setEditingItem(null);
           setAddEditModalVisibilty(false);
-          getAllItems();
+          getAllCustomer();
         })
         .catch((error) => {
           dispatch({ type: 'hideLoading' });
@@ -130,7 +124,7 @@ function Items() {
         message.success('Customer berhasil Dihapus');
         setDelItem(null);
         setDeleteModalVisibility(false);
-        getAllItems();
+        getAllCustomer();
       })
       .catch((error) => {
         dispatch({ type: 'hideLoading' });
@@ -158,8 +152,17 @@ function Items() {
         />
       </div>
 
-      <Table columns={columns} dataSource={itemsData} bordered rowKey='_id' />
-
+      <Table 
+        columns={columns} 
+        dataSource={itemsData} 
+        bordered rowKey='_id' 
+        pagination={{
+          onChange(current) {
+            setPage(current);
+          }
+        }}
+      />
+        
       {addEditModalVisibilty && (
         <Modal
           onCancel={() => {

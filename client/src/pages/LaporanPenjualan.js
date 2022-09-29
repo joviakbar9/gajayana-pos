@@ -14,6 +14,7 @@ function LaporanPenjualan() {
   const [itemsData, setItemsData] = useState([]);
   const [printLapPenjualan, setPrintLapPenjualan] = useState(false);
   const [totalPenjualan, setTotalPenjualan] = useState(0);
+  const [page, setPage] = React.useState(1);
   const dispatch = useDispatch();
 
   const getAllItems = () => {
@@ -31,6 +32,11 @@ function LaporanPenjualan() {
   };
 
   const columns = [
+    {
+      title: 'No.',
+      key: 'index',
+      render: (text, record, index) => (page - 1) * 10 + (index + 1),
+    },
     {
       title: 'Tanggal Pemesanan',
       dataIndex: '_id',
@@ -96,7 +102,17 @@ function LaporanPenjualan() {
           <b>LAPORAN PENJUALAN</b>
         </div>
       
-        <Table dataSource={itemsData} columns={columns} pagination={false} rowKey='_id'/>
+        <Table 
+          dataSource={itemsData} 
+          columns={columns} 
+          rowKey='_id'
+          // pagination={false}
+          pagination={{
+            onChange(current) {
+              setPage(current);
+            }
+          }}
+        />
       </div>
     </>
   );
