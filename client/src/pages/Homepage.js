@@ -9,8 +9,6 @@ function Homepage() {
   const { Search } = Input;
   const [itemsData, setItemsData] = useState([]);
   const [itemsDataOri, setItemsDataOri] = useState([]);
-  const [dataSource, setDataSource] = useState(itemsData);
-  const [value, setValue] = useState("");
 
   const onSearch = (value) => {
     if (value == '') {
@@ -19,7 +17,7 @@ function Homepage() {
     }
 
     const searched = itemsData.filter((v) => {
-      return v.namaproduk == value;
+      return v.namaproduk.toLowerCase().replace('//g,') == value.toLowerCase().replace('//g,');
     });
     setItemsData(searched);
   };

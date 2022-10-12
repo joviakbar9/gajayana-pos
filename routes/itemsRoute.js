@@ -5,7 +5,8 @@ const {
   addProduct,
   editProduct,
   deleteProduct,
-} = require('../controllers/itemsController');
+} = 
+require('../controllers/itemsController');
 
 router.get('/get-all-items', getProducts);
 router.post('/add-item', addProduct);

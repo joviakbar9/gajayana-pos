@@ -99,6 +99,9 @@ input:focus{
     text-align: center !important;
     font-size: 22px !important;
 }
+.nota-grand-total{
+    font-size: 18px !important;
+}
 
 
 @media only screen and (max-width:600px){

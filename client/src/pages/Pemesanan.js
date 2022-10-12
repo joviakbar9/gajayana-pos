@@ -400,10 +400,8 @@ function Pemesanan() {
               </table>
             </div>
 
-            <div>
-              <h2>
-                <b>GRAND TOTAL : Rp {selectedBill.totalHarga - (selectedBill.totalHarga / 100) * selectedBill.diskon}</b>
-              </h2>
+            <div className='nota-grand-total'>
+              <b>GRAND TOTAL : Rp {selectedBill.totalHarga - (selectedBill.totalHarga / 100) * selectedBill.diskon}</b>
             </div>
             <div className='dotted-border'></div>
 
