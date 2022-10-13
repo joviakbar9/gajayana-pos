@@ -13,7 +13,7 @@ function Pembelian() {
 
   const [pembelianData, setPembelianData] = useState([]);
   const [addModalVisibility, setAddModalVisibility] = useState(false);
-  const {editModalVisibility, setEditModalVisibility} = useState(false);
+  const [editModalVisibility, setEditModalVisibility] = useState(false);
   const [deleteModalVisibility, setDeleteModalVisibility] = useState(false);
   const [editingPembelian, setEditingPembelian] = useState(null);
   const [delPembelian, setDelPembelian] = useState(null);
@@ -79,11 +79,11 @@ function Pembelian() {
   pembelianData.map((e) => {
     var date = new Date(e.tanggalPembelian);
     var sdate = {
-      day: "2-digit",
       month: "2-digit",
+      day: "2-digit",
       year: "numeric",
     };
-    e.newtanggalPembelian = date.toLocaleDateString("id-ID", sdate);
+    e.newtanggalPembelian = date.toLocaleDateString("en-EN", sdate);
   });
 
   const columns = [

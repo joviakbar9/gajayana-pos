@@ -8,19 +8,23 @@ import { BASE_URL } from "../constant/axios";
 function Homepage() {
   const { Search } = Input;
   const [itemsData, setItemsData] = useState([]);
-  const [itemsDataOri, setItemsDataOri] = useState([]);
+  const [cari, setCari] = useState("");
 
-  const onSearch = (value) => {
-    if (value == '') {
-      setItemsData(itemsDataOri);
-      return;
-    }
+  // const onSearch = (value) => {
+  //   if (value == '') {
+  //     setItemsData(itemsDataOri);
+  //     return;
+  //   }
 
-    const searched = itemsData.filter((v) => {
-      return v.namaproduk.toLowerCase().replace('//g,') == value.toLowerCase().replace('//g,');
-    });
-    setItemsData(searched);
-  };
+  //   const searched = itemsData.filter((v) => {
+  //     return v.namaproduk.toLowerCase().replace('//g,') == value.toLowerCase().replace('//g,');
+  //   });
+  //   setItemsData(searched);
+  // };
+
+  const searching = (data) => {
+    return data.filter((v) => v.namaproduk.toLowerCase().includes(cari));
+  }
 
   const dispatch = useDispatch();
   function addTocart(item) {
@@ -33,7 +37,7 @@ function Homepage() {
       .then((response) => {
         dispatch({ type: "hideLoading" });
         setItemsData(response.data);
-        setItemsDataOri(response.data);
+        // setItemsDataOri(response.data);
       })
       .catch((error) => {
         dispatch({ type: "hideLoading" });
@@ -86,23 +90,15 @@ function Homepage() {
       <div className="d-flex">
         <Search
           placeholder="search produk"
-          onSearch={onSearch}
+          // onSearch={onSearch}
+          onChange={(e) => setCari(e.target.value)}
           style={{
             width: 240,
           }}
-          // value={value}
-          // onChange={(e) => {
-          //   const currValue = e.target.value;
-          //   setValue(currValue);
-          //   const filteredData = itemsData.filter((entry) =>
-          //     entry.namaproduk.includes(currValue)
-          //   );
-          //   setDataSource(filteredData);
-          // }}
         />
       </div>
 
-      <Table columns={columns} dataSource={itemsData} rowKey="_id" bordered />
+      <Table columns={columns} dataSource={searching(itemsData)} rowKey="_id" bordered />
     </div>
   );
 }

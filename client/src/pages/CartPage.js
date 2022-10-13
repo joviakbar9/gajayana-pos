@@ -7,21 +7,22 @@ import {
   Select,
   Table,
   DatePicker,
-} from 'antd';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
-import moment from 'moment';
-import { BASE_URL } from '../constant/axios';
+} from "antd";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import moment from "moment";
+import { BASE_URL } from "../constant/axios";
 import {
   DeleteTwoTone,
   PlusCircleOutlined,
   MinusCircleOutlined,
-} from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+} from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import e from "cors";
 
 function CartPage() {
-  const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
+  const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];
   const { cartItems } = useSelector((state) => state.rootReducer);
   const [billChargeModal, setBillChargeModal] = useState(false);
   const [subTotal, setSubTotal] = useState(0);
@@ -35,16 +36,25 @@ function CartPage() {
   const [isDp, setIsDp] = useState(false);
 
   const increaseQuantity = (record) => {
+    console.log(record);
     dispatch({
-      type: 'updateCart',
+      type: "updateCart",
       payload: { ...record, quantity: record.quantity + 1 },
+    });
+  };
+
+  const setJumlah = (record, e) => {
+    console.log(record);
+    dispatch({
+      type: "updateCart",
+      payload: { ...record, quantity: +e.target.value },
     });
   };
 
   const decreaseQuantity = (record) => {
     if (record.quantity !== 1) {
       dispatch({
-        type: 'updateCart',
+        type: "updateCart",
         payload: { ...record, quantity: record.quantity + -1 },
       });
     }
@@ -56,8 +66,8 @@ function CartPage() {
   };
 
   const grandTotal = (event) => {
-    setGrandTotal(subTotal - (subTotal / 100) * event.target.value)
-  }
+    setGrandTotal(subTotal - (subTotal / 100) * event.target.value);
+  };
 
   const getAllCustomer = () => {
     axios
@@ -72,41 +82,47 @@ function CartPage() {
 
   const columns = [
     {
-      title: 'Kode Produk',
-      dataIndex: 'kodeproduk',
+      title: "Kode Produk",
+      dataIndex: "kodeproduk",
     },
     {
-      title: 'Nama Produk',
-      dataIndex: 'namaproduk',
+      title: "Nama Produk",
+      dataIndex: "namaproduk",
     },
     {
-      title: 'Harga',
-      dataIndex: 'harga',
+      title: "Harga",
+      dataIndex: "harga",
     },
     {
-      title: 'Jumlah',
-      dataIndex: '_id',
+      title: "Jumlah",
+      dataIndex: "_id",
       render: (id, record) => (
         <div>
           <MinusCircleOutlined
-            className='mx-3'
+            className="mx-3"
             onClick={() => decreaseQuantity(record)}
           />
-          <b>{record.quantity}</b>
+          <input
+            value={record.quantity}
+            onChange={(e) => setJumlah(record, e)}
+            style={{
+              width: 70,
+            }}
+          />
           <PlusCircleOutlined
-            className='mx-3'
+            className="mx-3"
             onClick={() => increaseQuantity(record)}
           />
         </div>
       ),
     },
     {
-      title: 'Actions',
-      dataIndex: '_id',
+      title: "Actions",
+      dataIndex: "_id",
       render: (id, record) => (
         <DeleteTwoTone
-          twoToneColor='#eb2f96'
-          onClick={() => dispatch({ type: 'deleteFromCart', payload: record })}
+          twoToneColor="#eb2f96"
+          onClick={() => dispatch({ type: "deleteFromCart", payload: record })}
         />
       ),
     },
@@ -118,13 +134,12 @@ function CartPage() {
       temp = temp + item.harga * item.quantity;
     });
     setSubTotal(temp);
-    // setSisa(temp);
     getAllCustomer();
   }, [cartItems]);
 
   const onFinish = (values) => {
     console.log(values);
-    if (values.statusPembayaran === 'lunas') {
+    if (values.statusPembayaran === "lunas") {
       values.sisaPembayaran = 0;
       values.uangMuka = 0;
     }
@@ -132,18 +147,18 @@ function CartPage() {
       ...values,
       totalHarga: subTotal,
       cartItems,
-      userId: JSON.parse(localStorage.getItem('pos-user'))._id,
+      userId: JSON.parse(localStorage.getItem("pos-user"))._id,
     };
 
     axios
       .post(`${BASE_URL}/api/pemesanan/charge-pemesanan`, reqObject)
       .then(() => {
-        message.success('Pemesanan Berhasil');
-        navigate('/daftarpemesanan');
-        dispatch({ type: 'clearCart' });
+        message.success("Pemesanan Berhasil");
+        navigate("/daftarpemesanan");
+        dispatch({ type: "clearCart" });
       })
       .catch(() => {
-        message.error('Terjadi Kesalahan');
+        message.error("Terjadi Kesalahan");
       });
   };
 
@@ -155,38 +170,38 @@ function CartPage() {
         dataSource={cartItems}
         bordered
         pagination={false}
-        rowKey='kodeproduk'
+        rowKey="kodeproduk"
       />
       <hr />
 
-      <div className='d-flex justify-content-end flex-column align-items-end'>
-        <div className='subtotal'>
+      <div className="d-flex justify-content-end flex-column align-items-end">
+        <div className="subtotal">
           <h3>
             TOTAL HARGA : <b>Rp {subTotal}</b>
           </h3>
         </div>
 
-        <Button type='primary' onClick={() => setBillChargeModal(true)}>
+        <Button type="primary" onClick={() => setBillChargeModal(true)}>
           SUBMIT PEMESANAN
         </Button>
       </div>
 
       <Modal
-        title='Nota Pemesanan'
+        title="Nota Pemesanan"
         visible={billChargeModal}
         footer={false}
         onCancel={() => setBillChargeModal(false)}
       >
-        {' '}
-        <Form form={form} layout='vertical' onFinish={onFinish}>
+        {" "}
+        <Form form={form} layout="vertical" onFinish={onFinish}>
           <Form.Item
             initialValue={moment()}
-            name='tanggalPemesanan'
-            label='Tanggal Pemesanan'
+            name="tanggalPemesanan"
+            label="Tanggal Pemesanan"
           >
             <DatePicker initialValues={moment()} format={dateFormatList} />
           </Form.Item>
-          <Form.Item name='customerId' label='Customer'>
+          <Form.Item name="customerId" label="Customer">
             <Select
               showSearch
               filterOption={(input, option) =>
@@ -201,13 +216,13 @@ function CartPage() {
             </Select>
           </Form.Item>
           <Form.Item
-            initialValue={'Lunas'}
-            name='statusPembayaran'
-            label='Pembayaran'
+            initialValue={"Lunas"}
+            name="statusPembayaran"
+            label="Pembayaran"
           >
             <Select
               onChange={(value) => {
-                if (value === 'dp') {
+                if (value === "dp") {
                   setIsDp(true);
                   return;
                 }
@@ -216,42 +231,45 @@ function CartPage() {
                 form.setFieldsValue({ sisaPembayaran: 0, uangMuka: 0 });
               }}
             >
-              <Select.Option value='lunas'>Lunas</Select.Option>
-              <Select.Option value='dp'>DP</Select.Option>
+              <Select.Option value="lunas">Lunas</Select.Option>
+              <Select.Option value="dp">DP</Select.Option>
             </Select>
           </Form.Item>
-          <Form.Item hidden={!isDp} name='uangMuka' label='DP' defaultValue>
+          <Form.Item hidden={!isDp} name="uangMuka" label="DP" defaultValue>
             <Input onChange={hitungSisa} />
           </Form.Item>
-          <Form.Item disabled hidden={!isDp} name='sisaPembayaran' label='Sisa'>
+          <Form.Item disabled hidden={!isDp} name="sisaPembayaran" label="Sisa">
             <Input sisaPembayaran />
           </Form.Item>
-          <Form.Item initialValue={0} name='diskon' label='Diskon (%)'>
+          <Form.Item initialValue={0} name="diskon" label="Diskon (%)">
             <Input onChange={setDiskon} />
           </Form.Item>
-          <Form.Item name='keterangan' label='Keterangan'>
+          <Form.Item name="keterangan" label="Keterangan">
             <Input.TextArea />
           </Form.Item>
 
-          <div className='sisa-pembayaran'>
+          <div className="sisa-pembayaran">
             Sisa Pembayaran : Rp {sisaPembayaran}
           </div>
 
-          <div className='charge-bill-amount'>
+          <div className="charge-bill-amount">
             <h5>
-              Total Harga : <b>Rp {grandTotal} {subTotal - (subTotal / 100) * diskon}</b>
+              Total Harga :{" "}
+              <b>
+                Rp {grandTotal} {subTotal - (subTotal / 100) * diskon}
+              </b>
             </h5>
             {/* <h2>
               Grand Total : <b>{subTotal - (subTotal / 100) * diskon}</b>
             </h2> */}
           </div>
 
-          <div className='d-flex justify-content-end'>
-            <Button htmlType='submit' type='primary'>
+          <div className="d-flex justify-content-end">
+            <Button htmlType="submit" type="primary">
               CONFIRM PEMESANAN
             </Button>
           </div>
-        </Form>{' '}
+        </Form>{" "}
       </Modal>
     </div>
   );

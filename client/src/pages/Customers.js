@@ -9,7 +9,7 @@ function Items() {
   const { Search } = Input;
   const onSearch = (value) => console.log(value);
 
-  const [itemsData, setItemsData] = useState([]);
+  const [customerData, setCustomerData] = useState([]);
   const [addEditModalVisibilty, setAddEditModalVisibilty] = useState(false);
   const [deleteModalVisibility, setDeleteModalVisibility] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
@@ -23,7 +23,7 @@ function Items() {
       .get(`${BASE_URL}/api/customer/get-all-customer`)
       .then((response) => {
         dispatch({ type: 'hideLoading' });
-        setItemsData(response.data);
+        setCustomerData(response.data);
       })
       .catch((error) => {
         dispatch({ type: 'hideLoading' });
@@ -154,7 +154,7 @@ function Items() {
 
       <Table 
         columns={columns} 
-        dataSource={itemsData} 
+        dataSource={customerData} 
         bordered rowKey='_id' 
         pagination={{
           onChange(current) {

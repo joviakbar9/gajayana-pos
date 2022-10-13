@@ -8,7 +8,7 @@ router.get('/get-total-pembelian', async (req, res) => {
       {
         $project: {
           yearMonthDay: {
-            $dateToString: { format: '%d-%m-%Y', date: '$tanggalPembelian' },
+            $dateToString: { format: '%m-%d-%Y', date: '$tanggalPembelian' },
           },
           time: {
             $dateToString: { format: '%H:%M:%S:%L', date: '$tanggalPembelian' },

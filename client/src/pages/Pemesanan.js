@@ -42,11 +42,11 @@ function Pemesanan() {
   pemesananData.map((e) => {
     var date = new Date(e.tanggalPemesanan);
     var sdate = {
-      day: '2-digit',
       month: '2-digit',
+      day: '2-digit',
       year: 'numeric',
     };
-    e.newtanggalPemesanan = date.toLocaleDateString('id-ID', sdate);
+    e.newtanggalPemesanan = date.toLocaleDateString('en-EN', sdate);
 
     var ldate = {
       weekday: 'long',
