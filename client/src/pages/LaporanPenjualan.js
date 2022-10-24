@@ -36,20 +36,20 @@ function LaporanPenjualan() {
       title: "No.",
       key: "index",
       render: (text, record, index) => (page - 1) * 10 + (index + 1),
-      }
+      },
     ],
-    tanggalPemesanan: [
+    tanggalPemesanan[
       {
       title: "Tanggal Pemesanan",
       dataIndex: "_id",
       sorter: (a, b) => a._id.localeCompare(b._id),
-      }
+      },
     ],
-    totalPenjualan: [
+    totalPenjualan[
       {
       title: "Total Penjualan",
       dataIndex: "totalAmount",
-      }
+      },
     ],
   ];
 
