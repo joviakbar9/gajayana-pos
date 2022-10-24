@@ -343,6 +343,12 @@ function Pemesanan() {
               <table>
                 <tr>
                   <td>
+                    <b>No. Nota</b>
+                  </td>
+                  <td> : {selectedBill._id}</td>
+                </tr>
+                <tr>
+                  <td>
                     <b>Tanggal Pemesanan</b>
                   </td>
                   <td> : {selectedBill.tanggalNota}</td>
