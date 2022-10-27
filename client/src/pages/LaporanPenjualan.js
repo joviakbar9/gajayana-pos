@@ -8,13 +8,13 @@ import ReactToPrint from "react-to-print";
 import { useReactToPrint } from "react-to-print";
 import { BASE_URL } from "../constant/axios";
 import logo from "../resources/PrintingLogo.png";
-import { useExcelDownloder } from "react-xls";
+// import { useExcelDownloder } from "react-xls";
 
 function LaporanPenjualan() {
   const [itemsData, setItemsData] = useState([]);
   const [page, setPage] = React.useState(1);
   const dispatch = useDispatch();
-  const { ExcelDownloder, Type } = useExcelDownloder();
+  // const { ExcelDownloder, Type } = useExcelDownloder();
 
   const getAllItems = () => {
     dispatch({ type: "showLoading" });
@@ -31,26 +31,20 @@ function LaporanPenjualan() {
   };
 
   const columns = [
-    no: [
-      {
+    {
       title: "No.",
       key: "index",
       render: (text, record, index) => (page - 1) * 10 + (index + 1),
-      },
-    ],
-    tanggalPemesanan[
-      {
+    },
+    {
       title: "Tanggal Pemesanan",
       dataIndex: "_id",
       sorter: (a, b) => a._id.localeCompare(b._id),
-      },
-    ],
-    totalPenjualan[
-      {
+    },
+    {
       title: "Total Penjualan",
       dataIndex: "totalAmount",
-      },
-    ],
+    },
   ];
 
   useEffect(() => {
@@ -63,13 +57,13 @@ function LaporanPenjualan() {
     <div>
       <div className="d-flex justify-content-between">
         <h3>Laporan Penjualan</h3>
-        <ExcelDownloder
+        {/* <ExcelDownloder
           data={columns}
           filename={"Laporan Penjualan"}
           type={Type.Button}
         >
           Download
-        </ExcelDownloder>
+        </ExcelDownloder> */}
       </div>
       <Table columns={columns} dataSource={itemsData} bordered rowKey="_id" />
     </div>
