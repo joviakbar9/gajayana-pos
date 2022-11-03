@@ -12,6 +12,7 @@ const pemesananSchema = mongoose.Schema(
     cartItems: { type: Array, required: true },
     statusPembayaran: { type: String, required: true },
     keterangan: { type: String },
+    isArchive: {type: Boolean, default: false},
   },
   { timestamps: true }
 );

@@ -4,6 +4,7 @@ const customerSchema = mongoose.Schema(
   {
     namaCustomer: { type: String, required: true },
     noHpCustomer: { type: String, required: true },
+    isArchive: {type: Boolean, default: false},
   },
   { timestamps: true }
 );

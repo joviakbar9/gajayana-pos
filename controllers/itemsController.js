@@ -60,7 +60,7 @@ module.exports = {
     } catch (error) {
       res.status(400).json(error);
     }
-  };
+  },
   deleteKategori: async (req, res) => {
     try {
       await KategoriModel.findOneAndDelete({ _id: req.body.kategoriId });

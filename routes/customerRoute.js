@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get('/get-all-customer', async (req, res) => {
   try {
-    const customer = await CustomerModel.find();
+    const customer = await CustomerModel.find({isArchive:false});
     res.send(customer);
   } catch (error) {
     res.status(400).json(error);
@@ -30,9 +30,9 @@ router.post('/edit-customer', async (req, res) => {
   }
 });
 
-router.post('/delete-customer', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
-    await CustomerModel.findOneAndDelete({ _id: req.body.itemId });
+    await CustomerModel.findOneAndUpdate({ _id: req.params.id}, {isArchive: true});
     res.send('Customer deleted successfully');
   } catch (error) {
     res.status(400).json(error);

@@ -7,6 +7,7 @@ const pembelianSchema = mongoose.Schema(
     jumlah: { type: Number, required: true },
     hargaPembelian: { type: Number, required: true },
     keterangan: { type: String },
+    isArchive: {type: Boolean, default: false},
   },
   { timestamps: true }
 );

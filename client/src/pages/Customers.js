@@ -115,10 +115,7 @@ function Items() {
   const deleteItem = (values) => {
     dispatch({ type: 'showLoading' });
     axios
-      .post(`${BASE_URL}/api/customer/delete-customer`, {
-        ...values,
-        itemId: delItem._id,
-      })
+      .delete(`${BASE_URL}/api/customer/${delItem._id}`)
       .then((response) => {
         dispatch({ type: 'hideLoading' });
         message.success('Customer berhasil Dihapus');

@@ -6,6 +6,7 @@ const pegawaiSchema = mongoose.Schema(
     nohpPegawai: { type: String, required: true },
     tugas: { type: String, required: true },
     gajiPokok: { type: Number, required: true },
+    isArchive: {type: Boolean, default: false},
   },
   { timestamps: true }
 );
