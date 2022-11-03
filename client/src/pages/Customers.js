@@ -12,8 +12,8 @@ function Items() {
   const [customerData, setCustomerData] = useState([]);
   const [addEditModalVisibilty, setAddEditModalVisibilty] = useState(false);
   const [deleteModalVisibility, setDeleteModalVisibility] = useState(false);
-  const [editingItem, setEditingItem] = useState(null);
-  const [delItem, setDelItem] = useState(null);
+  const [editingCustomer, setEditingCustomer] = useState(null);
+  const [delCustomer, setDelCustomer] = useState(null);
   const [page, setPage] = React.useState(1);
   const dispatch = useDispatch();
 
@@ -54,7 +54,7 @@ function Items() {
           <EditTwoTone
             className='mx-2'
             onClick={() => {
-              setEditingItem(record);
+              setEditingCustomer(record);
               setAddEditModalVisibilty(true);
             }}
           />
@@ -62,7 +62,7 @@ function Items() {
             twoToneColor='#eb2f96'
             className='mx-2'
             onClick={() => {
-              setDelItem(record);
+              setDelCustomer(record);
               setDeleteModalVisibility(true);
             }}
           />
@@ -77,7 +77,7 @@ function Items() {
 
   const onFinish = (values) => {
     dispatch({ type: 'showLoading' });
-    if (editingItem === null) {
+    if (editingCustomer === null) {
       axios
         .post(`${BASE_URL}/api/customer/add-customer`, values)
         .then((response) => {
@@ -95,12 +95,12 @@ function Items() {
       axios
         .post(`${BASE_URL}/api/customer/edit-customer`, {
           ...values,
-          itemId: editingItem._id,
+          itemId: editingCustomer._id,
         })
         .then((response) => {
           dispatch({ type: 'hideLoading' });
           message.success('Data Customer Berhasil Diubah');
-          setEditingItem(null);
+          setEditingCustomer(null);
           setAddEditModalVisibilty(false);
           getAllCustomer();
         })
@@ -112,14 +112,14 @@ function Items() {
     }
   };
 
-  const deleteItem = (values) => {
+  const deleteCustomer = (values) => {
     dispatch({ type: 'showLoading' });
     axios
-      .delete(`${BASE_URL}/api/customer/${delItem._id}`)
+      .delete(`${BASE_URL}/api/customer/${delCustomer._id}`)
       .then((response) => {
         dispatch({ type: 'hideLoading' });
         message.success('Customer berhasil Dihapus');
-        setDelItem(null);
+        setDelCustomer(null);
         setDeleteModalVisibility(false);
         getAllCustomer();
       })
@@ -163,17 +163,17 @@ function Items() {
       {addEditModalVisibilty && (
         <Modal
           onCancel={() => {
-            setEditingItem(null);
+            setEditingCustomer(null);
             setAddEditModalVisibilty(false);
           }}
           visible={addEditModalVisibilty}
           title={`${
-            editingItem !== null ? 'Ubah Customer' : 'Tambah Costumer'
+            editingCustomer !== null ? 'Ubah Customer' : 'Tambah Costumer'
           }`}
           footer={false}
         >
           <Form
-            initialValues={editingItem}
+            initialValues={editingCustomer}
             layout='vertical'
             onFinish={onFinish}
           >
@@ -191,17 +191,18 @@ function Items() {
           </Form>
         </Modal>
       )}
+      
       {deleteModalVisibility && (
         <Modal
           onCancel={() => {
-            setDelItem(null);
+            setDelCustomer(null);
             setDeleteModalVisibility(false);
           }}
           visible={deleteModalVisibility}
           title='Hapus Customer'
           footer={false}
         >
-          <Form initialValues={delItem} layout='vertical' onFinish={deleteItem}>
+          <Form initialValues={delCustomer} layout='vertical' onFinish={deleteCustomer}>
             <div className='text-left'>
               <p>Apakah anda yakin ingin menghapus customer ini? </p>
             </div>

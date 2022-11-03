@@ -1,62 +1,21 @@
 const express = require('express');
-const UserModel = require('../models/userModel');
 const router = express.Router();
+const {
+  login,
+  getUser,
+  addUser,
+  editUser,
+  deleteUser,
+} = 
+require('../controllers/userController');
 
-router.post('/login', async (req, res) => {
-  try {
-    const user = await UserModel.findOne({
-      userId: req.body.userId,
-      password: req.body.password,
-    });
-    if (user) {
-      res.send(user);
-    } else {
-      res.status(400).json({ message: 'Login Gagal', user });
-    }
-  } catch (error) {
-    res.status(400).json(error);
-  }
-});
+router.post('/login', login);
+router.get('/get-all-user', getUser);
+router.post('/add-user', addUser);
+router.post('/edit-user', editUser);
+router.delete('/:id', deleteUser);
 
-router.get('/get-all-user', async (req, res) => {
-  try {
-    const user = await UserModel.find();
-    res.send(user);
-  } catch (error) {
-    res.status(400).json(error);
-  }
-});
-
-router.post('/add-user', async (req, res) => {
-  try {
-    const newUser = new UserModel(req.body);
-    await newUser.save();
-    res.send('User Baru Berhasil Ditambah');
-  } catch (error) {
-    res.status(400).json(error);
-  }
-});
-
-router.post('/edit-user', async (req, res) => {
-  try {
-    await UserModel.findOneAndUpdate(
-      { _id: req.body.usersId },
-      req.body
-    );
-    res.send('User Berhasil Diubah');
-  } catch (error) {
-    res.status(400).json(error);
-  }
-});
-
-router.post('/delete-user', async (req, res) => {
-  try {
-    await UserModel.findOneAndDelete({ _id: req.body.usersId });
-    res.send('User Berhasil Dihapus');
-  } catch (error) {
-    res.status(400).json(error);
-  }
-});
+module.exports = router;
 
 // router.post('/register', async (req, res) => {
 //   try {

@@ -8,7 +8,9 @@ import { BASE_URL } from '../constant/axios';
 function Pegawai() {
   const [pegawaiData, setPegawaiData] = useState([]);
   const [addEditModalVisibilty, setAddEditModalVisibilty] = useState(false);
+  const [deleteModalVisibility, setDeleteModalVisibility] = useState(false);
   const [editingPegawai, setEditingPegawai] = useState(null);
+  const [delPegawai, setDelPegawai] = useState(null);
   const dispatch = useDispatch();
 
   const getAllPegawai = () => {
@@ -21,22 +23,6 @@ function Pegawai() {
       })
       .catch((error) => {
         dispatch({ type: 'hideLoading' });
-        console.log(error);
-      });
-  };
-
-  const deletePegawai = (record) => {
-    dispatch({ type: 'showLoading' });
-    axios
-      .post(`${BASE_URL}/api/pegawai/delete-pegawai`, { pegawaiId: record._id })
-      .then((response) => {
-        dispatch({ type: 'hideLoading' });
-        message.success('Data Pegawai Berhasil Dihapus');
-        getAllPegawai();
-      })
-      .catch((error) => {
-        dispatch({ type: 'hideLoading' });
-        message.error('Terjadi Kesalahan');
         console.log(error);
       });
   };
@@ -73,7 +59,10 @@ function Pegawai() {
           <DeleteTwoTone
             twoToneColor='#eb2f96'
             className='mx-2'
-            onClick={() => deletePegawai(record)}
+            onClick={() => {
+              setDelPegawai(record);
+              setDeleteModalVisibility(true);
+            }}
           />
         </div>
       ),
@@ -121,6 +110,24 @@ function Pegawai() {
     }
   };
 
+  const deletePegawai = (values) => {
+    dispatch({ type: 'showLoading' });
+    axios
+      .delete(`${BASE_URL}/api/pegawai/${delPegawai._id}`)
+      .then((response) => {
+        dispatch({ type: 'hideLoading' });
+        message.success('Pegawai berhasil Dihapus');
+        setDelPegawai(null);
+        setDeleteModalVisibility(false);
+        getAllPegawai();
+      })
+      .catch((error) => {
+        dispatch({ type: 'hideLoading' });
+        message.error('Terjadi Kesalahan');
+        console.log(error);
+      });
+  };
+
   return (
     <div>
       <div className='d-flex justify-content-between'>
@@ -139,9 +146,7 @@ function Pegawai() {
           }}
           visible={addEditModalVisibilty}
           title={`${
-            editingPegawai !== null
-              ? 'Ubah Data Pegawai'
-              : 'Tambah Data Pegawai'
+            editingPegawai !== null ? 'Ubah Data Pegawai': 'Tambah Data Pegawai'
           }`}
           footer={false}
         >
@@ -166,6 +171,29 @@ function Pegawai() {
             <div className='d-flex justify-content-end'>
               <Button htmlType='submit' type='primary'>
                 SIMPAN
+              </Button>
+            </div>
+          </Form>
+        </Modal>
+      )}
+
+      {deleteModalVisibility && (
+        <Modal
+          onCancel={() => {
+            setDelPegawai(null);
+            setDeleteModalVisibility(false);
+          }}
+          visible={deleteModalVisibility}
+          title='Hapus Pegawai'
+          footer={false}
+        >
+          <Form initialValues={delPegawai} layout='vertical' onFinish={deletePegawai}>
+            <div className='text-left'>
+              <p>Apakah anda yakin ingin menghapus pegawai ini? </p>
+            </div>
+            <div className='d-flex justify-content-end'>
+              <Button htmlType='submit' type='danger'>
+                HAPUS
               </Button>
             </div>
           </Form>

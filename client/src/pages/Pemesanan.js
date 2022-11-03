@@ -208,10 +208,7 @@ function Pemesanan() {
   const deletePemesanan = (values) => {
     dispatch({ type: 'showLoading' });
     axios
-      .post(`${BASE_URL}/api/pemesanan/delete-pemesanan`, {
-        ...values,
-        pemesananId: delBill._id,
-      })
+      .delete(`${BASE_URL}/api/pemesanan/${delBill._id}`)
       .then((response) => {
         dispatch({ type: 'hideLoading' });
         message.success('Data Pemesanan Berhasil Dihapus');

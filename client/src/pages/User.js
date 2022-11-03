@@ -116,10 +116,7 @@ function Items() {
   const deleteItem = (values) => {
     dispatch({ type: 'showLoading' });
     axios
-      .post(`${BASE_URL}/api/users/delete-user`, {
-        ...values,
-        usersId: delItem._id,
-      })
+      .delete(`${BASE_URL}/api/users/${delItem._id}`)
       .then((response) => {
         dispatch({ type: 'hideLoading' });
         message.success('User berhasil Dihapus');

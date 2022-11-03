@@ -8,7 +8,9 @@ import { BASE_URL } from '../constant/axios';
 function KategoriProduk() {
   const [kategoriData, setKategoriData] = useState([]);
   const [addEditModalVisibilty, setAddEditModalVisibilty] = useState(false);
+  const [deleteModalVisibility, setDeleteModalVisibility] = useState(false);
   const [editingKategori, setEditingKategori] = useState(null);
+  const [delKategori, setDelKategori] = useState(null);
   const dispatch = useDispatch();
 
   const getAllKategori = () => {
@@ -21,24 +23,6 @@ function KategoriProduk() {
       })
       .catch((error) => {
         dispatch({ type: 'hideLoading' });
-        console.log(error);
-      });
-  };
-
-  const deleteKategori = (record) => {
-    dispatch({ type: 'showLoading' });
-    axios
-      .post(`${BASE_URL}/api/kategori/delete-kategori`, {
-        kategoriId: record._id,
-      })
-      .then((response) => {
-        dispatch({ type: 'hideLoading' });
-        message.success('Kategori Berhasil Dihapus');
-        getAllKategori();
-      })
-      .catch((error) => {
-        dispatch({ type: 'hideLoading' });
-        message.error('Terjadi Kesalahan');
         console.log(error);
       });
   };
@@ -116,6 +100,24 @@ function KategoriProduk() {
     }
   };
 
+  const deleteKategori = (values) => {
+    dispatch({ type: 'showLoading' });
+    axios
+      .delete(`${BASE_URL}/api/kategori/${delKategori._id}`)
+      .then((response) => {
+        dispatch({ type: 'hideLoading' });
+        message.success('Kategori berhasil Dihapus');
+        setDelKategori(null);
+        setDeleteModalVisibility(false);
+        getAllKategori();
+      })
+      .catch((error) => {
+        dispatch({ type: 'hideLoading' });
+        message.error('Terjadi Kesalahan');
+        console.log(error);
+      });
+  };
+
   return (
     <div>
       <div className='d-flex justify-content-between'>
@@ -158,6 +160,29 @@ function KategoriProduk() {
             <div className='d-flex justify-content-end'>
               <Button htmlType='submit' type='primary'>
                 SIMPAN
+              </Button>
+            </div>
+          </Form>
+        </Modal>
+      )}
+
+      {deleteModalVisibility && (
+        <Modal
+          onCancel={() => {
+            setDelKategori(null);
+            setDeleteModalVisibility(false);
+          }}
+          visible={deleteModalVisibility}
+          title='Hapus Kategori'
+          footer={false}
+        >
+          <Form initialValues={delKategori} layout='vertical' onFinish={deleteKategori}>
+            <div className='text-left'>
+              <p>Apakah anda yakin ingin menghapus kategori ini? </p>
+            </div>
+            <div className='d-flex justify-content-end'>
+              <Button htmlType='submit' type='danger'>
+                HAPUS
               </Button>
             </div>
           </Form>

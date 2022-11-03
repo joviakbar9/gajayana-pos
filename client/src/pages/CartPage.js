@@ -151,7 +151,7 @@ function CartPage() {
     };
 
     axios
-      .post(`${BASE_URL}/api/pemesanan/charge-pemesanan`, reqObject)
+      .post(`${BASE_URL}/api/pemesanan/add-pemesanan`, reqObject)
       .then(() => {
         message.success("Pemesanan Berhasil");
         navigate("/daftarpemesanan");

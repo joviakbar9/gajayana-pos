@@ -3,27 +3,27 @@ const dbConnect = require('./dbConnect');
 const cors = require('cors');
 
 const app = express();
-const itemsRoute = require('./routes/itemsRoute');
-const usersRoute = require('./routes/userRoute');
+const itemsRoute = require('./routes/masterDataRoute');
+const kategoriRoute = require('./routes/masterDataRoute');
+const customerRoute = require('./routes/masterDataRoute');
+const pegawaiRoute = require('./routes/masterDataRoute');
 const pemesananRoute = require('./routes/pemesananRoute');
-// const kategoriRoute = require('./routes/itemsRoute');
 const pembelianRoute = require('./routes/pembelianRoute');
-const customerRoute = require('./routes/customerRoute');
-const pegawaiRoute = require('./routes/pegawaiRoute');
 const laporanPenjualanRoute = require('./routes/laporanPenjualanRoute');
 const laporanPembelianRoute = require('./routes/laporanPembelianRoute');
+const usersRoute = require('./routes/userRoute');
 
 app.use(cors());
 
 app.use(express.json());
 
 app.use('/api/items/', itemsRoute);
-app.use('/api/users/', usersRoute);
-app.use('/api/pemesanan/', pemesananRoute);
-// app.use('/api/kategori/', kategoriRoute);
-app.use('/api/pembelian/', pembelianRoute);
+app.use('/api/kategori/', kategoriRoute);
 app.use('/api/customer/', customerRoute);
 app.use('/api/pegawai/', pegawaiRoute);
+app.use('/api/users/', usersRoute);
+app.use('/api/pemesanan/', pemesananRoute);
+app.use('/api/pembelian/', pembelianRoute);
 app.use('/api/laporanPenjualan/', laporanPenjualanRoute);
 app.use('/api/laporanPembelian', laporanPembelianRoute);
 
