@@ -10,7 +10,7 @@ const pegawaiRoute = require('./routes/masterDataRoute');
 const pemesananRoute = require('./routes/pemesananRoute');
 const pembelianRoute = require('./routes/pembelianRoute');
 const laporanPenjualanRoute = require('./routes/laporanPenjualanRoute');
-const laporanPembelianRoute = require('./routes/laporanPembelianRoute');
+const laporanPembelianRoute = require('./routes/laporanPenjualanRoute');
 const usersRoute = require('./routes/userRoute');
 
 app.use(cors());

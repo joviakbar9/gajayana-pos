@@ -147,6 +147,9 @@ function CartPage() {
       ...values,
       totalHarga: subTotal,
       cartItems,
+      grandTotal: Number(
+        subTotal - Number(((subTotal / 100) * diskon).toFixed(2))
+      ),
       userId: JSON.parse(localStorage.getItem("pos-user"))._id,
     };
 
@@ -161,6 +164,7 @@ function CartPage() {
         message.error("Terjadi Kesalahan");
       });
   };
+  console.log(subTotal);
 
   return (
     <div>
@@ -242,7 +246,7 @@ function CartPage() {
             <Input sisaPembayaran />
           </Form.Item>
           <Form.Item initialValue={0} name="diskon" label="Diskon (%)">
-            <Input onChange={setDiskon} />
+            <Input onChange = {setDiskon}/>
           </Form.Item>
           <Form.Item name="keterangan" label="Keterangan">
             <Input.TextArea />
@@ -254,10 +258,10 @@ function CartPage() {
 
           <div className="charge-bill-amount">
             <h5>
-              Total Harga :{" "}
-              <b>
-                Rp {grandTotal} {subTotal - (subTotal / 100) * diskon}
-              </b>
+              Diskon: {(subTotal / 100) * 40}
+            </h5>
+            <h5>
+              Total Harga :{" "}<b>Rp {subTotal - (subTotal / 100) * diskon}</b>
             </h5>
             {/* <h2>
               Grand Total : <b>{subTotal - (subTotal / 100) * diskon}</b>

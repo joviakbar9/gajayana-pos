@@ -39,7 +39,7 @@ module.exports = {
     }
   },
 
-  getKategoris: async (req, res) => {
+  getKategori: async (req, res) => {
     try {
       const kategori = await KategoriModel.find({isArchive:false});
       res.send(kategori);

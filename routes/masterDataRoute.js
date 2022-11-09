@@ -5,7 +5,7 @@ const {
   addProduk,
   editProduk,
   deleteProduk,
-  getKategoris,
+  getKategori,
   addKategori,
   editKategori,
   deleteKategori,
@@ -25,7 +25,7 @@ router.post('/add-item', addProduk);
 router.post('/edit-item', editProduk);
 router.delete('/:id', deleteProduk);
 
-router.get('/get-all-kategori', getKategoris);
+router.get('/get-all-kategori', getKategori);
 router.post('/add-kategori', addKategori);
 router.post('/edit-kategori', editKategori);
 router.delete('/:id', deleteKategori);
@@ -36,8 +36,8 @@ router.post('/edit-customer', editCustomer);
 router.delete('/:id', deleteCustomer);
 
 router.get('/get-all-pegawai', getPegawai);
-router.post('/add-customer', addPegawai);
-router.post('/edit-customer', editPegawai);
+router.post('/add-pegawai', addPegawai);
+router.post('/edit-pegawai', editPegawai);
 router.delete('/:id', deletePegawai);
 
 module.exports = router;

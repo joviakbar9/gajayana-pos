@@ -9,9 +9,6 @@ const laporanPembelianSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-const laporanPembelianModel = mongoose.model(
-  'laporanPembelian',
-  laporanPembelianSchema
-);
+const laporanPembelianModel = mongoose.model('laporanPembelian', laporanPembelianSchema);
 
 module.exports = laporanPembelianModel;
