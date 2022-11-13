@@ -9,8 +9,8 @@ const customerRoute = require('./routes/masterDataRoute');
 const pegawaiRoute = require('./routes/masterDataRoute');
 const pemesananRoute = require('./routes/pemesananRoute');
 const pembelianRoute = require('./routes/pembelianRoute');
-const laporanPenjualanRoute = require('./routes/laporanPenjualanRoute');
-const laporanPembelianRoute = require('./routes/laporanPenjualanRoute');
+const laporanPenjualanRoute = require('./routes/laporanRoute');
+const laporanPembelianRoute = require('./routes/laporanRoute');
 const usersRoute = require('./routes/userRoute');
 
 app.use(cors());
