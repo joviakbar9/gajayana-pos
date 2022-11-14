@@ -27,9 +27,11 @@ function Order() {
   }
 
   const dispatch = useDispatch();
+  
   function addTocart(item) {
     dispatch({ type: "addToCart", payload: { ...item, quantity: 1 } });
   }
+
   const getAllItems = () => {
     dispatch({ type: "showLoading" });
     axios

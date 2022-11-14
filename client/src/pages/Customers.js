@@ -7,7 +7,7 @@ import { BASE_URL } from '../constant/axios';
 
 function Items() {
   const { Search } = Input;
-  const onSearch = (value) => console.log(value);
+  const [cari, setCari] = useState("");
 
   const [customerData, setCustomerData] = useState([]);
   const [addEditModalVisibilty, setAddEditModalVisibilty] = useState(false);
@@ -16,6 +16,12 @@ function Items() {
   const [delCustomer, setDelCustomer] = useState(null);
   const [page, setPage] = React.useState(1);
   const dispatch = useDispatch();
+
+  const searching = (data) => {
+    return data.filter((v) => v.namaCustomer.toLowerCase().includes(cari) 
+      || v.noHpCustomer.includes(cari)
+    );
+  }
 
   const getAllCustomer = () => {
     dispatch({ type: 'showLoading' });
@@ -141,8 +147,8 @@ function Items() {
 
       <div className='d-flex'>
         <Search
-          placeholder='search customer'
-          onSearch={onSearch}
+          placeholder="search customer"
+          onChange={(e) => setCari(e.target.value)}
           style={{
             width: 240,
           }}
@@ -151,7 +157,7 @@ function Items() {
 
       <Table 
         columns={columns} 
-        dataSource={customerData} 
+        dataSource={searching(customerData)} 
         bordered rowKey='_id' 
         pagination={{
           onChange(current) {

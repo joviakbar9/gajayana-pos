@@ -9,7 +9,7 @@ import Pemesanan from "./pages/CartPage";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Customers from "./pages/Customers";
-import DaftarPemesanan from "./pages/Pemesanan";
+import DaftarPemesanan from "./pages/DaftarPemesanan";
 import Pembelian from "./pages/Pembelian";
 import Pegawai from "./pages/Pegawai";
 import LaporanPenjualan from "./pages/LaporanPenjualan";

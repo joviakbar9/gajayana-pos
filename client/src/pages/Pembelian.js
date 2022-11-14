@@ -9,7 +9,7 @@ import { BASE_URL } from "../constant/axios";
 function Pembelian() {
   const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];
   const { Search } = Input;
-  const onSearch = (value) => console.log(value);
+  const [cari, setCari] = useState("");
 
   const [pembelianData, setPembelianData] = useState([]);
   const [addModalVisibility, setAddModalVisibility] = useState(false);
@@ -18,6 +18,10 @@ function Pembelian() {
   const [editingPembelian, setEditingPembelian] = useState(null);
   const [delPembelian, setDelPembelian] = useState(null);
   const dispatch = useDispatch();
+
+  const searching = (data) => {
+    return data.filter((v) => v.namaProduk.toLowerCase().includes(cari));
+  }
 
   const getAllPembelian = () => {
     dispatch({ type: "showLoading" });
@@ -162,14 +166,14 @@ function Pembelian() {
       <div className="d-flex">
         <Search
           placeholder="search pembelian"
-          onSearch={onSearch}
+          onChange={(e) => setCari(e.target.value)}
           style={{
             width: 240,
           }}
         />
       </div>
 
-      <Table columns={columns} dataSource={pembelianData} bordered />
+      <Table columns={columns} dataSource={searching(pembelianData)} bordered />
 
       {addModalVisibility && (
         <Modal

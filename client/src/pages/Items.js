@@ -7,7 +7,7 @@ import { BASE_URL } from '../constant/axios';
 
 function Items() {
   const { Search } = Input;
-  const onSearch = (value) => console.log(value);
+  const [cari, setCari] = useState("");
 
   const [itemsData, setItemsData] = useState([]);
   const [addEditModalVisibilty, setAddEditModalVisibilty] = useState(false);
@@ -16,6 +16,10 @@ function Items() {
   const [delItem, setDelItem] = useState(null);
   const [getKategori, setKategori] = useState([]);
   const dispatch = useDispatch();
+
+  const searching = (data) => {
+    return data.filter((v) => v.namaproduk.toLowerCase().includes(cari));
+  }
 
   const getAllItems = () => {
     dispatch({ type: 'showLoading' });
@@ -160,15 +164,15 @@ function Items() {
 
       <div className='d-flex'>
         <Search
-          placeholder='search produk'
-          onSearch={onSearch}
+          placeholder="search produk"
+          onChange={(e) => setCari(e.target.value)}
           style={{
             width: 240,
           }}
         />
       </div>
 
-      <Table columns={columns} dataSource={itemsData} bordered rowKey='_id' />
+      <Table columns={columns} dataSource={searching(itemsData)} bordered rowKey='_id' />
 
       {addEditModalVisibilty && (
         <Modal

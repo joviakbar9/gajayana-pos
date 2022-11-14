@@ -8,9 +8,9 @@ import { useReactToPrint } from "react-to-print";
 import { BASE_URL } from "../constant/axios";
 import logo from "../resources/PrintingLogo.png";
 
-function Pemesanan() {
+function DaftarPemesanan() {
   const { Search } = Input;
-  const onSearch = (value) => console.log(value);
+  const [cari, setCari] = useState("");
 
   const componentRef = useRef();
   const [pemesananData, setPemesananData] = useState([]);
@@ -21,6 +21,10 @@ function Pemesanan() {
   const [editingBill, setEditingBill] = useState(null);
   const [delBill, setDelBill] = useState(null);
   const dispatch = useDispatch();
+
+  const searching = (data) => {
+    return data.filter((v) => v._id.toLowerCase().includes(cari));
+  }
 
   const getAllPemesanan = () => {
     dispatch({ type: "showLoading" });
@@ -237,7 +241,7 @@ function Pemesanan() {
       <div className="d-flex">
         <Search
           placeholder="search pemesanan"
-          onSearch={onSearch}
+          onChange={(e) => setCari(e.target.value)}
           style={{
             width: 240,
           }}
@@ -246,7 +250,7 @@ function Pemesanan() {
 
       <Table
         columns={columns}
-        dataSource={pemesananData}
+        dataSource={searching(pemesananData)}
         bordered
         rowKey="_id"
       />
@@ -376,7 +380,7 @@ function Pemesanan() {
               <table>
                 <tr>
                   <td>
-                    <b>SUB TOTAL</b>
+                    <b>TOTAL HARGA</b>
                   </td>
                   <td> : Rp {selectedBill.totalHarga}</td>
                 </tr>
@@ -396,14 +400,13 @@ function Pemesanan() {
                   <td>
                     <b>SISA PEMBAYARAN</b>
                   </td>
-                  <td>
-                    {" "}
-                    : Rp{" "}
+                  <td> : Rp 
                     {selectedBill.sisaPembayaran !== 0
                       ? selectedBill.totalHarga -
                         (selectedBill.totalHarga / 100) * selectedBill.diskon -
                         selectedBill.uangMuka
-                      : 0}
+                      : 0
+                    }
                   </td>
                 </tr>
               </table>
@@ -412,8 +415,7 @@ function Pemesanan() {
             <div className="nota-grand-total">
               <b>
                 GRAND TOTAL : Rp{" "}
-                {selectedBill.totalHarga -
-                  (selectedBill.totalHarga / 100) * selectedBill.diskon}
+                {selectedBill.totalHarga - (selectedBill.totalHarga / 100) * selectedBill.diskon}
               </b>
             </div>
             <div className="dotted-border"></div>
@@ -441,4 +443,4 @@ function Pemesanan() {
   );
 }
 
-export default Pemesanan;
+export default DaftarPemesanan;
