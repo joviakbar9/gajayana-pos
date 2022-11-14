@@ -2,7 +2,7 @@ import logo from "./logo.svg";
 import "antd/dist/antd.css";
 import { Button } from "antd";
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
-import Homepage from "./pages/Homepage";
+import Order from "./pages/Order";
 import Produk from "./pages/Items";
 import KategoriProduk from "./pages/KategoriProduk";
 import Pemesanan from "./pages/CartPage";
@@ -23,8 +23,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<DefaultLayout><Outlet/></DefaultLayout>}>
-            <Route path="home" element={<ProtectedRoute><Homepage /></ProtectedRoute>} />
-            <Route path="produk" element={<ProtectedRoute><Produk /></ProtectedRoute>} />
+            <Route path="/order" element={<ProtectedRoute><Order /></ProtectedRoute>} />
+            <Route path="/produk" element={<ProtectedRoute><Produk /></ProtectedRoute>} />
             <Route path="/kategoriproduk" element={<ProtectedRoute><KategoriProduk /></ProtectedRoute>} />
             <Route path="/pemesanan" element={<ProtectedRoute><Pemesanan /></ProtectedRoute>} />
             <Route path="/daftarpemesanan" element={<ProtectedRoute><DaftarPemesanan /></ProtectedRoute>} />

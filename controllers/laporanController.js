@@ -2,11 +2,11 @@ const PemesananModel = require('../models/pemesananModel');
 const PembelianModel = require('../models/pembelianModel');
 
 module.exports = {
-    getSum: async (req, res) => {
+    getTotalPenjualan: async (req, res) => {
       try {
         const data = [
           {
-            $match: { statusPembayaran: 'lunas' },
+            $match: { statusPembayaran: 'lunas', isArchive:false },
           },
           {
             $project: {
@@ -22,7 +22,7 @@ module.exports = {
           {
             $group: {
               _id: '$yearMonthDay',
-              totalAmount: { $sum: '$totalHarga' },
+              totalPenjualan: { $sum: '$totalHarga' },
             },
           },
         ];
@@ -37,6 +37,9 @@ module.exports = {
       try {
         const data = [
           {
+            $match: { isArchive:false },
+          },
+          {
             $project: {
               yearMonthDay: {
                 $dateToString: { format: '%m-%d-%Y', date: '$tanggalPembelian' },
@@ -50,7 +53,7 @@ module.exports = {
           {
             $group: {
               _id: '$yearMonthDay',
-              totalAmount: { $sum: '$hargaPembelian' },
+              totalPembelian: { $sum: '$hargaPembelian' },
             },
           },
         ];

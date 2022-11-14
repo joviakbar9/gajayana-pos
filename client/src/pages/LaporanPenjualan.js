@@ -16,9 +16,9 @@ function LaporanPenjualan() {
   const downloadExcel = () => {
     const worksheet = XLSX.utils.json_to_sheet(itemsData.map(v=>{
       v["Tanggal Pemesanan"] = v._id
-      v["Total"] = v.totalAmount
+      v["Total Penjualan"] = v.totalPenjualan
       delete v._id
-      delete v.totalAmount
+      delete v.totalPenjualan
       return v
     }));
     const workbook = XLSX.utils.book_new();
@@ -28,10 +28,10 @@ function LaporanPenjualan() {
     XLSX.writeFile(workbook, "Laporan Penjualan.xlsx");
   };
 
-  const getAllItems = () => {
+  const getAllPenjualan = () => {
     dispatch({ type: 'showLoading' });
     axios
-      .get(`${BASE_URL}/api/laporanPenjualan/get-sum`)
+      .get(`${BASE_URL}/api/laporanPenjualan/get-total-penjualan`)
       .then((response) => {
         dispatch({ type: 'hideLoading' });
         setItemsData(response.data);
@@ -55,15 +55,13 @@ function LaporanPenjualan() {
     },
     {
       title: 'Total Penjualan',
-      dataIndex: 'totalAmount',
+      dataIndex: 'totalPenjualan',
     },
   ];
 
   useEffect(() => {
-    getAllItems();
+    getAllPenjualan();
   }, []);
-
-  console.log(columns);
 
   return (
     <div>
@@ -73,7 +71,15 @@ function LaporanPenjualan() {
           Export ke Excel
         </Button>
       </div>
-      <Table columns={columns} dataSource={itemsData} bordered rowKey='_id' />
+      <Table
+        columns={columns} 
+        dataSource={itemsData} 
+        bordered rowKey='_id' 
+        pagination={{
+          onChange(current) {
+            setPage(current);
+          }
+        }}/>
     </div>
   );
 }

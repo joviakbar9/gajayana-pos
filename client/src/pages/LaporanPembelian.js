@@ -3,14 +3,29 @@ import axios from 'axios';
 import { Table } from 'antd';
 import '../resources/items.css';
 import { useDispatch } from 'react-redux';
+import { Button, Modal } from 'antd';
 import { BASE_URL } from '../constant/axios';
-// import { useExcelDownloder } from 'react-xls';
+import * as XLSX from "xlsx";
 
 function LaporanPembelian() {
   const [itemsData, setItemsData] = useState([]);
   const [page, setPage] = React.useState(1);
   const dispatch = useDispatch();
-  // const { ExcelDownloder, Type } = useExcelDownloder();
+
+  const downloadExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(itemsData.map(v=>{
+      v["Tanggal Pembelian"] = v._id
+      v["Total Pembelian"] = v.totalPembelian
+      delete v._id
+      delete v.totalPembelian
+      return v
+    }));
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    //let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
+    //XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
+    XLSX.writeFile(workbook, "Laporan Pembelian.xlsx");
+  };
 
   const getAllPembelian = () => {
     dispatch({ type: 'showLoading' });
@@ -39,25 +54,22 @@ function LaporanPembelian() {
     },
     {
       title: 'Total Pembelian',
-      dataIndex: 'totalAmount',
+      dataIndex: 'totalPembelian',
     },
   ];
 
   useEffect(() => {
     getAllPembelian();
   }, []);
+
   return (
     <div>
       <div className='d-flex justify-content-between'>
         <h3>Laporan Pembelian</h3>
+        <Button type='primary' onClick={() => downloadExcel()}>
+          Export ke Excel
+        </Button>
       </div>
-      {/* <ExcelDownloder
-        data={columns}
-        filename={'Laporan Pembelian'}
-        type={Type.Button} // or type={'button'}
-      >
-        Download
-      </ExcelDownloder> */}
       <Table 
         columns={columns} 
         dataSource={itemsData} 

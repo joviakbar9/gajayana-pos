@@ -5,7 +5,8 @@ import {
   MenuFoldOutlined,
   DownOutlined,
   UsergroupAddOutlined,
-  HomeOutlined,
+  FileAddOutlined,
+  DatabaseOutlined,
   CopyOutlined,
   UnorderedListOutlined,
   AppstoreOutlined,
@@ -15,6 +16,7 @@ import {
   UserOutlined,
   LoginOutlined,
   ShoppingCartOutlined,
+  BookOutlined,
 } from '@ant-design/icons';
 import '../resources/layout.css';
 import { Link, useNavigate } from 'react-router-dom';
@@ -72,16 +74,16 @@ const DefaultLayout = (props) => {
         >
           <Menu.Item
             hidden={role === 'kasir'}
-            key='/home'
-            icon={<HomeOutlined />}
+            key='/order'
+            icon={<FileAddOutlined />}
           >
-            <Link to='/home'>Home</Link>
+            <Link to='/order'>Order</Link>
           </Menu.Item>
           <Menu.SubMenu
             hidden={role === 'kasir'}
             key={1}
             title='Master Data'
-            icon={<BarChartOutlined />}
+            icon={<DatabaseOutlined />}
           >
             <Menu.Item key='/produk' icon={<UnorderedListOutlined />}>
               <Link to='/produk'>Produk</Link>
@@ -109,10 +111,10 @@ const DefaultLayout = (props) => {
           </Menu.Item>
 
           <Menu.SubMenu
-            hidden={role === 'admin' || role === 'kasir'}
+            hidden={role === 'admin'}
             key={2}
             title='Laporan'
-            icon={<BarChartOutlined />}
+            icon={<BookOutlined />}
           >
             <Menu.Item key='/laporanpenjualan'>
               <Link to='/laporanpenjualan'>Laporan Penjualan</Link>

@@ -5,7 +5,7 @@ import "../resources/items.css";
 import { useDispatch } from "react-redux";
 import { BASE_URL } from "../constant/axios";
 
-function Homepage() {
+function Order() {
   const { Search } = Input;
   const [itemsData, setItemsData] = useState([]);
   const [cari, setCari] = useState("");
@@ -103,4 +103,4 @@ function Homepage() {
   );
 }
 
-export default Homepage;
+export default Order;

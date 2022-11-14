@@ -57,10 +57,7 @@ function Pembelian() {
   const deletePembelian = (values) => {
     dispatch({ type: "showLoading" });
     axios
-      .post(`${BASE_URL}/api/pembelian/delete-pembelian`, {
-        ...values,
-        pembelianId: delPembelian._id,
-      })
+      .delete(`${BASE_URL}/api/pembelian/${delPembelian._id}`)
       .then((response) => {
         dispatch({ type: "hideLoading" });
         message.success("Data Pembelian Berhasil Dihapus");

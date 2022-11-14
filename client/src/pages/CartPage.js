@@ -27,7 +27,7 @@ function CartPage() {
   const [billChargeModal, setBillChargeModal] = useState(false);
   const [subTotal, setSubTotal] = useState(0);
   const [sisaPembayaran, setSisa] = useState(0);
-  const [grandTotall, setGrandTotal] = useState(0);
+  // const [grandTotall, setGrandTotal] = useState(0);
   const [diskon, setDiskon] = useState(0);
   const [getCustomer, setCustomer] = useState([]);
   const [form] = Form.useForm();

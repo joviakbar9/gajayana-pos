@@ -12,7 +12,7 @@ module.exports = {
   },
   getPemesanan: async (req, res) => {
     try {
-      const pemesanan = await PemesananModel.find().populate('customerId');
+      const pemesanan = await PemesananModel.find({isArchive:false}).populate('customerId');
       res.send(pemesanan);
     } catch (error) {
       res.status(400).json(error);
