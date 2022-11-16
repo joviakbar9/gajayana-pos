@@ -213,7 +213,7 @@ function CartPage() {
             </Select>
           </Form.Item>
           <Form.Item
-            initialValue={"Lunas"}
+            initialValue={"Lunas", {sisaPembayaran: 0, uangMuka: 0}}
             name="statusPembayaran"
             label="Pembayaran"
           >
