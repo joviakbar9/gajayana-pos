@@ -168,13 +168,7 @@ function CartPage() {
   return (
     <div>
       <h3>Pemesanan</h3>
-      <Table
-        columns={columns}
-        dataSource={cartItems}
-        bordered
-        pagination={false}
-        rowKey="kodeproduk"
-      />
+      <Table columns={columns} dataSource={cartItems} bordered pagination={false} rowKey="kodeproduk"/>
       <hr />
 
       <div className="d-flex justify-content-end flex-column align-items-end">

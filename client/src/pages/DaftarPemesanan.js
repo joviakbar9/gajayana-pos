@@ -400,8 +400,7 @@ function DaftarPemesanan() {
                   <td>
                     <b>SISA PEMBAYARAN</b>
                   </td>
-                  <td> : Rp 
-                    {selectedBill.sisaPembayaran !== 0
+                  <td> : Rp {selectedBill.sisaPembayaran !== 0
                       ? selectedBill.totalHarga -
                         (selectedBill.totalHarga / 100) * selectedBill.diskon -
                         selectedBill.uangMuka
