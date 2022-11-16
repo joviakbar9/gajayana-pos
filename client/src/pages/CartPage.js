@@ -7,22 +7,22 @@ import {
   Select,
   Table,
   DatePicker,
-} from 'antd';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
-import moment from 'moment';
-import { BASE_URL } from '../constant/axios';
+} from "antd";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import moment from "moment";
+import { BASE_URL } from "../constant/axios";
 import {
   DeleteTwoTone,
   PlusCircleOutlined,
   MinusCircleOutlined,
-} from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
-import e from 'cors';
+} from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import e from "cors";
 
 function CartPage() {
-  const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
+  const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];
   const { cartItems } = useSelector((state) => state.rootReducer);
   const [billChargeModal, setBillChargeModal] = useState(false);
   const [subTotal, setSubTotal] = useState(0);
@@ -38,7 +38,7 @@ function CartPage() {
   const increaseQuantity = (record) => {
     console.log(record);
     dispatch({
-      type: 'updateCart',
+      type: "updateCart",
       payload: { ...record, quantity: record.quantity + 1 },
     });
   };
@@ -46,7 +46,7 @@ function CartPage() {
   const setJumlah = (record, e) => {
     console.log(record);
     dispatch({
-      type: 'updateCart',
+      type: "updateCart",
       payload: { ...record, quantity: +e.target.value },
     });
   };
@@ -54,15 +54,17 @@ function CartPage() {
   const decreaseQuantity = (record) => {
     if (record.quantity !== 1) {
       dispatch({
-        type: 'updateCart',
+        type: "updateCart",
         payload: { ...record, quantity: record.quantity + -1 },
       });
     }
   };
 
   const hitungSisa = (event) => {
-    setSisa((subTotal - ((subTotal / 100) * diskon) - event.target.value));
-    form.setFieldsValue({ sisaPembayaran: (subTotal - ((subTotal / 100) * diskon) - event.target.value) });
+    setSisa(subTotal - (subTotal / 100) * diskon - event.target.value);
+    form.setFieldsValue({
+      sisaPembayaran: subTotal - (subTotal / 100) * diskon - event.target.value,
+    });
   };
 
   const getAllCustomer = () => {
@@ -78,24 +80,24 @@ function CartPage() {
 
   const columns = [
     {
-      title: 'Kode Produk',
-      dataIndex: 'kodeproduk',
+      title: "Kode Produk",
+      dataIndex: "kodeproduk",
     },
     {
-      title: 'Nama Produk',
-      dataIndex: 'namaproduk',
+      title: "Nama Produk",
+      dataIndex: "namaproduk",
     },
     {
-      title: 'Harga',
-      dataIndex: 'harga',
+      title: "Harga",
+      dataIndex: "harga",
     },
     {
-      title: 'Jumlah',
-      dataIndex: '_id',
+      title: "Jumlah",
+      dataIndex: "_id",
       render: (id, record) => (
         <div>
           <MinusCircleOutlined
-            className='mx-3'
+            className="mx-3"
             onClick={() => decreaseQuantity(record)}
           />
           <input
@@ -106,19 +108,19 @@ function CartPage() {
             }}
           />
           <PlusCircleOutlined
-            className='mx-3'
+            className="mx-3"
             onClick={() => increaseQuantity(record)}
           />
         </div>
       ),
     },
     {
-      title: 'Actions',
-      dataIndex: '_id',
+      title: "Actions",
+      dataIndex: "_id",
       render: (id, record) => (
         <DeleteTwoTone
-          twoToneColor='#eb2f96'
-          onClick={() => dispatch({ type: 'deleteFromCart', payload: record })}
+          twoToneColor="#eb2f96"
+          onClick={() => dispatch({ type: "deleteFromCart", payload: record })}
         />
       ),
     },
@@ -136,7 +138,7 @@ function CartPage() {
 
   const onFinish = (values) => {
     console.log(values);
-    if (values.statusPembayaran === 'lunas') {
+    if (values.statusPembayaran === "lunas") {
       values.sisaPembayaran = 0;
       values.uangMuka = 0;
     }
@@ -147,18 +149,18 @@ function CartPage() {
       grandTotal: Number(
         subTotal - Number(((subTotal / 100) * diskon).toFixed(2))
       ),
-      userId: JSON.parse(localStorage.getItem('pos-user'))._id,
+      userId: JSON.parse(localStorage.getItem("gajayana-pos-user"))._id,
     };
 
     axios
       .post(`${BASE_URL}/api/pemesanan/add-pemesanan`, reqObject)
       .then(() => {
-        message.success('Pemesanan Berhasil');
-        navigate('/daftarpemesanan');
-        dispatch({ type: 'clearCart' });
+        message.success("Pemesanan Berhasil");
+        navigate("/daftarpemesanan");
+        dispatch({ type: "clearCart" });
       })
       .catch(() => {
-        message.error('Terjadi Kesalahan');
+        message.error("Terjadi Kesalahan");
       });
   };
   console.log(subTotal);
@@ -171,38 +173,38 @@ function CartPage() {
         dataSource={cartItems}
         bordered
         pagination={false}
-        rowKey='kodeproduk'
+        rowKey="kodeproduk"
       />
       <hr />
 
-      <div className='d-flex justify-content-end flex-column align-items-end'>
-        <div className='subtotal'>
+      <div className="d-flex justify-content-end flex-column align-items-end">
+        <div className="subtotal">
           <h3>
             TOTAL HARGA : <b>Rp {subTotal}</b>
           </h3>
         </div>
 
-        <Button type='primary' onClick={() => setBillChargeModal(true)}>
+        <Button type="primary" onClick={() => setBillChargeModal(true)}>
           SUBMIT PEMESANAN
         </Button>
       </div>
 
       <Modal
-        title='Nota Pemesanan'
+        title="Nota Pemesanan"
         visible={billChargeModal}
         footer={false}
         onCancel={() => setBillChargeModal(false)}
       >
-        {' '}
-        <Form form={form} layout='vertical' onFinish={onFinish}>
+        {" "}
+        <Form form={form} layout="vertical" onFinish={onFinish}>
           <Form.Item
             initialValue={moment()}
-            name='tanggalPemesanan'
-            label='Tanggal Pemesanan'
+            name="tanggalPemesanan"
+            label="Tanggal Pemesanan"
           >
-          <DatePicker initialValues={moment()} format={dateFormatList} />
+            <DatePicker initialValues={moment()} format={dateFormatList} />
           </Form.Item>
-          <Form.Item name='customerId' label='Customer'>
+          <Form.Item name="customerId" label="Customer">
             <Select
               showSearch
               filterOption={(input, option) =>
@@ -210,20 +212,20 @@ function CartPage() {
               }
             >
               {getCustomer.map((v) => (
-                <Select.Option
-                  value={v._id}
-                >{`${v.namaCustomer} - ${v.noHpCustomer}`}</Select.Option>
+                <Select.Option value={v._id}>
+                  {`${v.namaCustomer} - ${v.noHpCustomer}`}
+                </Select.Option>
               ))}
             </Select>
           </Form.Item>
           <Form.Item
-            initialValue={'Lunas'}
-            name='statusPembayaran'
-            label='Pembayaran'
+            initialValue={"Lunas"}
+            name="statusPembayaran"
+            label="Pembayaran"
           >
             <Select
               onChange={(value) => {
-                if (value === 'dp') {
+                if (value === "dp") {
                   setIsDp(true);
                   return;
                 }
@@ -232,24 +234,24 @@ function CartPage() {
                 form.setFieldsValue({ sisaPembayaran: 0, uangMuka: 0 });
               }}
             >
-              <Select.Option value='lunas'>Lunas</Select.Option>
-              <Select.Option value='dp'>DP</Select.Option>
+              <Select.Option value="lunas">Lunas</Select.Option>
+              <Select.Option value="dp">DP</Select.Option>
             </Select>
           </Form.Item>
-          <Form.Item hidden={!isDp} name='uangMuka' label='DP' defaultValue>
+          <Form.Item hidden={!isDp} name="uangMuka" label="DP" defaultValue>
             <Input onChange={hitungSisa} />
           </Form.Item>
-          <Form.Item disabled hidden={!isDp} name='sisaPembayaran' label='Sisa'>
+          <Form.Item disabled hidden={!isDp} name="sisaPembayaran" label="Sisa">
             <Input value={sisaPembayaran} />
           </Form.Item>
-          <Form.Item initialValue={0} name='diskon' label='Diskon (%)'>
+          <Form.Item initialValue={0} name="diskon" label="Diskon (%)">
             <Input
               onChange={(e) => {
                 setDiskon(+e.target.value);
               }}
             />
           </Form.Item>
-          <Form.Item name='keterangan' label='Keterangan'>
+          <Form.Item name="keterangan" label="Keterangan">
             <Input.TextArea />
           </Form.Item>
 
@@ -267,8 +269,16 @@ function CartPage() {
               <td> : Rp {sisaPembayaran}</td>
             </tr>
             <tr>
-              <td><h5><b>Grand Total</b></h5></td>
-              <td><h5><b> : Rp {subTotal - (subTotal / 100) * diskon} </b></h5></td>
+              <td>
+                <h5>
+                  <b>Grand Total</b>
+                </h5>
+              </td>
+              <td>
+                <h5>
+                  <b> : Rp {subTotal - (subTotal / 100) * diskon} </b>
+                </h5>
+              </td>
             </tr>
           </table>
 
@@ -283,12 +293,12 @@ function CartPage() {
             </h5>
           </div> */}
 
-          <div className='d-flex justify-content-end'>
-            <Button htmlType='submit' type='primary'>
+          <div className="d-flex justify-content-end">
+            <Button htmlType="submit" type="primary">
               CONFIRM PEMESANAN
             </Button>
           </div>
-        </Form>{' '}
+        </Form>{" "}
       </Modal>
     </div>
   );

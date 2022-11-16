@@ -24,7 +24,7 @@ function Register() {
       });
   };
   useEffect(() => {
-    if (localStorage.getItem('pos-user')) navigate('/pemesanan');
+    if (localStorage.getItem('gajayana-pos-user')) navigate('/pemesanan');
   }, []);
 
   return (

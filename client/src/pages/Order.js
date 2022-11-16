@@ -10,18 +10,6 @@ function Order() {
   const [itemsData, setItemsData] = useState([]);
   const [cari, setCari] = useState("");
 
-  // const onSearch = (value) => {
-  //   if (value == '') {
-  //     setItemsData(itemsDataOri);
-  //     return;
-  //   }
-
-  //   const searched = itemsData.filter((v) => {
-  //     return v.namaproduk.toLowerCase().replace('//g,') == value.toLowerCase().replace('//g,');
-  //   });
-  //   setItemsData(searched);
-  // };
-
   const searching = (data) => {
     return data.filter((v) => v.namaproduk.toLowerCase().includes(cari));
   }
@@ -39,7 +27,6 @@ function Order() {
       .then((response) => {
         dispatch({ type: "hideLoading" });
         setItemsData(response.data);
-        // setItemsDataOri(response.data);
       })
       .catch((error) => {
         dispatch({ type: "hideLoading" });
@@ -92,7 +79,6 @@ function Order() {
       <div className="d-flex">
         <Search
           placeholder="search produk"
-          // onSearch={onSearch}
           onChange={(e) => setCari(e.target.value)}
           style={{
             width: 240,

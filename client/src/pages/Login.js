@@ -18,7 +18,7 @@ function Login() {
       .then((res) => {
         dispatch({ type: 'hideLoading' });
         message.success('Login Berhasil');
-        localStorage.setItem('pos-user', JSON.stringify(res.data));
+        localStorage.setItem('gajayana-pos-user', JSON.stringify(res.data));
         naviate('/daftarpemesanan');
       })
       .catch(() => {
@@ -28,7 +28,7 @@ function Login() {
   };
 
   useEffect(() => {
-    if (localStorage.getItem('pos-user')) naviate('/daftarpemesanan');
+    if (localStorage.getItem('gajayana-pos-user')) naviate('/daftarpemesanan');
   }, []);
 
   return (

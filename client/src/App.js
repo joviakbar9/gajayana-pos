@@ -1,17 +1,16 @@
 import logo from "./logo.svg";
 import "antd/dist/antd.css";
-import { Button } from "antd";
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import Order from "./pages/Order";
 import Produk from "./pages/Items";
 import KategoriProduk from "./pages/KategoriProduk";
+import Customers from "./pages/Customers";
+import Pegawai from "./pages/Pegawai";
 import Pemesanan from "./pages/CartPage";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import Customers from "./pages/Customers";
 import DaftarPemesanan from "./pages/DaftarPemesanan";
 import Pembelian from "./pages/Pembelian";
-import Pegawai from "./pages/Pegawai";
 import LaporanPenjualan from "./pages/LaporanPenjualan";
 import LaporanPembelian from "./pages/LaporanPembelian";
 import User from "./pages/User";
@@ -23,7 +22,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<DefaultLayout><Outlet/></DefaultLayout>}>
-            <Route path="/order" element={<ProtectedRoute><Order /></ProtectedRoute>} />
+            <Route path="order" element={<ProtectedRoute><Order /></ProtectedRoute>} />
             <Route path="/produk" element={<ProtectedRoute><Produk /></ProtectedRoute>} />
             <Route path="/kategoriproduk" element={<ProtectedRoute><KategoriProduk /></ProtectedRoute>} />
             <Route path="/pemesanan" element={<ProtectedRoute><Pemesanan /></ProtectedRoute>} />
@@ -34,7 +33,6 @@ function App() {
             <Route path="/laporanpenjualan" element={<ProtectedRoute><LaporanPenjualan /></ProtectedRoute>} />
             <Route path="/laporanpembelian" element={<ProtectedRoute><LaporanPembelian /></ProtectedRoute>} />
             <Route path="/user" element={<ProtectedRoute><User /></ProtectedRoute>} />
-            <Route path="/register" element={<Register />} />
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Login />} />
@@ -47,7 +45,7 @@ function App() {
 export default App;
 
 export function ProtectedRoute({ children }) {
-  if (localStorage.getItem('pos-user')) {
+  if (localStorage.getItem('gajayana-pos-user')) {
     return children
   }
   else {

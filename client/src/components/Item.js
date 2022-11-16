@@ -11,7 +11,6 @@ function Item({item}) {
     <div className='item'>
         <h4 className='kodeproduk'>{item.kodeproduk}</h4>
         <h4 className='namaproduk'>{item.nama}</h4>
-        {/* <img src={item.image} alt="" height='100' width='100'/> */}
         <h4 className='harga'><b>Harga : </b>Rp {item.harga}</h4>
         <div className="d-flex justify-content-end">
             <Button onClick={()=>addTocart()}>Tambah</Button>
