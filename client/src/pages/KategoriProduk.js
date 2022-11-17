@@ -103,7 +103,7 @@ function KategoriProduk() {
   const deleteKategori = (values) => {
     dispatch({ type: 'showLoading' });
     axios
-      .delete(`${BASE_URL}/api/kategori/${delKategori._id}`)
+      .delete(`${BASE_URL}/api/kategori/delete-kategori/${delKategori._id}`)
       .then((response) => {
         dispatch({ type: 'hideLoading' });
         message.success('Kategori berhasil Dihapus');

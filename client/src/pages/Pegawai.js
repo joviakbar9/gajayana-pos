@@ -113,7 +113,7 @@ function Pegawai() {
   const deletePegawai = (values) => {
     dispatch({ type: 'showLoading' });
     axios
-      .delete(`${BASE_URL}/api/pegawai/${delPegawai._id}`)
+      .delete(`${BASE_URL}/api/pegawai/delete-pegawai/${delPegawai._id}`)
       .then((response) => {
         dispatch({ type: 'hideLoading' });
         message.success('Pegawai berhasil Dihapus');

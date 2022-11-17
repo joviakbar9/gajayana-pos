@@ -23,21 +23,21 @@ require('../controllers/masterDataController');
 router.get('/get-all-items', getProduk);
 router.post('/add-item', addProduk);
 router.post('/edit-item', editProduk);
-router.delete('/:id', deleteProduk);
+router.delete('/delete-item/:id', deleteProduk);
 
 router.get('/get-all-kategori', getKategori);
 router.post('/add-kategori', addKategori);
 router.post('/edit-kategori', editKategori);
-router.delete('/:id', deleteKategori);
+router.delete('/delete-kategori/:id', deleteKategori);
 
 router.get('/get-all-customer', getCustomer);
 router.post('/add-customer', addCustomer);
 router.post('/edit-customer', editCustomer);
-router.delete('/:id', deleteCustomer);
+router.delete('/delete-customer/:id', deleteCustomer);
 
 router.get('/get-all-pegawai', getPegawai);
 router.post('/add-pegawai', addPegawai);
 router.post('/edit-pegawai', editPegawai);
-router.delete('/:id', deletePegawai);
+router.delete('/delete-pegawai/:id', deletePegawai);
 
 module.exports = router;

@@ -138,7 +138,7 @@ function Items() {
   const deleteItem = (values) => {
     dispatch({ type: 'showLoading' });
     axios
-      .delete(`${BASE_URL}/api/items/${delItem._id}`)
+      .delete(`${BASE_URL}/api/items/delete-item/${delItem._id}`)
       .then((response) => {
         dispatch({ type: 'hideLoading' });
         message.success('Produk berhasil Dihapus');
