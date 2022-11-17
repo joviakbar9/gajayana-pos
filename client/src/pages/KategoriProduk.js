@@ -100,7 +100,7 @@ function KategoriProduk() {
     }
   };
 
-  const deleteKategori = (values) => {
+  const deleteKategori = (delKategori) => {
     dispatch({ type: 'showLoading' });
     axios
       .delete(`${BASE_URL}/api/kategori/delete-kategori/${delKategori._id}`)
