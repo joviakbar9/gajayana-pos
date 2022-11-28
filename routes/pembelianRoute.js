@@ -6,7 +6,7 @@ const {
   editPembelian,
   deletePembelian,
 } = 
-require('../controllers/PembelianController');
+require('../controllers/pembelianController');
 
 router.get('/get-all-pembelian', getPembelian);
 router.post('/add-pembelian', addPembelian);
