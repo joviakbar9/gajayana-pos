@@ -29,7 +29,15 @@ app.use('/api/laporanPembelian', laporanPembelianRoute);
 
 const path = require('path');
 
+// // Routes
+// app.get('/', function(req, res) {
+//   res.send('Hello World!!!!!!!!!!!!!!!!!!!!');
+// });
+ 
+// Listen
 const port = process.env.PORT || 5000;
+// app.listen(port);
+// console.log('Listening on localhost:'+ port);
 
 if (process.env.NODE_ENV === 'production') {
   app.use('/', express.static('client/build'));

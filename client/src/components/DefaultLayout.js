@@ -144,17 +144,6 @@ const DefaultLayout = (props) => {
             </b>
             <ShoppingCartOutlined />
           </div>
-
-          {/* <div className='akun-dropdown d-flex'>
-            <Dropdown overlay={menu} trigger={['click']}>
-              <a onClick={(e) => e.preventDefault()}>
-                <Space>
-                  (Tipe Akun)
-                  <DownOutlined />
-                </Space>
-              </a>
-            </Dropdown>
-          </div> */}
         </Header>
         <main
           className="site-layout-background"
