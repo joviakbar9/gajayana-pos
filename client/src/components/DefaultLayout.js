@@ -17,7 +17,7 @@ import {
   BookOutlined,
 } from "@ant-design/icons";
 import "../resources/layout.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 const { Header, Sider, Footer } = Layout;
 
@@ -33,6 +33,9 @@ const DefaultLayout = (props) => {
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
     const authData = JSON.parse(localStorage.getItem("gajayana-pos-user"));
+    if (!authData) {
+      <Navigate to='/login' />
+    }
     setRole(authData.role);
   }, [cartItems]);
 

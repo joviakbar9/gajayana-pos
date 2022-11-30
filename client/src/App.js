@@ -22,6 +22,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
+        <Route path="/" element={<Login />} />
           <Route path="/" element={<DefaultLayout><Outlet/></DefaultLayout>}>
             <Route path="/order" element={<ProtectedRoute><Order /></ProtectedRoute>} />
             <Route path="/produk" element={<ProtectedRoute><Produk /></ProtectedRoute>} />
@@ -36,7 +37,6 @@ function App() {
             <Route path="/user" element={<ProtectedRoute><User /></ProtectedRoute>} />
           </Route>
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </div>
