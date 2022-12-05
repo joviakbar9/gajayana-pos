@@ -253,6 +253,7 @@ function DaftarPemesanan() {
         dataSource={searching(pemesananData)}
         bordered
         rowKey="_id"
+        scroll={{x: true}}
       />
 
       {addEditModalVisibility && (
