@@ -79,7 +79,8 @@ const DefaultLayout = (props) => {
             <Menu.Item key="/customers" icon={<UsergroupAddOutlined />}>
               <Link to="/customers">Customer</Link>
             </Menu.Item>
-            <Menu.Item key="/pegawai" icon={<UserSwitchOutlined />}>
+            <Menu.Item hidden={role === "kasir" || role === "admin"}
+              key="/pegawai" icon={<UserSwitchOutlined />}>
               <Link to="/pegawai">Pegawai</Link>
             </Menu.Item>
           </Menu.SubMenu>

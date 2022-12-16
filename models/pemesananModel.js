@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 const pemesananSchema = mongoose.Schema(
   {
-    idnota: { type: mongoose.Types.ObjectId, ref: 'GDP' },
+    idnota: { type: mongoose.Types.ObjectId },
     tanggalPemesanan: { type: Date, required: true },
-    customerId: { type: mongoose.Types.ObjectId, ref: 'customer' },
+    customerId: { type: mongoose.Types.ObjectId, ref: 'customer', required: true },
     totalHarga: { type: Number },
     uangMuka: { type: Number },
     diskon: { type: Number },
