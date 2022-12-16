@@ -81,7 +81,9 @@ function CartPage() {
   const openSubmitModal = () => {
     if (cartItems.length) {
       setBillChargeModal(true)
-    } 
+    } else {
+      message.error("Tambah Produk Terlebih Dahulu")
+    }
   }
 
   const columns = [
