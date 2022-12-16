@@ -7,7 +7,7 @@ module.exports = {
   getProduk: async (req, res) => {
     try {
       const items = await ItemModel.find({isArchive:false}).populate('kategori');
-      console.log(items);
+      // console.log(items);
       res.send(items);
     } catch (error) {
       res.status(400).json(error);

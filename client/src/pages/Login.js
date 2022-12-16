@@ -12,6 +12,12 @@ function Login() {
   const naviate = useNavigate();
   
   const onFinish = (values) => {
+    if (!values.userId){
+      return message.error("User ID Harus Diisi")
+    }
+    if (!values.password){
+      return message.error("Password Harus Diisi")
+    }
     dispatch({ type: 'showLoading' });
     axios
       .post(`${BASE_URL}/api/users/login`, values)
@@ -48,9 +54,6 @@ function Login() {
             </Form.Item>
 
             <div className='d-flex-justify-content-between-align-items-right'>
-              {/* <Link to='/register'>
-                Not Yet Registered ? Click Here To Register
-              </Link> */}
               <Button htmlType='submit' type='primary'>
                 Login
               </Button>

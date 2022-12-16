@@ -78,6 +78,12 @@ function CartPage() {
       });
   };
 
+  const openSubmitModal = () => {
+    if (cartItems.length) {
+      setBillChargeModal(true)
+    } 
+  }
+
   const columns = [
     {
       title: "Kode Produk",
@@ -137,7 +143,9 @@ function CartPage() {
   }, [cartItems]);
 
   const onFinish = (values) => {
-    console.log(values);
+    if (!values.customerId) {
+      return message.error("Data Customer Harus Diisi")
+    }
     if (values.statusPembayaran === "Lunas") {
       values.sisaPembayaran = 0;
       values.uangMuka = 0;
@@ -178,7 +186,7 @@ function CartPage() {
           </h3>
         </div>
 
-        <Button type="primary" onClick={() => setBillChargeModal(true)}>
+        <Button type="primary" onClick={() => openSubmitModal()}>
           SUBMIT PEMESANAN
         </Button>
       </div>
