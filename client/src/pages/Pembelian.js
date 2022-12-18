@@ -39,6 +39,15 @@ function Pembelian() {
 
   const editPembelian = (values) => {
     dispatch({ type: "showLoading" });
+    if (!values.namaProduk) {
+      return message.error("Nama produk harus diisi")
+    }
+    if (!values.jumlah) {
+      return message.error("Jumlah produk harus diisi")
+    }
+    if (!values.hargaPembelian) {
+      return message.error("Total Harga harus diisi")
+    }
     axios
       .post(`${BASE_URL}/api/pembelian/edit-pembelian`, {
         ...values,
