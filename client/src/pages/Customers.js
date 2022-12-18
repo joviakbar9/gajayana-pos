@@ -82,6 +82,12 @@ function Items() {
   }, []);
 
   const onFinish = (values) => {
+    if (!values.namaCustomer) {
+      return message.error("Kode customer harus diisi")
+    }
+    if (!values.noHpCustomer) {
+      return message.error("Nomor HP customer harus diisi")
+    }
     dispatch({ type: 'showLoading' });
     if (editingCustomer === null) {
       axios

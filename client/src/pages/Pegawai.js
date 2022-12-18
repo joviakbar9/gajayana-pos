@@ -74,6 +74,18 @@ function Pegawai() {
   }, []);
 
   const onFinish = (values) => {
+    if (!values.namaPegawai) {
+      return message.error("Nama pegawai harus diisi")
+    }
+    if (!values.nohpPegawai) {
+      return message.error("Nomor HP pegawai harus diisi")
+    }
+    if (!values.tugas) {
+      return message.error("Tugas pegawai harus diisi")
+    }
+    if (!values.gajiPokok) {
+      return message.error("Gaji pokok pegawai harus diisi")
+    }
     dispatch({ type: 'showLoading' });
     if (editingPegawai === null) {
       axios

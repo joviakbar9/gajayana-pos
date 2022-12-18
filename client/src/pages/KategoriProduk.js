@@ -64,6 +64,12 @@ function KategoriProduk() {
   }, []);
 
   const onFinish = (values) => {
+    if (!values.namakategori) {
+      return message.error("Nama kategori produk harus diisi")
+    }
+    if (!values.satuan) {
+      return message.error("Satuan harus diisi")
+    }
     dispatch({ type: 'showLoading' });
     if (editingKategori === null) {
       axios

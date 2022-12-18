@@ -8,7 +8,6 @@ import { BASE_URL } from '../constant/axios';
 function Items() {
   const { Search } = Input;
   const [cari, setCari] = useState("");
-
   const [itemsData, setItemsData] = useState([]);
   const [addEditModalVisibilty, setAddEditModalVisibilty] = useState(false);
   const [deleteModalVisibility, setDeleteModalVisibility] = useState(false);
@@ -99,6 +98,19 @@ function Items() {
   }, []);
 
   const onFinish = (values) => {
+    console.log(values)
+    if (!values.kodeproduk) {
+      return message.error("Kode produk harus diisi")
+    }
+    // if (values.kodeproduk === itemsData) {
+    //   return message.error("Kode produk sudah terdaftar")
+    // }
+    if (!values.namaproduk) {
+      return message.error("Nama produk harus diisi")
+    }
+    if (!values.harga) {
+      return message.error("Harga produk harus diisi")
+    }
     dispatch({ type: 'showLoading' });
     if (editingItem === null) {
       axios
