@@ -64,7 +64,7 @@ function KategoriProduk() {
   }, []);
 
   const onFinish = (values) => {
-    if (!values.namakategori) {
+    if (!values.namaKategori) {
       return message.error("Nama kategori produk harus diisi")
     }
     if (!values.satuan) {

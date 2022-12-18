@@ -98,7 +98,6 @@ function Items() {
   }, []);
 
   const onFinish = (values) => {
-    console.log(values)
     if (!values.kodeproduk) {
       return message.error("Kode produk harus diisi")
     }
