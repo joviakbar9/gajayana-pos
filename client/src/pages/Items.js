@@ -102,9 +102,6 @@ function Items() {
     if (!values.kodeproduk) {
       return message.error("Kode produk harus diisi")
     }
-    // if (values.kodeproduk === itemsData) {
-    //   return message.error("Kode produk sudah terdaftar")
-    // }
     if (!values.namaproduk) {
       return message.error("Nama produk harus diisi")
     }

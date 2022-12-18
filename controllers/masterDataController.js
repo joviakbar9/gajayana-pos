@@ -22,7 +22,7 @@ module.exports = {
     }
   },
   editProduk: async (req, res) => {
-    try {np
+    try {
       await ItemModel.findOneAndUpdate({ _id: req.body.itemId }, req.body);
       res.send("Produk Berhasil Diubah");
     } catch (error) {
