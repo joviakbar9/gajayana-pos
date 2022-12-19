@@ -37,6 +37,23 @@ function Pembelian() {
       });
   };
 
+  const onFinish = (values) => {
+    dispatch({ type: "showLoading" });
+    axios
+      .post(`${BASE_URL}/api/pembelian/add-pembelian`, values)
+      .then((response) => {
+        dispatch({ type: "hideLoading" });
+        message.success("Data Pembelian Berhasil Ditambah");
+        setAddModalVisibility(false);
+        getAllPembelian();
+      })
+      .catch((error) => {
+        dispatch({ type: "hideLoading" });
+        message.error("Terjadi Kesalahan");
+        console.log(error);
+      });
+  };
+
   const editPembelian = (values) => {
     dispatch({ type: "showLoading" });
     if (!values.namaProduk) {
@@ -145,23 +162,6 @@ function Pembelian() {
   useEffect(() => {
     getAllPembelian();
   }, []);
-
-  const onFinish = (values) => {
-    dispatch({ type: "showLoading" });
-    axios
-      .post(`${BASE_URL}/api/pembelian/add-pembelian`, values)
-      .then((response) => {
-        dispatch({ type: "hideLoading" });
-        message.success("Data Pembelian Berhasil Ditambah");
-        setAddModalVisibility(false);
-        getAllPembelian();
-      })
-      .catch((error) => {
-        dispatch({ type: "hideLoading" });
-        message.error("Terjadi Kesalahan");
-        console.log(error);
-      });
-  };
 
   return (
     <div>

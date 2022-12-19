@@ -78,6 +78,18 @@ function Items() {
 
   const onFinish = (values) => {
     dispatch({ type: 'showLoading' });
+    if (!values.name) {
+      return message.error("Nama harus diisi")
+    }
+    if (!values.userId) {
+      return message.error("User ID harus diisi")
+    }
+    if (!values.password) {
+      return message.error("Password harus diisi")
+    }
+    if (!values.role) {
+      return message.error("Role harus diisi")
+    }
     if (editingItem === null) {
       axios
         .post(`${BASE_URL}/api/users/add-user`, values)
