@@ -8,7 +8,6 @@ import KategoriProduk from "./pages/KategoriProduk";
 import Customers from "./pages/Customers";
 import Pegawai from "./pages/Pegawai";
 import Pemesanan from "./pages/CartPage";
-// import Register from "./pages/Register";
 import Login from "./pages/Login";
 import DaftarPemesanan from "./pages/DaftarPemesanan";
 import Pembelian from "./pages/Pembelian";

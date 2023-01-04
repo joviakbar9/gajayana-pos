@@ -8,7 +8,7 @@ import { BASE_URL } from "../constant/axios";
 
 function Pembelian() {
   const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];
-  const { Search } = Input;
+  // const { Search } = Input;
   const [cari, setCari] = useState("");
 
   const [pembelianData, setPembelianData] = useState([]);
@@ -33,7 +33,6 @@ function Pembelian() {
       })
       .catch((error) => {
         dispatch({ type: "hideLoading" });
-        console.log(error);
       });
   };
 
@@ -50,7 +49,6 @@ function Pembelian() {
       .catch((error) => {
         dispatch({ type: "hideLoading" });
         message.error("Terjadi Kesalahan");
-        console.log(error);
       });
   };
 
@@ -80,9 +78,12 @@ function Pembelian() {
       .catch((error) => {
         dispatch({ type: "hideLoading" });
         message.error("Terjadi Kesalahan");
-        console.log(error);
       });
   };
+
+  useEffect(() => {
+    getAllPembelian();
+  }, []);
 
   const deletePembelian = (values) => {
     dispatch({ type: "showLoading" });
@@ -98,7 +99,6 @@ function Pembelian() {
       .catch((error) => {
         dispatch({ type: "hideLoading" });
         message.error("Terjadi Kesalahan");
-        console.log(error);
       });
   };
 
@@ -158,10 +158,6 @@ function Pembelian() {
       ),
     },
   ];
-
-  useEffect(() => {
-    getAllPembelian();
-  }, []);
 
   return (
     <div>
