@@ -8,7 +8,7 @@ import { BASE_URL } from "../constant/axios";
 
 function Pembelian() {
   const dateFormatList = ["DD/MM/YYYY", "DD/MM/YY"];
-  // const { Search } = Input;
+  const { Search } = Input;
   const [cari, setCari] = useState("");
 
   const [pembelianData, setPembelianData] = useState([]);
