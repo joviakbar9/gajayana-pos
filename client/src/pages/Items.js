@@ -30,7 +30,6 @@ function Items() {
       })
       .catch((error) => {
         dispatch({ type: 'hideLoading' });
-        console.log(error);
       });
   };
 
@@ -39,10 +38,75 @@ function Items() {
       .get(`${BASE_URL}/api/kategori/get-all-kategori`)
       .then((response) => {
         setKategori(response.data);
-        console.log(getKategori);
       })
       .catch((error) => {
-        console.log(error);
+        dispatch({ type: 'hideLoading' });
+      });
+  };
+
+  useEffect(() => {
+    getAllItems();
+    getAllKategori();
+  }, []);
+
+  const onFinish = (values) => {
+    if (!values.kodeproduk) {
+      return message.error("Kode produk harus diisi")
+    }
+    if (!values.namaproduk) {
+      return message.error("Nama produk harus diisi")
+    }
+    if (!values.harga) {
+      return message.error("Harga produk harus diisi")
+    }
+    dispatch({ type: 'showLoading' });
+    if (editingItem === null) {
+      axios
+        .post(`${BASE_URL}/api/items/add-item`, values)
+        .then((response) => {
+          dispatch({ type: 'hideLoading' });
+          message.success('Produk Berhasil Ditambah');
+          setAddEditModalVisibilty(false);
+          getAllItems();
+        })
+        .catch((error) => {
+          dispatch({ type: 'hideLoading' });
+          message.error('Terjadi Kesalahan');
+        });
+    } else {
+      axios
+        .post(`${BASE_URL}/api/items/edit-item`, {
+          ...values,
+          itemId: editingItem._id,
+        })
+        .then((response) => {
+          dispatch({ type: 'hideLoading' });
+          message.success('Data Produk Berhasil Diubah');
+          setEditingItem(null);
+          setAddEditModalVisibilty(false);
+          getAllItems();
+        })
+        .catch((error) => {
+          dispatch({ type: 'hideLoading' });
+          message.error('Terjadi Kesalahan');
+        });
+    }
+  };
+
+  const deleteItem = (values) => {
+    dispatch({ type: 'showLoading' });
+    axios
+      .delete(`${BASE_URL}/api/items/delete-item/${delItem._id}`)
+      .then((response) => {
+        dispatch({ type: 'hideLoading' });
+        message.success('Produk berhasil Dihapus');
+        setDelItem(null);
+        setDeleteModalVisibility(false);
+        getAllItems();
+      })
+      .catch((error) => {
+        dispatch({ type: 'hideLoading' });
+        message.error('Terjadi Kesalahan');
       });
   };
 
@@ -91,75 +155,6 @@ function Items() {
       ),
     },
   ];
-
-  useEffect(() => {
-    getAllItems();
-    getAllKategori();
-  }, []);
-
-  const onFinish = (values) => {
-    if (!values.kodeproduk) {
-      return message.error("Kode produk harus diisi")
-    }
-    if (!values.namaproduk) {
-      return message.error("Nama produk harus diisi")
-    }
-    if (!values.harga) {
-      return message.error("Harga produk harus diisi")
-    }
-    dispatch({ type: 'showLoading' });
-    if (editingItem === null) {
-      axios
-        .post(`${BASE_URL}/api/items/add-item`, values)
-        .then((response) => {
-          dispatch({ type: 'hideLoading' });
-          message.success('Produk Berhasil Ditambah');
-          setAddEditModalVisibilty(false);
-          getAllItems();
-        })
-        .catch((error) => {
-          dispatch({ type: 'hideLoading' });
-          message.error('Terjadi Kesalahan');
-          console.log(error);
-        });
-    } else {
-      axios
-        .post(`${BASE_URL}/api/items/edit-item`, {
-          ...values,
-          itemId: editingItem._id,
-        })
-        .then((response) => {
-          dispatch({ type: 'hideLoading' });
-          message.success('Data Produk Berhasil Diubah');
-          setEditingItem(null);
-          setAddEditModalVisibilty(false);
-          getAllItems();
-        })
-        .catch((error) => {
-          dispatch({ type: 'hideLoading' });
-          message.error('Terjadi Kesalahan');
-          console.log(error);
-        });
-    }
-  };
-
-  const deleteItem = (values) => {
-    dispatch({ type: 'showLoading' });
-    axios
-      .delete(`${BASE_URL}/api/items/delete-item/${delItem._id}`)
-      .then((response) => {
-        dispatch({ type: 'hideLoading' });
-        message.success('Produk berhasil Dihapus');
-        setDelItem(null);
-        setDeleteModalVisibility(false);
-        getAllItems();
-      })
-      .catch((error) => {
-        dispatch({ type: 'hideLoading' });
-        message.error('Terjadi Kesalahan');
-        console.log(error);
-      });
-  };
 
   return (
     <div>

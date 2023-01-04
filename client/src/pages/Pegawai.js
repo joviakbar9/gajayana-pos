@@ -27,52 +27,6 @@ function Pegawai() {
       });
   };
 
-  const columns = [
-    {
-      title: 'Nama Pegawai',
-      dataIndex: 'namaPegawai',
-    },
-    {
-      title: 'Nomor HP',
-      dataIndex: 'nohpPegawai',
-    },
-    {
-      title: 'Tugas',
-      dataIndex: 'tugas',
-    },
-    {
-      title: 'Gaji Pokok',
-      dataIndex: 'gajiPokok',
-    },
-    {
-      title: 'Actions',
-      dataIndex: '_id',
-      render: (id, record) => (
-        <div className='d-flex'>
-          <EditTwoTone
-            className='mx-2'
-            onClick={() => {
-              setEditingPegawai(record);
-              setAddEditModalVisibilty(true);
-            }}
-          />
-          <DeleteTwoTone
-            twoToneColor='#eb2f96'
-            className='mx-2'
-            onClick={() => {
-              setDelPegawai(record);
-              setDeleteModalVisibility(true);
-            }}
-          />
-        </div>
-      ),
-    },
-  ];
-
-  useEffect(() => {
-    getAllPegawai();
-  }, []);
-
   const onFinish = (values) => {
     if (!values.namaPegawai) {
       return message.error("Nama pegawai harus diisi")
@@ -139,6 +93,52 @@ function Pegawai() {
         console.log(error);
       });
   };
+
+  useEffect(() => {
+    getAllPegawai();
+  }, []);
+  
+  const columns = [
+    {
+      title: 'Nama Pegawai',
+      dataIndex: 'namaPegawai',
+    },
+    {
+      title: 'Nomor HP',
+      dataIndex: 'nohpPegawai',
+    },
+    {
+      title: 'Tugas',
+      dataIndex: 'tugas',
+    },
+    {
+      title: 'Gaji Pokok',
+      dataIndex: 'gajiPokok',
+    },
+    {
+      title: 'Actions',
+      dataIndex: '_id',
+      render: (id, record) => (
+        <div className='d-flex'>
+          <EditTwoTone
+            className='mx-2'
+            onClick={() => {
+              setEditingPegawai(record);
+              setAddEditModalVisibilty(true);
+            }}
+          />
+          <DeleteTwoTone
+            twoToneColor='#eb2f96'
+            className='mx-2'
+            onClick={() => {
+              setDelPegawai(record);
+              setDeleteModalVisibility(true);
+            }}
+          />
+        </div>
+      ),
+    },
+  ];
 
   return (
     <div>

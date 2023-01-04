@@ -2,12 +2,11 @@ const mongoose = require('mongoose');
 
 const pemesananSchema = mongoose.Schema(
   {
-    idnota: { type: mongoose.Types.ObjectId },
     tanggalPemesanan: { type: Date, required: true },
     customerId: { type: mongoose.Types.ObjectId, ref: 'customer', required: true },
     totalHarga: { type: Number, required: true },
-    uangMuka: { type: Number },
-    diskon: { type: Number },
+    uangMuka: { type: Number, required: true },
+    diskon: { type: Number, required: true},
     sisaPembayaran: { type: Number, required: true },
     cartItems: { type: Array, required: true },
     statusPembayaran: { type: String, required: true },

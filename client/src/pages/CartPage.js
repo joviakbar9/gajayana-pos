@@ -34,8 +34,15 @@ function CartPage() {
   const dispatch = useDispatch();
   const [isDp, setIsDp] = useState(false);
 
+  const openSubmitModal = () => {
+    if (cartItems.length) {
+      setBillChargeModal(true)
+    } else {
+      message.error("Tambah Produk Terlebih Dahulu")
+    }
+  }
+
   const increaseQuantity = (record) => {
-    console.log(record);
     dispatch({
       type: "updateCart",
       payload: { ...record, quantity: record.quantity + 1 },
@@ -43,7 +50,6 @@ function CartPage() {
   };
 
   const setJumlah = (record, e) => {
-    console.log(record);
     dispatch({
       type: "updateCart",
       payload: { ...record, quantity: +e.target.value },
@@ -73,17 +79,49 @@ function CartPage() {
         setCustomer(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        message.error(error);
       });
   };
 
-  const openSubmitModal = () => {
-    if (cartItems.length) {
-      setBillChargeModal(true)
-    } else {
-      message.error("Tambah Produk Terlebih Dahulu")
+  useEffect(() => {
+    let temp = 0;
+    console.log(cartItems);
+    cartItems.forEach((item) => {
+      temp = temp + item.harga * item.quantity;
+    });
+    setSubTotal(temp);
+    getAllCustomer();
+  }, [cartItems]);
+
+  const onFinish = (values) => {
+    if (!values.customerId) {
+      return message.error("Data Customer Harus Diisi")
     }
-  }
+    if (values.statusPembayaran === "Lunas") {
+      values.sisaPembayaran = 0;
+      values.uangMuka = 0;
+    }
+    const reqObject = {
+      ...values,
+      totalHarga: subTotal,
+      cartItems,
+      grandTotal: Number(
+        subTotal - Number(((subTotal / 100) * diskon).toFixed(2))
+      ),
+      userId: JSON.parse(localStorage.getItem("gajayana-pos-user"))._id,
+    };
+
+    axios
+      .post(`${BASE_URL}/api/pemesanan/add-pemesanan`, reqObject)
+      .then(() => {
+        message.success("Pemesanan Berhasil");
+        navigate("/daftarpemesanan");
+        dispatch({ type: "clearCart" });
+      })
+      .catch(() => {
+        message.error("Terjadi Kesalahan");
+      });
+  };
 
   const columns = [
     {
@@ -132,46 +170,6 @@ function CartPage() {
       ),
     },
   ];
-
-  useEffect(() => {
-    let temp = 0;
-    console.log(cartItems);
-    cartItems.forEach((item) => {
-      temp = temp + item.harga * item.quantity;
-    });
-    setSubTotal(temp);
-    getAllCustomer();
-  }, [cartItems]);
-
-  const onFinish = (values) => {
-    if (!values.customerId) {
-      return message.error("Data Customer Harus Diisi")
-    }
-    if (values.statusPembayaran === "Lunas") {
-      values.sisaPembayaran = 0;
-      values.uangMuka = 0;
-    }
-    const reqObject = {
-      ...values,
-      totalHarga: subTotal,
-      cartItems,
-      grandTotal: Number(
-        subTotal - Number(((subTotal / 100) * diskon).toFixed(2))
-      ),
-      userId: JSON.parse(localStorage.getItem("gajayana-pos-user"))._id,
-    };
-
-    axios
-      .post(`${BASE_URL}/api/pemesanan/add-pemesanan`, reqObject)
-      .then(() => {
-        message.success("Pemesanan Berhasil");
-        navigate("/daftarpemesanan");
-        dispatch({ type: "clearCart" });
-      })
-      .catch(() => {
-        message.error("Terjadi Kesalahan");
-      });
-  };
 
   return (
     <div>
@@ -283,17 +281,6 @@ function CartPage() {
               </td>
             </tr>
           </table>
-
-          {/* <div className='sisa-pembayaran'>
-            Diskon : Rp {(subTotal / 100) * diskon}
-            Sisa Pembayaran : Rp {sisaPembayaran}
-          </div> */}
-
-          {/* <div className='charge-bill-amount'>
-            <h5>
-              Grand Total : <b>Rp {subTotal - (subTotal / 100) * diskon}</b>
-            </h5>
-          </div> */}
 
           <div className="d-flex justify-content-end">
             <Button htmlType="submit" type="primary">
